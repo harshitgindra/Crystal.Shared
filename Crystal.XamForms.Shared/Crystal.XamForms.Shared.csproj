@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Crystal.XamForms.Shared</Title>
+        <Authors>Harshit Gindra</Authors>
+        <Copyright>Harshit Gindra</Copyright>
+        <PackageVersion>1.1.1-beta</PackageVersion>
+        <Description>Extension and Utility methods of using Xamarin View Elements in a structured way with the use of MVVMCROSS and its dependency injection library.</Description>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\Output\</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MvvmCross.Forms" Version="6.4.2" />
+      <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
+      <PackageReference Include="Xamarin.Forms" Version="4.5.0.495" />
+      <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.1.0" />
+      <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.1.0" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Crystal.Core.Shared/bin/Debug
+/Crystal.Core.Shared/obj
+/Crystal.XamForms.Shared/obj
+/Crystal.XamForms.Shared/bin
+*.DS_Store
