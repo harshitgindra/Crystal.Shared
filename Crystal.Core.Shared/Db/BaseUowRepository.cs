@@ -1,8 +1,4 @@
 ﻿using Crystal.Core.Shared.Abstraction;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Crystal.Core.Shared.Db

@@ -8,10 +8,11 @@
         <Copyright>Harshit Gindra</Copyright>
         <PackageVersion>1.1.1-beta</PackageVersion>
         <Description>Extension and Utility methods of using Xamarin View Elements in a structured way with the use of MVVMCROSS and its dependency injection library.</Description>
+        <Version>1.1.4.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>..\Output\</OutputPath>
+      <OutputPath>C:\Users\harshitgindra\source\repos\LocalNuget</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>

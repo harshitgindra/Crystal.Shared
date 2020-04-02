@@ -8,3 +8,4 @@
 /Crystal.XamForms.Shared/obj
 /Crystal.XamForms.Shared/bin
 *.DS_Store
+/Output
