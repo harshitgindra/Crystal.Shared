@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AppCenter.Crashes;
 
 namespace Crystal.Core.Shared.Extension
 {
@@ -13,7 +12,7 @@ namespace Crystal.Core.Shared.Extension
                 { "Method", methodName },
                 { "Message", msg }
               };
-            Crashes.TrackError(ex, properties);
+            //Crashes.TrackError(ex, properties);
             Console.WriteLine(ex);
         }
     }

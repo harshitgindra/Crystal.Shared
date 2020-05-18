@@ -30,5 +30,17 @@ namespace Crystal.Core.Shared.Abstraction
         /// <param name="item"></param>
         /// <returns></returns>
         Task<bool> InsertAsync(IEnumerable<TEntity> item);
+        /// <summary>
+        /// Delete the entry with the id from the system
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> DeleteAsync(int id);
+        /// <summary>
+        /// Delete the entry with the id from the system
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+       bool Delete(int id);
     }
 }

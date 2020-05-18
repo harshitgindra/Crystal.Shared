@@ -1,6 +1,7 @@
 using Crystal.XamForms.Shared.Abstraction;
 using Crystal.XamForms.Shared.Ui;
 using MvvmCross;
+using MvvmCross.Exceptions;
 using MvvmCross.Forms.Views;
 using MvvmCross.ViewModels;
 using Xamarin.Forms.Xaml;
@@ -14,9 +15,16 @@ namespace Crystal.XamForms.Shared.Page
 
         protected BasePage()
         {
-            var themeProperty = Mvx.IoCProvider.Resolve<IThemeProperty>();
-            this.BackgroundColor = themeProperty.BackgroundColor;
-            ViewStore = new ViewStore(themeProperty);
+            try
+            {
+                IThemeProperty themeProperty = Mvx.IoCProvider.Resolve<IThemeProperty>();
+                this.BackgroundColor = themeProperty.BackgroundColor;
+                this.ViewStore = (IViewStore) new Crystal.XamForms.Shared.Ui.ViewStore(themeProperty);
+            }
+            catch (MvxIoCResolveException)
+            {
+                this.ViewStore = (IViewStore) new Crystal.XamForms.Shared.Ui.ViewStore();
+            }
             this.SetupNavBar();
             this.SetupContent();
         }
