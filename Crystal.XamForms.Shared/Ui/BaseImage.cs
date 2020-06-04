@@ -8,20 +8,14 @@ namespace Crystal.XamForms.Shared.Ui
         public BaseImage(IThemeProperty themeProperty, double widthRequest = default, ImageSource source = default) :
             this(widthRequest, source)
         {
-            this.BackgroundColor = themeProperty.BackgroundColor;
+            BackgroundColor = themeProperty.BackgroundColor;
         }
 
-        public BaseImage(double widthRequest, ImageSource source = null) : base()
+        public BaseImage(double widthRequest, ImageSource source = null)
         {
-            if (widthRequest != default)
-            {
-                this.WidthRequest = widthRequest;
-            }
+            if (widthRequest != default) WidthRequest = widthRequest;
 
-            if (source != default)
-            {
-                this.Source = source;
-            }
+            if (source != default) Source = source;
         }
     }
 }

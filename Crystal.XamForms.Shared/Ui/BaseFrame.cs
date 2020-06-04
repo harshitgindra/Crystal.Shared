@@ -3,28 +3,22 @@ using Xamarin.Forms;
 
 namespace Crystal.XamForms.Shared.Ui
 {
-    public class BaseFrame: Frame
+    public class BaseFrame : Frame
     {
         public BaseFrame(IThemeProperty themeProperty, View content, Thickness padding = default,
-            Thickness margin = default): this(content, padding, margin)
+            Thickness margin = default) : this(content, padding, margin)
         {
-            this.BackgroundColor = themeProperty.BackgroundColor;
-            this.BorderColor = themeProperty.TextColor;
-        } 
-        
+            BackgroundColor = themeProperty.BackgroundColor;
+            BorderColor = themeProperty.TextColor;
+        }
+
         public BaseFrame(View content, Thickness padding = default,
-            Thickness margin = default): base()
+            Thickness margin = default)
         {
-            this.Content = content;
-            if (padding != default)
-            {
-                this.Padding = padding;
-            }
-            
-            if (margin != default)
-            {
-                this.Margin = margin;
-            }
-        } 
+            Content = content;
+            if (padding != default) Padding = padding;
+
+            if (margin != default) Margin = margin;
+        }
     }
 }

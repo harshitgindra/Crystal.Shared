@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Crystal.Core.Shared.Db
+namespace Crystal.EntityFramework
 {
     public class BaseContext : DbContext
     {
-        protected DbContextOptionsBuilder ContextBuilder { get;set;}
-
         public BaseContext()
         {
         }
@@ -14,5 +12,7 @@ namespace Crystal.Core.Shared.Db
             : base(options)
         {
         }
+
+        protected DbContextOptionsBuilder ContextBuilder { get; set; }
     }
 }

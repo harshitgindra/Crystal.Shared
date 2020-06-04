@@ -11,12 +11,11 @@ namespace Crystal.XamForms.Shared.Behavior
             BindableProperty.Create(
                 nameof(LoadMoreCommand),
                 typeof(ICommand),
-                typeof(InfiniteScroll),
-                null);
+                typeof(InfiniteScroll));
 
         public ICommand LoadMoreCommand
         {
-            get => (ICommand)GetValue(LoadMoreCommandProperty);
+            get => (ICommand) GetValue(LoadMoreCommandProperty);
             set => SetValue(LoadMoreCommandProperty, value);
         }
 
@@ -56,10 +55,8 @@ namespace Crystal.XamForms.Shared.Behavior
         {
             var items = AssociatedObject.ItemsSource as IList;
             if (items != null && e.Item == items[items.Count - 1])
-            {
                 if (LoadMoreCommand != null && LoadMoreCommand.CanExecute(null))
                     LoadMoreCommand.Execute(null);
-            }
         }
     }
 }

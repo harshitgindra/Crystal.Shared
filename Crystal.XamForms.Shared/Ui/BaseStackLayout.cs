@@ -9,30 +9,20 @@ namespace Crystal.XamForms.Shared.Ui
             Thickness margin = default,
             View[] children = default) : this(padding, margin, children)
         {
-            this.BackgroundColor = themeProperty.BackgroundColor;
+            BackgroundColor = themeProperty.BackgroundColor;
         }
 
         public BaseStackLayout(Thickness padding = default,
             Thickness margin = default,
-            View[] children = default) : base()
+            View[] children = default)
         {
-            if (padding != default)
-            {
-                this.Padding = padding;
-            }
+            if (padding != default) Padding = padding;
 
-            if (margin != default)
-            {
-                this.Margin = margin;
-            }
+            if (margin != default) Margin = margin;
 
             if (children != default)
-            {
-                foreach (View child in children)
-                {
-                    this.Children.Add(child);
-                }
-            }
+                foreach (var child in children)
+                    Children.Add(child);
         }
     }
 }

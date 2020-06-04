@@ -3,40 +3,32 @@ using Xamarin.Forms;
 
 namespace Crystal.XamForms.Shared.Ui
 {
-    public class BaseButton: Button
+    public class BaseButton : Button
     {
-        public BaseButton(IThemeProperty themeProperty, 
-            string buttonText, 
+        public BaseButton(IThemeProperty themeProperty,
+            string buttonText,
             Thickness padding = default,
-            Thickness margin = default): this(buttonText, padding, margin)
+            Thickness margin = default) : this(buttonText, padding, margin)
         {
-            this.BackgroundColor = themeProperty.TextColor;
-            this.BorderColor = themeProperty.BackgroundColor;
-            this.TextColor = themeProperty.BackgroundColor;
-            this.FontFamily = themeProperty.FontFamily;
-        } 
-        
+            BackgroundColor = themeProperty.TextColor;
+            BorderColor = themeProperty.BackgroundColor;
+            TextColor = themeProperty.BackgroundColor;
+            FontFamily = themeProperty.FontFamily;
+        }
+
         public BaseButton(string text, Thickness padding = default,
-            Thickness margin = default):this()
+            Thickness margin = default) : this()
         {
-            if (!string.IsNullOrEmpty(text))
-            {
-                this.Text = text;
-            }
-            if (padding != default)
-            {
-                this.Padding = padding;
-            }
-            
-            if (margin != default)
-            {
-                this.Margin = margin;
-            }
-        } 
-        
+            if (!string.IsNullOrEmpty(text)) Text = text;
+
+            if (padding != default) Padding = padding;
+
+            if (margin != default) Margin = margin;
+        }
+
         public BaseButton()
         {
-            this.CornerRadius = 5;
-        } 
+            CornerRadius = 5;
+        }
     }
 }

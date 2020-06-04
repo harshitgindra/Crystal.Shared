@@ -1,5 +1,4 @@
-﻿using System;
-using MvvmCross.ViewModels;
+﻿using MvvmCross.ViewModels;
 
 namespace Crystal.XamForms.Shared
 {
@@ -7,20 +6,17 @@ namespace Crystal.XamForms.Shared
     {
         public override void Initialize()
         {
-                this.OnStart();
-                this.Registrations();
-                base.Initialize();
+            OnStart();
+            Registrations();
+            base.Initialize();
         }
 
         protected virtual void OnStart()
         {
-
         }
 
         protected virtual void Registrations()
         {
-
         }
-
     }
 }

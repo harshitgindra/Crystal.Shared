@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
-using System.Reflection;
-using Crystal.Core.Shared.Model;
-using System.Linq.Dynamic.Core;
 
-namespace Crystal.Core.Shared.Extension
+namespace Crystal.Shared.Decorator
 {
-    public static class ListExtensions
+    public static class ListDecorator
     {
         public static bool IsNullOrEmpty<TItem>(this IEnumerable<TItem> dataset)
         {
-            bool returnValue = dataset == null || !dataset.Any();
+            var returnValue = dataset == null || !dataset.Any();
             return returnValue;
         }
 

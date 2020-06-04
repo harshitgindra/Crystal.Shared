@@ -12,17 +12,16 @@ namespace Crystal.XamForms.Shared.Ui
             string buttonText,
             Action afterHideCallback)
         {
-            MainThread.BeginInvokeOnMainThread(async () => {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
                 await Application.Current.MainPage.DisplayAlert(
-                  title,
-                  message,
-                  buttonText);
+                    title,
+                    message,
+                    buttonText);
             });
 
-            if (afterHideCallback != null)
-            {
-                afterHideCallback();
-            }
+            if (afterHideCallback != null) afterHideCallback();
+
             return Task.FromResult(0);
         }
 
@@ -32,17 +31,16 @@ namespace Crystal.XamForms.Shared.Ui
             string buttonText,
             Action afterHideCallback)
         {
-            MainThread.BeginInvokeOnMainThread(async () => {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
                 await Application.Current.MainPage.DisplayAlert(
-                  title,
-                  error.Message,
-                  buttonText);
+                    title,
+                    error.Message,
+                    buttonText);
             });
 
-            if (afterHideCallback != null)
-            {
-                afterHideCallback();
-            }
+            if (afterHideCallback != null) afterHideCallback();
+
             return Task.FromResult(0);
         }
 
@@ -53,9 +51,9 @@ namespace Crystal.XamForms.Shared.Ui
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await Application.Current.MainPage.DisplayAlert(
-                  title,
-                  message,
-                  "OK");
+                    title,
+                    message,
+                    "OK");
             });
             return Task.FromResult(0);
         }
@@ -66,17 +64,16 @@ namespace Crystal.XamForms.Shared.Ui
             string buttonText,
             Action afterHideCallback)
         {
-            MainThread.BeginInvokeOnMainThread(async () => {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
                 await Application.Current.MainPage.DisplayAlert(
-                  title,
-                  message,
-                  buttonText);
+                    title,
+                    message,
+                    buttonText);
             });
 
-            if (afterHideCallback != null)
-            {
-                afterHideCallback();
-            }
+            if (afterHideCallback != null) afterHideCallback();
+
             return Task.FromResult(0);
         }
 
@@ -93,10 +90,8 @@ namespace Crystal.XamForms.Shared.Ui
                 buttonConfirmText,
                 buttonCancelText);
 
-            if (afterHideCallback != null)
-            {
-                afterHideCallback(result);
-            }
+            if (afterHideCallback != null) afterHideCallback(result);
+
             return result;
         }
 

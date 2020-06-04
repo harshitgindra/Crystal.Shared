@@ -11,23 +11,24 @@ namespace Crystal.XamForms.Shared.Page
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public abstract class BasePage<TViewModel> : MvxContentPage<TViewModel> where TViewModel : MvxViewModel
     {
-        protected IViewStore ViewStore { get; }
-
         protected BasePage()
         {
             try
             {
-                IThemeProperty themeProperty = Mvx.IoCProvider.Resolve<IThemeProperty>();
-                this.BackgroundColor = themeProperty.BackgroundColor;
-                this.ViewStore = (IViewStore) new Crystal.XamForms.Shared.Ui.ViewStore(themeProperty);
+                var themeProperty = Mvx.IoCProvider.Resolve<IThemeProperty>();
+                BackgroundColor = themeProperty.BackgroundColor;
+                ViewStore = new ViewStore(themeProperty);
             }
             catch (MvxIoCResolveException)
             {
-                this.ViewStore = (IViewStore) new Crystal.XamForms.Shared.Ui.ViewStore();
+                ViewStore = new ViewStore();
             }
-            this.SetupNavBar();
-            this.SetupContent();
+
+            SetupNavBar();
+            SetupContent();
         }
+
+        protected IViewStore ViewStore { get; }
 
         protected virtual void SetupNavBar()
         {

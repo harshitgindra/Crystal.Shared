@@ -4,7 +4,8 @@ namespace Crystal.XamForms.Shared.Extension
 {
     public static class ButtonExtension
     {
-        public static Button BindCommand(this Button self, string path, BindingMode mode = BindingMode.Default, IValueConverter converter = null,
+        public static Button BindCommand(this Button self, string path, BindingMode mode = BindingMode.Default,
+            IValueConverter converter = null,
             string stringFormat = null)
         {
             return BaseExtension.Bind<Button>(self, Button.CommandProperty, path, mode, converter, stringFormat);

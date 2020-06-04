@@ -1,24 +1,23 @@
-﻿using Crystal.Core.Shared.Abstraction;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Crystal.Abstraction.Repository;
 
-namespace Crystal.Core.Shared.Db
+namespace Crystal.EntityFramework.Repository
 {
     public class BaseUowRepository : IBaseUowRepository
     {
-        public BaseContext DbContext { get;set;}
-
         public BaseUowRepository(BaseContext context)
         {
             DbContext = context;
         }
 
+        private BaseContext DbContext { get; }
+
         public async Task<bool> Commit()
         {
-            bool returnValue = true;
+            var returnValue = true;
             if (DbContext != null && DbContext.ChangeTracker.HasChanges())
-            {
-                returnValue = (await DbContext.SaveChangesAsync()) > 0;
-            }
+                returnValue = await DbContext.SaveChangesAsync() > 0;
+
             return returnValue;
         }
 
