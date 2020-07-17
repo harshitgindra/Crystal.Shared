@@ -1,6 +1,7 @@
 ﻿#region USING
-using Crystal.Abstraction.Repository;
+using Crystal.Patterns.Abstraction;
 using System.Threading.Tasks;
+
 #endregion
 
 namespace Crystal.EntityFrameworkCore

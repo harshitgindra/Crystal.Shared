@@ -1,6 +1,6 @@
 ﻿#region USING
 
-using Crystal.Abstraction.Repository;
+using Crystal.Patterns.Abstraction;
 using Crystal.Shared.Decorator;
 using Crystal.Shared.Model;
 using Microsoft.EntityFrameworkCore;

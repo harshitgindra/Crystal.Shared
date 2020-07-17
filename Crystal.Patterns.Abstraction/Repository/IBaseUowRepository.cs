@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Crystal.Abstraction.Repository
+namespace Crystal.Patterns.Abstraction
 {
     public interface IBaseUowRepository : IDisposable
     {

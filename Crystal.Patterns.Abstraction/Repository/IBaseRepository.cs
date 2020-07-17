@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace Crystal.Abstraction.Repository
+namespace Crystal.Patterns.Abstraction
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {

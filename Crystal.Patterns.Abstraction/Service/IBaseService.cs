@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Crystal.Abstraction.Service
+namespace Crystal.Patterns.Abstraction
 {
     public interface IBaseService<TEntity> where TEntity : class
     {
