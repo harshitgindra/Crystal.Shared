@@ -8,12 +8,6 @@ namespace Crystal.Shared.Model
         /// <summary>
         ///     Total records in the dataset matching the filters without the pagination
         /// </summary>
-        [JsonProperty("recordsTotal")]
-        public int RecordsTotal { get; set; }
-
-        /// <summary>
-        ///     Total records in the dataset matching the filters without the pagination
-        /// </summary>
         [JsonProperty("iTotalRecords")]
         public int TotalRecords { get; set; }
 

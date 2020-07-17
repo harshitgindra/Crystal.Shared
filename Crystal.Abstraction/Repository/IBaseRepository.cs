@@ -1,11 +1,11 @@
 #region USING
 
+using Crystal.Shared.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Crystal.Shared.Model;
 
 #endregion
 
@@ -37,6 +37,7 @@ namespace Crystal.Abstraction.Repository
         ///     Get records from the database based on  input parameters
         /// </summary>
         /// <param name="filter">Conditions to filter the records</param>
+        /// <param name="includeProperties">specify the names of the properties that needs to be added to the entity</param>
         /// <returns></returns>
         Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
             string includeProperties = "");
@@ -151,5 +152,21 @@ namespace Crystal.Abstraction.Repository
         /// <param name="filter">conditions to filter the records</param>
         /// <returns></returns>
         bool Any(Expression<Func<TEntity, bool>> filter = null);
+
+        /// <summary>
+        /// Get the record from the dB based on expression asynchronously
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="includeProperties"></param>
+        /// <returns></returns>
+        Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
+
+        /// <summary>
+        /// Get the record from the dB based on expression asynchronously
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="includeProperties"></param>
+        /// <returns></returns>
+        TEntity Find(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
     }
 }

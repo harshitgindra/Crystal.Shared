@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.XamForms.Shared", "Crystal.XamForms.Shared\Crystal.XamForms.Shared.csproj", "{089119A6-1AA0-49A8-8372-8DC386B6D795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.XamForms.Shared", "Crystal.XamForms.Shared\Crystal.XamForms.Shared.csproj", "{089119A6-1AA0-49A8-8372-8DC386B6D795}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.Abstraction", "Crystal.Abstraction\Crystal.Abstraction.csproj", "{3C16C964-E88F-4048-BC41-1189C9D71CA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Abstraction", "Crystal.Abstraction\Crystal.Abstraction.csproj", "{3C16C964-E88F-4048-BC41-1189C9D71CA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.Shared", "Crystal.Shared\Crystal.Shared.csproj", "{1AA5CC05-2D3E-41F4-8A5A-44C9D619219B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Shared", "Crystal.Shared\Crystal.Shared.csproj", "{1AA5CC05-2D3E-41F4-8A5A-44C9D619219B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.EntityFramework", "Crystal.EntityFramework\Crystal.EntityFramework.csproj", "{6D41F7DF-B62C-4CB9-8E5B-6AA1FD48FDF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.EntityFrameworkCore", "Crystal.EntityFramework\Crystal.EntityFrameworkCore.csproj", "{6D41F7DF-B62C-4CB9-8E5B-6AA1FD48FDF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

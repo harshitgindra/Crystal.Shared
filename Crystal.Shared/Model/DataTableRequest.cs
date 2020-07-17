@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Crystal.Shared.Model
 {
-    public class DataTableRequest<TEntity> where TEntity : class
+    public class DataTableRequest<TEntity>
     {
         /// <summary>
         ///     Draw counter. This is used by DataTables to ensure that the Ajax returns from

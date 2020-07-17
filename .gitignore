@@ -9,3 +9,9 @@
 /Crystal.XamForms.Shared/bin
 *.DS_Store
 /Output
+/Crystal.Abstraction/obj
+/Crystal.EntityFramework/obj
+/Crystal.Shared/obj
+/Crystal.Abstraction/bin/Debug/netstandard2.1
+/Crystal.Abstraction/bin/Debug/netstandard2.1
+/Crystal.Shared/bin/Debug/netstandard2.1

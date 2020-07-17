@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Crystal.EntityFramework
+namespace Crystal.EntityFrameworkCore
 {
     public class BaseContext : DbContext
     {

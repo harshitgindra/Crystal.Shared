@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿#region USING
 using Crystal.Abstraction.Repository;
+using System.Threading.Tasks;
+#endregion
 
-namespace Crystal.EntityFramework.Repository
+namespace Crystal.EntityFrameworkCore
 {
     public class BaseUowRepository : IBaseUowRepository
     {
@@ -10,13 +12,24 @@ namespace Crystal.EntityFramework.Repository
             DbContext = context;
         }
 
+        public BaseUowRepository()
+        {
+            if (DbContext == null)
+            {
+                DbContext = new BaseContext();
+            }
+        }
+
         private BaseContext DbContext { get; }
 
         public async Task<bool> Commit()
         {
             var returnValue = true;
             if (DbContext != null && DbContext.ChangeTracker.HasChanges())
+            {
                 returnValue = await DbContext.SaveChangesAsync() > 0;
+
+            }
 
             return returnValue;
         }

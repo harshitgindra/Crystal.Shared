@@ -1,19 +1,19 @@
 ﻿#region USING
 
+using Crystal.Abstraction.Repository;
+using Crystal.Shared.Decorator;
+using Crystal.Shared.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Crystal.Abstraction.Repository;
-using Crystal.Shared.Decorator;
-using Crystal.Shared.Model;
-using Microsoft.EntityFrameworkCore;
 
 #endregion
 
-namespace Crystal.EntityFramework.Repository
+namespace Crystal.EntityFrameworkCore
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
@@ -35,9 +35,9 @@ namespace Crystal.EntityFramework.Repository
             if (filter != null) query = query.Where(filter);
 
             if (!string.IsNullOrEmpty(includeProperties))
-                foreach (var includeProperty in includeProperties.Split
-                    (new[] {','}, StringSplitOptions.RemoveEmptyEntries))
-                    query = query.Include(includeProperty);
+            {
+                query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            }
 
             return query;
         }
@@ -54,45 +54,50 @@ namespace Crystal.EntityFramework.Repository
             var response = new DataTableResponse<TEntity>();
             if (request != null)
             {
-                //***
-                //*** Filter data based on custom Query
-                //***
-                if (request.SearchQuery != null)
-                    query = query.Where(request.SearchQuery);
+                if (!string.IsNullOrEmpty(request.IncludeProperties))
+                {
+                    query = request.IncludeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                }
+
                 //***
                 //*** Filter based on search content and search columns
                 //***
-                else if (request.Search != null && !string.IsNullOrEmpty(request.Search.Value))
+                if (request.Search != null && !string.IsNullOrEmpty(request.Search.Value))
+                {
                     //***
                     //*** Custom where clause to filter data
                     //***
                     query = query.Where(request);
+                }
 
-                //response.TotalRecords = query.Count();
-                response.RecordsTotal = query.Count();
+                response.TotalRecords = query.Count();
 
-                if (!string.IsNullOrEmpty(request.IncludeProperties))
-                    foreach (var includeProperty in request.IncludeProperties.Split
-                        (new[] {','}, StringSplitOptions.RemoveEmptyEntries))
-                        query = query.Include(includeProperty);
-
-                if (request.OrderByQuery != null)
-                    query = request.OrderByQuery(query);
-                else if (!request.Order.IsNullOrEmpty())
-                    query = query.OrderBy(request.Columns[request.Order[0].Column].Data + " " + request.Order[0].Dir);
-
-                query = query.Skip(request.Start);
-
-                if (request.Length != 0) query = query.Take(request.Length);
+                if (!request.Order.IsNullOrEmpty())
+                {
+                    query = query.OrderBy(request);
+                    //***
+                    //*** Skip the records from the filtered dataset
+                    //***
+                    query = query.Skip(request.Start);
+                }
+                //***
+                //*** If length is -1, return all records
+                //***
+                if (request.Length != -1)
+                {
+                    //***
+                    //*** Take selected count of records from the filtered dataset
+                    //***
+                    query = query.Take(request.Length);
+                }
             }
             else
             {
-                response.RecordsTotal = query.Count();
+                response.TotalDisplayRecords = query.Count();
             }
 
             response.Echo = "sEcho";
-            response.TotalRecords = query.Count();
-            response.TotalDisplayRecords = response.RecordsTotal;
+            response.TotalDisplayRecords = query.Count();
             response.Data = query.ToList();
             return response;
         }
@@ -110,7 +115,7 @@ namespace Crystal.EntityFramework.Repository
 
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
-            foreach (var entity in entities) _dbSet.Add(entity);
+            Context.BulkInsert(entities);
         }
 
         public virtual void Delete(object id)
@@ -128,8 +133,7 @@ namespace Crystal.EntityFramework.Repository
 
         public virtual void DeleteAll()
         {
-            var entities = _dbSet;
-            foreach (var entity in entities) Delete(entity);
+            Context.BulkDelete(_dbSet);
         }
 
         public virtual void Update(TEntity entityToUpdate)
@@ -165,36 +169,44 @@ namespace Crystal.EntityFramework.Repository
             await _dbSet.AddAsync(entity);
         }
 
-        public virtual async Task InsertAsync(IEnumerable<TEntity> entities)
+        public virtual Task InsertAsync(IEnumerable<TEntity> entities)
         {
-            foreach (var entity in entities) await _dbSet.AddAsync(entity);
+            this.Insert(entities);
+            return Task.CompletedTask;
         }
 
-        public virtual async Task DeleteAsync(object id)
+        public virtual Task DeleteAsync(object id)
         {
-            var entityToDelete = await _dbSet.FindAsync(id);
-            await DeleteAsync(entityToDelete);
+            this.Delete(id);
+            return Task.CompletedTask;
         }
 
         public virtual Task DeleteAsync(TEntity entityToDelete)
         {
-            if (Context.Entry(entityToDelete).State == EntityState.Detached) _dbSet.Attach(entityToDelete);
-
-            _dbSet.Remove(entityToDelete);
+            this.Delete(entityToDelete);
             return Task.CompletedTask;
         }
 
-        public virtual async Task DeleteAllAsync()
+        public virtual Task DeleteAllAsync()
         {
-            var entities = _dbSet;
-            foreach (var entity in entities) await DeleteAsync(entity);
+            this.DeleteAll();
+            return Task.CompletedTask;
         }
 
         public virtual Task UpdateAsync(TEntity entityToUpdate)
         {
-            _dbSet.Attach(entityToUpdate);
-            Context.Entry(entityToUpdate).State = EntityState.Modified;
+            this.Update(entityToUpdate);
             return Task.CompletedTask;
+        }
+
+        public Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
+        {
+            return Task.FromResult(this.Find(filter, includeProperties));
+        }
+
+        public TEntity Find(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
+        {
+            return this.GetAll(filter, includeProperties).FirstOrDefault();
         }
     }
 }
