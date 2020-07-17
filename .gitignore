@@ -15,3 +15,5 @@
 /Crystal.Abstraction/bin/Debug/netstandard2.1
 /Crystal.Abstraction/bin/Debug/netstandard2.1
 /Crystal.Shared/bin/Debug/netstandard2.1
+/Crystal.EntityFrameworkCore/bin/Debug/netstandard2.1
+/Crystal.EntityFrameworkCore/obj

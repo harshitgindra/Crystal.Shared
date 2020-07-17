@@ -29,7 +29,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Crystal.Abstraction\Crystal.Abstraction.csproj" />
-      <ProjectReference Include="..\Crystal.Core.Shared\Crystal.Core.Shared.csproj" />
     </ItemGroup>
 
 </Project>
