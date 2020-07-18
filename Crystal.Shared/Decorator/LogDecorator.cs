@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace Crystal.Shared.Decorator
 {
@@ -12,6 +13,7 @@ namespace Crystal.Shared.Decorator
             //     { "Message", msg }
             // };
             Console.WriteLine(ex);
+            Debug.WriteLine(ex);
         }
     }
 }

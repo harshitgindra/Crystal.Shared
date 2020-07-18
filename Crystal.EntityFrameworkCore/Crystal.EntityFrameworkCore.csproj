@@ -10,6 +10,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
+        <PackageVersion>1.2.3.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,6 +34,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj" />
+      <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
     </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

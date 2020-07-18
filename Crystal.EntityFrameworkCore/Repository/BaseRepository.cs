@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
 
 #endregion
 
@@ -18,14 +19,21 @@ namespace Crystal.EntityFrameworkCore
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly DbSet<TEntity> _dbSet;
+        private readonly DbContext _context;
+        private readonly IDbContextTransaction _transaction;
 
         public BaseRepository(DbContext context)
         {
-            Context = context;
+            _context = context;
             _dbSet = context.Set<TEntity>();
         }
 
-        private DbContext Context { get; }
+        public BaseRepository(DbContext context, IDbContextTransaction transaction)
+        {
+            _context = context;
+            _dbSet = context.Set<TEntity>();
+            _transaction = transaction;
+        }
 
         public virtual IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
             string includeProperties = "")
@@ -36,7 +44,8 @@ namespace Crystal.EntityFrameworkCore
 
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Aggregate(query,
+                    (current, includeProperty) => current.Include(includeProperty));
             }
 
             return query;
@@ -56,13 +65,18 @@ namespace Crystal.EntityFrameworkCore
             {
                 if (!string.IsNullOrEmpty(request.IncludeProperties))
                 {
-                    query = request.IncludeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                    query = request.IncludeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                        .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
                 }
 
+                if(request.SearchQuery != null)
+                {
+                    query = query.Where(request.SearchQuery);
+                }
                 //***
                 //*** Filter based on search content and search columns
                 //***
-                if (request.Search != null && !string.IsNullOrEmpty(request.Search.Value))
+                else if (request.Search != null && !string.IsNullOrEmpty(request.Search.Value))
                 {
                     //***
                     //*** Custom where clause to filter data
@@ -72,7 +86,15 @@ namespace Crystal.EntityFrameworkCore
 
                 response.TotalRecords = query.Count();
 
-                if (!request.Order.IsNullOrEmpty())
+                if (request.OrderByQuery != null)
+                {
+                    query = request.OrderByQuery(query);
+                    //***
+                    //*** Skip the records from the filtered dataset
+                    //***
+                    query = query.Skip(request.Start);
+                }
+                else if (!request.Order.IsNullOrEmpty())
                 {
                     query = query.OrderBy(request);
                     //***
@@ -80,6 +102,7 @@ namespace Crystal.EntityFrameworkCore
                     //***
                     query = query.Skip(request.Start);
                 }
+
                 //***
                 //*** If length is -1, return all records
                 //***
@@ -115,7 +138,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
-            Context.BulkInsert(entities);
+            _context.BulkInsert(entities);
         }
 
         public virtual void Delete(object id)
@@ -126,20 +149,20 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (Context.Entry(entityToDelete).State == EntityState.Detached) _dbSet.Attach(entityToDelete);
+            if (_context.Entry(entityToDelete).State == EntityState.Detached) _dbSet.Attach(entityToDelete);
 
             _dbSet.Remove(entityToDelete);
         }
 
         public virtual void DeleteAll()
         {
-            Context.BulkDelete(_dbSet);
+            _context.BulkDelete(_dbSet);
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
             _dbSet.Attach(entityToUpdate);
-            Context.Entry(entityToUpdate).State = EntityState.Modified;
+            _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
         public virtual Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,

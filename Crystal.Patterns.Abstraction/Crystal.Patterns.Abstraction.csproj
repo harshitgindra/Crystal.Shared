@@ -12,13 +12,15 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+        <PackageVersion>1.2.2.0</PackageVersion>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
-    </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
+  </ItemGroup>
 
 </Project>

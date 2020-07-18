@@ -9,15 +9,8 @@ namespace Crystal.Shared.Model
 {
     public class DataTableRequest<TEntity>
     {
-        /// <summary>
-        ///     Draw counter. This is used by DataTables to ensure that the Ajax returns from
-        ///     server-side processing requests are drawn in sequence by DataTables
-        /// </summary>
-        public int Draw { get; set; }
-
         public Expression<Func<TEntity, bool>> SearchQuery { get; set; }
         public List<string> SearchColumns { get; set; }
-        public int Skip { get; set; }
         public Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> OrderByQuery { get; set; }
         public string IncludeProperties { get; set; }
 
