@@ -6,7 +6,7 @@
         <Title>Crystal.XamForms.Shared</Title>
         <Authors>Harshit Gindra</Authors>
         <Copyright>Harshit Gindra</Copyright>
-        <PackageVersion>1.1.4</PackageVersion>
+        <PackageVersion>1.1.5</PackageVersion>
         <Description>Extension and Utility methods of using Xamarin View Elements in a structured way with the use of MVVMCROSS and its dependency injection library.</Description>
         <Version>1.2.1.0</Version>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
