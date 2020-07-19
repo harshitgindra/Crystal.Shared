@@ -39,12 +39,7 @@ namespace Crystal.EntityFrameworkCore
 
         public IBaseRepository<TEntity> GetInstance<TEntity>(ref IBaseRepository<TEntity> instance) where TEntity:class
         {
-            if (instance == default)
-            {
-                instance = new BaseRepository<TEntity>(this.DbContext, Transaction);
-            }
-
-            return instance;
+            return instance ??= new BaseRepository<TEntity>(this.DbContext, Transaction);
         }
 
         public bool Commit()
@@ -56,20 +51,14 @@ namespace Crystal.EntityFrameworkCore
                 returnValue = DbContext.SaveChanges() > 0;
             }
 
-            if (Transaction != null)
-            {
-                Transaction.Commit();
-            }
+             Transaction?.Commit();
 
             return returnValue;
         }
 
         public void Rollback()
         {
-            if (Transaction != null)
-            {
-                Transaction.Rollback();
-            }
+            Transaction?.Rollback();
         }
 
 

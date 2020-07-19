@@ -10,7 +10,8 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
-        <PackageVersion>1.2.3.0</PackageVersion>
+        <PackageVersion>1.2.3.2</PackageVersion>
+        <PackOnBuild>true</PackOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,8 +34,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj" />
       <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
+      <ProjectReference Include="..\Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj" />
     </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
