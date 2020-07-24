@@ -10,7 +10,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
-        <PackageVersion>1.2.3.2</PackageVersion>
+        <PackageVersion>1.2.3.3</PackageVersion>
         <PackOnBuild>true</PackOnBuild>
     </PropertyGroup>
 

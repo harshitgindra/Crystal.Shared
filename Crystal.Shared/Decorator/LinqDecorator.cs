@@ -11,7 +11,8 @@ namespace Crystal.Shared.Decorator
     {
         private static readonly string _orCondition = " || ";
 
-        public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> query, DataTableRequest<TEntity> request)
+        public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> query,
+            DataTableRequest<TEntity> request)
         {
             //***
             //*** Get the property name based on column name
@@ -54,6 +55,7 @@ namespace Crystal.Shared.Decorator
                     .Select(x => x.Data)
                     .ToList();
             }
+
             //***
             //*** Prepare the query
             //*** 
@@ -91,7 +93,8 @@ namespace Crystal.Shared.Decorator
 
         private static string WhereString<TEntity>(string field) where TEntity : class
         {
-            var propertyInfo = typeof(TEntity).GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            var propertyInfo = typeof(TEntity).GetProperty(field,
+                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
             if (propertyInfo != null)
             {
                 var typeCode = Type.GetTypeCode(propertyInfo.PropertyType);
@@ -109,7 +112,7 @@ namespace Crystal.Shared.Decorator
                     case TypeCode.UInt64:
                         return $"{field}.ToString().Contains(@0)";
 
-                        // todo: DateTime, float, double, decimals, and other types.
+                    // todo: DateTime, float, double, decimals, and other types.
                 }
             }
             else

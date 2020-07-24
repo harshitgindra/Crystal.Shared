@@ -10,7 +10,7 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         /// <returns></returns>
         bool Commit();
-        
+
         /// <summary>
         ///     Commiting pending changes to the database
         /// </summary>
@@ -22,6 +22,22 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         void BeginTransaction();
 
+        /// <summary>
+        /// Rollback the transaction
+        /// </summary>
         void Rollback();
+
+        /// <summary>
+        /// Rollback the transaction
+        /// </summary>
+        Task RollbackAsync();
+
+        /// <summary>
+        /// Get IBaseRepository instance
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
+        IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class;
     }
 }

@@ -37,7 +37,7 @@ namespace Crystal.EntityFrameworkCore
             Transaction = DbContext.Database.BeginTransaction();
         }
 
-        public IBaseRepository<TEntity> GetInstance<TEntity>(ref IBaseRepository<TEntity> instance) where TEntity:class
+        public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity:class
         {
             return instance ??= new BaseRepository<TEntity>(this.DbContext, Transaction);
         }
@@ -60,7 +60,12 @@ namespace Crystal.EntityFrameworkCore
         {
             Transaction?.Rollback();
         }
-
+        
+        public Task RollbackAsync()
+        {
+            this.Rollback();
+            return Task.CompletedTask;
+        }
 
         public void Dispose()
         {

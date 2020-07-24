@@ -69,7 +69,7 @@ namespace Crystal.EntityFrameworkCore
                         .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
                 }
 
-                if(request.SearchQuery != null)
+                if (request.SearchQuery != null)
                 {
                     query = query.Where(request.SearchQuery);
                 }
