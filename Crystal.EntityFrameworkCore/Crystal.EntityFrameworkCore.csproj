@@ -10,7 +10,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
-        <PackageVersion>1.2.3.3</PackageVersion>
+        <PackageVersion>1.2.3.4</PackageVersion>
         <PackOnBuild>true</PackOnBuild>
     </PropertyGroup>
 
@@ -30,7 +30,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="3.0.83" />
+      <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="3.0.85" />
     </ItemGroup>
 
     <ItemGroup>
