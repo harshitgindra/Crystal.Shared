@@ -138,6 +138,23 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
+           foreach(var item in entities)
+            {
+                _dbSet.Add(item);
+            }
+        }
+
+        public virtual Task InsertAsync(IEnumerable<TEntity> entities)
+        {
+            foreach (var item in entities)
+            {
+                _dbSet.Add(item);
+            }
+            return Task.CompletedTask;
+        }
+
+        public virtual void BulkInsert(IEnumerable<TEntity> entities)
+        {
             _context.BulkInsert(entities);
         }
 
@@ -192,7 +209,7 @@ namespace Crystal.EntityFrameworkCore
             await _dbSet.AddAsync(entity);
         }
 
-        public virtual Task InsertAsync(IEnumerable<TEntity> entities)
+        public virtual Task BulkInsertAsync(IEnumerable<TEntity> entities)
         {
             this.Insert(entities);
             return Task.CompletedTask;

@@ -23,7 +23,7 @@ namespace Crystal.EntityFrameworkCore
             }
         }
 
-        protected BaseContext DbContext { get; }
+        public BaseContext DbContext { get; }
         
         public IDbContextTransaction Transaction { get; set; }
 
@@ -52,6 +52,34 @@ namespace Crystal.EntityFrameworkCore
             }
 
              Transaction?.Commit();
+
+            return returnValue;
+        }
+
+        public async Task<bool> CommitBulkChangesAsync()
+        {
+            var returnValue = true;
+
+            if (DbContext != null && DbContext.ChangeTracker.HasChanges())
+            {
+                await DbContext.BulkSaveChangesAsync();
+            }
+
+            Transaction?.Commit();
+
+            return returnValue;
+        }
+
+        public bool CommitBulkChanges()
+        {
+            var returnValue = true;
+
+            if (DbContext != null && DbContext.ChangeTracker.HasChanges())
+            {
+                DbContext.BulkSaveChanges();
+            }
+
+            Transaction?.Commit();
 
             return returnValue;
         }

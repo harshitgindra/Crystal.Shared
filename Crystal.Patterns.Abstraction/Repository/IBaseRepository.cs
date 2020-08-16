@@ -71,6 +71,20 @@ namespace Crystal.Patterns.Abstraction
         Task InsertAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
+        ///     Insert list of records in the table
+        /// </summary>
+        /// <param name="entities">List of entity records to be inserted</param>
+        /// <returns></returns>
+        void BulkInsert(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        ///     Insert list of records in the table
+        /// </summary>
+        /// <param name="entities">List of entity records to be inserted</param>
+        /// <returns></returns>
+        Task BulkInsertAsync(IEnumerable<TEntity> entities);
+
+        /// <summary>
         ///     Update the entity in the database based on unique identifier
         /// </summary>
         /// <param name="entityToUpdate">entity record to be updated</param>

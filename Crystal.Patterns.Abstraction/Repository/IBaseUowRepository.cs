@@ -9,6 +9,16 @@ namespace Crystal.Patterns.Abstraction
         ///     Commiting pending changes to the database
         /// </summary>
         /// <returns></returns>
+        Task<bool> CommitBulkChangesAsync();
+        /// <summary>
+        ///     Commiting pending changes to the database
+        /// </summary>
+        /// <returns></returns>
+        bool CommitBulkChanges();
+        /// <summary>
+        ///     Commiting pending changes to the database
+        /// </summary>
+        /// <returns></returns>
         bool Commit();
 
         /// <summary>
