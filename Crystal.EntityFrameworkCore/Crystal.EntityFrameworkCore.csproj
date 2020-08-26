@@ -6,11 +6,11 @@
         <Authors>Harshit Gindra</Authors>
         <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
         <Copyright>Harshit Gindra</Copyright>
-        <Version>1.2.1.0</Version>
+        <Version>1.3.0.1</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
-        <PackageVersion>1.2.3.5</PackageVersion>
+        <PackageVersion>1.3.0.1</PackageVersion>
         <PackOnBuild>true</PackOnBuild>
     </PropertyGroup>
 
@@ -30,7 +30,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="3.0.89" />
+      <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="3.0.90" />
     </ItemGroup>
 
     <ItemGroup>

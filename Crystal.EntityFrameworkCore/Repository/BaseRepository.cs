@@ -44,7 +44,7 @@ namespace Crystal.EntityFrameworkCore
 
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).Aggregate(query,
+                query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query,
                     (current, includeProperty) => current.Include(includeProperty));
             }
 
@@ -65,7 +65,7 @@ namespace Crystal.EntityFrameworkCore
             {
                 if (!string.IsNullOrEmpty(request.IncludeProperties))
                 {
-                    query = request.IncludeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                    query = request.IncludeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                         .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
                 }
 
@@ -84,6 +84,7 @@ namespace Crystal.EntityFrameworkCore
                     query = query.Where(request);
                 }
 
+                //response.TotalRecords = query.Count();
                 response.TotalRecords = query.Count();
 
                 if (request.OrderByQuery != null)
@@ -114,13 +115,9 @@ namespace Crystal.EntityFrameworkCore
                     query = query.Take(request.Length);
                 }
             }
-            else
-            {
-                response.TotalDisplayRecords = query.Count();
-            }
 
             response.Echo = "sEcho";
-            response.TotalDisplayRecords = query.Count();
+            response.RecordsFiltered = query.Count();
             response.Data = query.ToList();
             return response;
         }
@@ -138,7 +135,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
-           foreach(var item in entities)
+            foreach (var item in entities)
             {
                 _dbSet.Add(item);
             }
