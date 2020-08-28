@@ -22,3 +22,6 @@
 /Crystal.EntityFrameworkCore/bin/Release
 /Crystal.Patterns.Abstraction/bin/Release
 /Crystal.Shared/bin/Release/netstandard2.1
+/Crystal.EntityFrameworkCore/bin/Debug
+/Crystal.Patterns.Abstraction/bin/Debug
+/Crystal.Shared/bin/Debug

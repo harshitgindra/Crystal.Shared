@@ -28,6 +28,20 @@ namespace Crystal.Patterns.Abstraction
         Task DeleteAsync(object id);
 
         /// <summary>
+        ///     Delete the record based on the query
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        void Delete(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        ///     Delete the record based on the query
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task DeleteAsync(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
         ///     Delete all records from the table
         /// </summary>
         /// <returns></returns>
@@ -87,9 +101,23 @@ namespace Crystal.Patterns.Abstraction
         /// <summary>
         ///     Update the entity in the database based on unique identifier
         /// </summary>
+        /// <param name="entities">entity record to be updated</param>
+        /// <returns></returns>
+        Task UpdateAsync(TEntity entities);
+
+        /// <summary>
+        /// Update the entity in the database based on unique identifier
+        /// </summary>
         /// <param name="entityToUpdate">entity record to be updated</param>
         /// <returns></returns>
-        Task UpdateAsync(TEntity entityToUpdate);
+        Task UpdateAsync(ICollection<TEntity> entities);
+
+        /// <summary>
+        /// Update the entity in the database based on unique identifier
+        /// </summary>
+        /// <param name="entityToUpdate">entity record to be updated</param>
+        /// <returns></returns>
+        void Update(ICollection<TEntity> entities);
 
         /// <summary>
         ///     Checks if record exists in the table based on filter

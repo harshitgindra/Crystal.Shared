@@ -130,47 +130,76 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Insert(TEntity entity)
         {
+            _context.Entry(entity).State = EntityState.Added;
             _dbSet.Add(entity);
         }
 
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
-            foreach (var item in entities)
-            {
-                _dbSet.Add(item);
-            }
+            //***
+            //*** Add multiple entities
+            //***
+            _dbSet.AddRange(entities);
         }
 
         public virtual Task InsertAsync(IEnumerable<TEntity> entities)
         {
-            foreach (var item in entities)
-            {
-                _dbSet.Add(item);
-            }
+            //***
+            //*** Add multiple entities
+            //***
+            this.Insert(entities);
             return Task.CompletedTask;
         }
 
         public virtual void BulkInsert(IEnumerable<TEntity> entities)
         {
-            _context.BulkInsert(entities);
+            //***
+            //*** Add multiple entities
+            //***
+            _dbSet.BulkInsert(entities);
+            //_context.BulkInsert(entities);
         }
 
         public virtual void Delete(object id)
         {
-            var entityToDelete = _dbSet.Find(id);
+            //***
+            //*** find the entity and delete it
+            //***
+            TEntity entityToDelete = _dbSet.Find(id);
             Delete(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (_context.Entry(entityToDelete).State == EntityState.Detached) _dbSet.Attach(entityToDelete);
-
+            //***
+            //*** update the state of the entity
+            //***
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entityToDelete);
+            }
+            //***
+            //*** Remove the entity
+            //***
             _dbSet.Remove(entityToDelete);
+            _context.Entry(entityToDelete).State = EntityState.Deleted;
+        }
+
+        public virtual void BulkDeleteAll()
+        {
+            //***
+            //*** Bulk delete
+            //***
+            _dbSet.BulkDelete(_dbSet);
+            //_context.BulkDelete(_dbSet);
         }
 
         public virtual void DeleteAll()
         {
-            _context.BulkDelete(_dbSet);
+            //***
+            //*** Delete all entities
+            //***
+            _dbSet.RemoveRange(_dbSet);
         }
 
         public virtual void Update(TEntity entityToUpdate)
@@ -203,6 +232,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual async Task InsertAsync(TEntity entity)
         {
+            this.Insert(entity);
             await _dbSet.AddAsync(entity);
         }
 
@@ -236,6 +266,20 @@ namespace Crystal.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
+        public virtual void Update(ICollection<TEntity> entities)
+        {
+            foreach (var item in entities)
+            {
+                this.Update(item);
+            }
+        }
+
+        public virtual Task UpdateAsync(ICollection<TEntity> entities)
+        {
+            this.Update(entities);
+            return Task.CompletedTask;
+        }
+
         public Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
         {
             return Task.FromResult(this.Find(filter, includeProperties));
@@ -243,7 +287,22 @@ namespace Crystal.EntityFrameworkCore
 
         public TEntity Find(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
         {
-            return this.GetAll(filter, includeProperties).FirstOrDefault();
+            return this.GetAll(filter, includeProperties)
+                .FirstOrDefault();
+        }
+
+        public virtual void Delete(Expression<Func<TEntity, bool>> filter)
+        {
+            //***
+            //*** Remove/Delete the entities
+            //***
+            _dbSet.RemoveRange(_dbSet.Where(filter));
+        }
+
+        public virtual Task DeleteAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            this.Delete(filter);
+            return Task.CompletedTask;
         }
     }
 }
