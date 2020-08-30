@@ -25,3 +25,5 @@
 /Crystal.EntityFrameworkCore/bin/Debug
 /Crystal.Patterns.Abstraction/bin/Debug
 /Crystal.Shared/bin/Debug
+/Crystal.EntityFrameworkCore.Tests/bin
+/Crystal.EntityFrameworkCore.Tests/obj

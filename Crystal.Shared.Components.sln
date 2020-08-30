@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Shared", "Crystal.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Patterns.Abstraction", "Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj", "{71E0EB47-2BC4-408B-8D6A-94232226459E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.EntityFrameworkCore.Tests", "Crystal.EntityFrameworkCore.Tests\Crystal.EntityFrameworkCore.Tests.csproj", "{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +37,16 @@ Global
 		{71E0EB47-2BC4-408B-8D6A-94232226459E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71E0EB47-2BC4-408B-8D6A-94232226459E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71E0EB47-2BC4-408B-8D6A-94232226459E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9} = {FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {610FF09B-265B-4730-9213-0D0225D8D4F5}

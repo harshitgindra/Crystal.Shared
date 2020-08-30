@@ -157,7 +157,6 @@ namespace Crystal.EntityFrameworkCore
             //*** Add multiple entities
             //***
             _dbSet.BulkInsert(entities);
-            //_context.BulkInsert(entities);
         }
 
         public virtual void Delete(object id)
@@ -238,7 +237,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual Task BulkInsertAsync(IEnumerable<TEntity> entities)
         {
-            this.Insert(entities);
+            this.BulkInsert(entities);
             return Task.CompletedTask;
         }
 
@@ -280,12 +279,12 @@ namespace Crystal.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
-        public Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
+        public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
         {
-            return Task.FromResult(this.Find(filter, includeProperties));
+            return Task.FromResult(this.Get(filter, includeProperties));
         }
 
-        public TEntity Find(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
+        public TEntity Get(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
         {
             return this.GetAll(filter, includeProperties)
                 .FirstOrDefault();
