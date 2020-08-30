@@ -11,6 +11,7 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 #endregion
 
@@ -53,8 +54,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual bool Any(Expression<Func<TEntity, bool>> filter)
         {
-            var query = _dbSet.AsNoTracking();
-            return query.Any(filter);
+            return _dbSet.AsNoTracking().Any(filter);
         }
 
         public virtual DataTableResponse<TEntity> GetAll(DataTableRequest<TEntity> request)
@@ -84,7 +84,6 @@ namespace Crystal.EntityFrameworkCore
                     query = query.Where(request);
                 }
 
-                //response.TotalRecords = query.Count();
                 response.TotalRecords = query.Count();
 
                 if (request.OrderByQuery != null)
@@ -130,8 +129,17 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Insert(TEntity entity)
         {
+            //***
+            //*** update the state of the entity
+            //***
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entity);
+            }
+            //***
+            //*** Add the entity
+            //***
             _context.Entry(entity).State = EntityState.Added;
-            _dbSet.Add(entity);
         }
 
         public virtual void Insert(IEnumerable<TEntity> entities)
@@ -139,7 +147,10 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Add multiple entities
             //***
-            _dbSet.AddRange(entities);
+            foreach (var item in entities)
+            {
+                this.Insert(item);
+            }
         }
 
         public virtual Task InsertAsync(IEnumerable<TEntity> entities)
@@ -164,8 +175,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** find the entity and delete it
             //***
-            TEntity entityToDelete = _dbSet.Find(id);
-            Delete(entityToDelete);
+            Delete(_dbSet.Find(id));
         }
 
         public virtual void Delete(TEntity entityToDelete)
@@ -180,7 +190,6 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Remove the entity
             //***
-            _dbSet.Remove(entityToDelete);
             _context.Entry(entityToDelete).State = EntityState.Deleted;
         }
 
@@ -190,7 +199,6 @@ namespace Crystal.EntityFrameworkCore
             //*** Bulk delete
             //***
             _dbSet.BulkDelete(_dbSet);
-            //_context.BulkDelete(_dbSet);
         }
 
         public virtual void DeleteAll()
@@ -201,9 +209,52 @@ namespace Crystal.EntityFrameworkCore
             _dbSet.RemoveRange(_dbSet);
         }
 
+        public virtual void BulkDelete()
+        {
+            //***
+            //*** Bulk Delete all entities
+            //***
+            _dbSet.BulkDelete(_dbSet);
+        }
+
+        public virtual Task BulkDeleteAsync()
+        {
+            //***
+            //*** Bulk Delete all entities
+            //***
+            this.BulkDelete();
+            return Task.CompletedTask;
+        }
+
+        public virtual void BulkDelete(Expression<Func<TEntity, bool>> filter)
+        {
+            //***
+            //*** Bulk Delete entities
+            //***
+            _dbSet.BulkDelete(_dbSet.Where(filter));
+        }
+
+        public virtual Task BulkDeleteAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            //***
+            //*** Bulk Delete entities
+            //***
+            this.BulkDelete(filter);
+            return Task.CompletedTask;
+        }
+
         public virtual void Update(TEntity entityToUpdate)
         {
-            _dbSet.Attach(entityToUpdate);
+            //***
+            //*** update the state of the entity
+            //***
+            if (_context.Entry(entityToUpdate).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entityToUpdate);
+            }
+            //***
+            //*** Update the entity
+            //***
             _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
@@ -223,16 +274,15 @@ namespace Crystal.EntityFrameworkCore
             return Task.FromResult(GetAll(request));
         }
 
-        public virtual async Task<TEntity> GetAsync(object id)
+        public virtual Task<TEntity> GetAsync(object id)
         {
-            return await _dbSet
-                .FindAsync(id);
+            return Task.FromResult(this.Get(id));
         }
 
-        public virtual async Task InsertAsync(TEntity entity)
+        public virtual Task InsertAsync(TEntity entity)
         {
             this.Insert(entity);
-            await _dbSet.AddAsync(entity);
+            return Task.CompletedTask;
         }
 
         public virtual Task BulkInsertAsync(IEnumerable<TEntity> entities)
@@ -265,7 +315,7 @@ namespace Crystal.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
-        public virtual void Update(ICollection<TEntity> entities)
+        public virtual void Update(IEnumerable<TEntity> entities)
         {
             foreach (var item in entities)
             {
@@ -273,9 +323,20 @@ namespace Crystal.EntityFrameworkCore
             }
         }
 
-        public virtual Task UpdateAsync(ICollection<TEntity> entities)
+        public virtual Task UpdateAsync(IEnumerable<TEntity> entities)
         {
             this.Update(entities);
+            return Task.CompletedTask;
+        }
+
+        public virtual void BulkUpdate(IEnumerable<TEntity> entities)
+        {
+            _dbSet.BulkUpdate(entities);
+        }
+
+        public virtual Task BulkUpdateAsync(IEnumerable<TEntity> entities)
+        {
+            this.BulkUpdate(entities);
             return Task.CompletedTask;
         }
 

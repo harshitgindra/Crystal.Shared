@@ -115,56 +115,7 @@ namespace Crystal.Patterns.Abstraction
         /// <returns></returns>
         Task BulkInsertAsync(IEnumerable<TEntity> entities);
 
-
-
-
-
-        /// <summary>
-        ///     Delete the record entity from the databae
-        /// </summary>
-        /// <param name="entityToDelete"></param>
-        /// <returns></returns>
-        Task DeleteAsync(TEntity entityToDelete);
-
-        /// <summary>
-        ///     Delete the record based on the id from the database
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task DeleteAsync(object id);
-
-        /// <summary>
-        ///     Delete the record based on the query
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        void Delete(Expression<Func<TEntity, bool>> filter);
-
-        /// <summary>
-        ///     Delete the record based on the query
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task DeleteAsync(Expression<Func<TEntity, bool>> filter);
-
-        /// <summary>
-        ///     Delete all records from the table
-        /// </summary>
-        /// <returns></returns>
-        Task DeleteAllAsync();
-
-
-
-
-
-
-
-        
-
-
-
-
-
+        #region Update methods
         /// <summary>
         ///     Update the entity in the database based on unique identifier
         /// </summary>
@@ -177,64 +128,129 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         /// <param name="entityToUpdate">entity record to be updated</param>
         /// <returns></returns>
-        Task UpdateAsync(ICollection<TEntity> entities);
+        Task UpdateAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Update the entity in the database based on unique identifier
         /// </summary>
         /// <param name="entityToUpdate">entity record to be updated</param>
         /// <returns></returns>
-        void Update(ICollection<TEntity> entities);
+        Task BulkUpdateAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
-        ///     Checks if record exists in the table based on filter
+        /// Update the entity in the database based on unique identifier
         /// </summary>
-        /// <param name="filter">conditions to filter the records</param>
+        /// <param name="entityToUpdate">entity record to be updated</param>
         /// <returns></returns>
-        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null);
+        void BulkUpdate(IEnumerable<TEntity> entities);
 
         /// <summary>
-        ///     Delete the record entity from the databae
+        /// Update the entity in the database based on unique identifier
         /// </summary>
-        /// <param name="entityToDelete"></param>
+        /// <param name="entityToUpdate">entity record to be updated</param>
         /// <returns></returns>
-        void Delete(TEntity entityToDelete);
-
-        /// <summary>
-        ///     Delete the record based on the id from the database
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        void Delete(object id);
-
-        /// <summary>
-        ///     Delete all records from the table
-        /// </summary>
-        /// <returns></returns>
-        void DeleteAll();
-
-
-
-
-
-
-
-
+        void Update(IEnumerable<TEntity> entities);
 
         /// <summary>
         ///     Update the entity in the database based on unique identifier
         /// </summary>
         /// <param name="entityToUpdate">entity record to be updated</param>
         /// <returns></returns>
-        void Update(TEntity entityToUpdate);
+        void Update(TEntity entityToUpdate); 
+        #endregion
+
+        #region Delete methods
+        /// <summary>
+        /// Delete the record entity from the databae
+        /// </summary>
+        /// <param name="entityToDelete"></param>
+        /// <returns></returns>
+        void Delete(TEntity entityToDelete);
 
         /// <summary>
-        ///     Checks if record exists in the table based on filter
+        /// Delete the record based on the id from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        void Delete(object id);
+
+        /// <summary>
+        /// Delete the record entity from the databae
+        /// </summary>
+        /// <param name="entityToDelete"></param>
+        /// <returns></returns>
+        Task DeleteAsync(TEntity entityToDelete);
+
+        /// <summary>
+        /// Delete all records from the table
+        /// </summary>
+        /// <returns></returns>
+        void DeleteAll();
+
+        /// <summary>
+        /// Delete the record based on the id from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task DeleteAsync(object id);
+
+        /// <summary>
+        /// Delete the record based on the query
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        void Delete(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        /// Delete the record based on the query
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task DeleteAsync(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        /// Delete all records from the table
+        /// </summary>
+        /// <returns></returns>
+        Task DeleteAllAsync();
+
+        /// <summary>
+        /// Bulk delete records from the table
+        /// </summary>
+        void BulkDelete();
+
+        /// <summary>
+        /// Bulk delete records from the table
+        /// </summary>
+        /// <returns></returns>
+        Task BulkDeleteAsync();
+
+        /// <summary>
+        /// Bulk delete records from the table using the expression
+        /// </summary>
+        /// <param name="filter"></param>
+        void BulkDelete(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        /// Bulk delete records from the table using the expression
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        Task BulkDeleteAsync(Expression<Func<TEntity, bool>> filter); 
+        #endregion
+
+        /// <summary>
+        /// Checks if record exists in the table based on filter
+        /// </summary>
+        /// <param name="filter">conditions to filter the records</param>
+        /// <returns></returns>
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null);
+
+        /// <summary>
+        /// Checks if record exists in the table based on filter
         /// </summary>
         /// <param name="filter">conditions to filter the records</param>
         /// <returns></returns>
         bool Any(Expression<Func<TEntity, bool>> filter = null);
-
-
     }
 }

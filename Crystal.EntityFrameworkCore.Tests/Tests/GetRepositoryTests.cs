@@ -126,7 +126,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-            Assert.AreEqual(frstRec, response);
+            Assert.AreEqual(frstRec.Name, response.Name);
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-            Assert.AreEqual(frstRec, response);
+            Assert.AreEqual(frstRec.Name, response.Name);
         }
 
         [Test]
@@ -218,5 +218,70 @@ namespace Crystal.EntityFrameworkCore.Tests
         }
         #endregion
 
+        #region Any tests
+        [Test]
+        [Category("Any")]
+        public void AnyDataExist()
+        {
+            var firstRecord = _testOrders.First();
+            //***
+            //*** When Any all method is called
+            //***
+            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            var response = uowRepo.Any(x => x.OrderId == firstRecord.OrderId);
+            //***
+            //*** Return true
+            //***
+            Assert.IsTrue(response);
+        }
+
+        [Test]
+        [Category("Any")]
+        public async Task AnyDataExistAsync()
+        {
+            var firstRecord = _testOrders.First();
+            //***
+            //*** When Any all method is called
+            //***
+            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            var response = await uowRepo.AnyAsync(x => x.OrderId == firstRecord.OrderId);
+            //***
+            //*** Return true
+            //***
+            Assert.IsTrue(response);
+        }
+
+        [Test]
+        [Category("Any")]
+        public void AnyDataNotExist()
+        {
+            var firstRecord = _testOrders.First();
+            //***
+            //*** When Any all method is called
+            //***
+            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            var response = uowRepo.Any(x => x.OrderId == 99);
+            //***
+            //*** Return false
+            //***
+            Assert.IsFalse(response);
+        }
+
+        [Test]
+        [Category("Any")]
+        public async Task AnyDataNotExistAsync()
+        {
+            var firstRecord = _testOrders.First();
+            //***
+            //*** When Any all method is called
+            //***
+            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            var response = await uowRepo.AnyAsync(x => x.OrderId == 99);
+            //***
+            //*** Return false
+            //***
+            Assert.IsFalse(response);
+        } 
+        #endregion
     }
 }

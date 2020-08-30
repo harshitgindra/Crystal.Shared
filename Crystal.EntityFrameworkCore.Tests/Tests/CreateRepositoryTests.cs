@@ -50,7 +50,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(newRecord, DbContext.Orders.Find(newRecord.OrderId));
+            Assert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(newRecord, DbContext.Orders.Find(newRecord.OrderId));
+            Assert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
         }
 
         #endregion

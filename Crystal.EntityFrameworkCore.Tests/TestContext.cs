@@ -13,6 +13,8 @@ namespace Crystal.EntityFrameworkCore.Tests
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseInMemoryDatabase($"TestDb");
+
+            optionsBuilder.EnableSensitiveDataLogging();
         }
     }
 }
