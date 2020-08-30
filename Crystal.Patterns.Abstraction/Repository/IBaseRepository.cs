@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Crystal.Patterns.Abstraction
 {
-    public interface IBaseRepository<TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity>: IDisposable where TEntity : class
     {
         /// <summary>
         ///     Get records from the database based on  input parameters

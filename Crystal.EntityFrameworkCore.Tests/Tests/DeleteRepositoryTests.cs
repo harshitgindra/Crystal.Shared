@@ -1,6 +1,5 @@
 ﻿using Crystal.Patterns.Abstraction;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,7 +42,6 @@ namespace Crystal.EntityFrameworkCore.Tests
             DbContext.SaveChanges();
         }
 
-
         #region Delete tests
         [Test]
         [Category("Delete")]
@@ -53,7 +51,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Delete method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Delete(record.OrderId);
             DbContext.SaveChanges();
             //***
@@ -71,7 +69,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Delete Async method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.DeleteAsync(record.OrderId);
             DbContext.SaveChanges();
             //***
@@ -91,7 +89,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 //*** When Delete method is called
                 //***
-                IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+                using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
                 uowRepo.Delete(99);
                 DbContext.SaveChanges();
                 //***
@@ -118,7 +116,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 //*** When Delete method is called
                 //***
-                IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+                using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
                 await uowRepo.DeleteAsync(99);
                 DbContext.SaveChanges();
                 //***
@@ -135,6 +133,10 @@ namespace Crystal.EntityFrameworkCore.Tests
             }
         }
 
+        #endregion
+
+        #region Delete multiple records tests
+
         [Test]
         [Category("Delete")]
         public void DeleteDataExpression()
@@ -143,7 +145,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Delete method is called with an expression
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Delete(x => x.OrderId == record.OrderId);
             DbContext.SaveChanges();
             //***
@@ -161,7 +163,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Delete method is called with an expression
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.DeleteAsync(x => x.OrderId == record.OrderId);
             DbContext.SaveChanges();
             //***
@@ -179,7 +181,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Delete all method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.DeleteAll();
             DbContext.SaveChanges();
             //***
@@ -196,7 +198,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Delete all method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.DeleteAllAsync();
             DbContext.SaveChanges();
             //***
@@ -205,15 +207,18 @@ namespace Crystal.EntityFrameworkCore.Tests
             Assert.AreEqual(0, DbContext.Orders.Count());
         }
 
+        #endregion
+
+        #region Bulk delete tests
+
         [Test]
         [Category("Delete")]
         public void BulkDeleteAllData()
         {
-            var record = _testOrders.First();
             //***
             //*** When Delete all method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.BulkDelete();
             //***
             //*** All Records should be deleted
@@ -229,7 +234,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Bulk Delete method is called with an expression
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.BulkDelete(x => x.OrderId == record.OrderId);
             DbContext.SaveChanges();
             //***
@@ -247,7 +252,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Bulk Delete method is called with an expression
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.BulkDeleteAsync(x => x.OrderId == record.OrderId);
             DbContext.SaveChanges();
             //***
@@ -255,8 +260,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             Assert.IsNull(DbContext.Orders.Find(record.OrderId));
             Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
+        } 
         #endregion
     }
 }

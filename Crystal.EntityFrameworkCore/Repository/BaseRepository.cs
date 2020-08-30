@@ -364,5 +364,14 @@ namespace Crystal.EntityFrameworkCore
             this.Delete(filter);
             return Task.CompletedTask;
         }
+
+        public void Dispose()
+        {
+            //***
+            //*** Dispose the context and transaction
+            //***
+            _context?.Dispose();
+            _transaction?.Dispose();
+        }
     }
 }

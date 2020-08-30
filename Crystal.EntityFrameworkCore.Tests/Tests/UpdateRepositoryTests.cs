@@ -1,10 +1,7 @@
 ﻿using Crystal.Patterns.Abstraction;
-using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Crystal.EntityFrameworkCore.Tests
@@ -44,6 +41,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             DbContext.SaveChanges();
         }
 
+        #region Update tests
         [Test]
         [Category("Update")]
         public void UpdateRecord()
@@ -56,7 +54,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Update(order);
             DbContext.SaveChanges();
             //***
@@ -77,15 +75,17 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.UpdateAsync(order);
             DbContext.SaveChanges();
             //***
             //*** Then: 1 record should be updated
             //***
             Assert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
-        }
+        } 
+        #endregion
 
+        #region Update record tests
         [Test]
         [Category("Update")]
         public void UpdateRecords()
@@ -102,7 +102,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Update(updatedRecords);
             DbContext.SaveChanges();
             //***
@@ -133,7 +133,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.UpdateAsync(updatedRecords);
             DbContext.SaveChanges();
             //***
@@ -146,8 +146,10 @@ namespace Crystal.EntityFrameworkCore.Tests
                     Assert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
                 }
             });
-        }
+        } 
+        #endregion
 
+        #region Bulk update tests
         [Test]
         [Category("Update")]
         public void BulkUpdateRecords()
@@ -164,7 +166,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.BulkUpdate(updatedRecords);
             //***
             //*** Then: multiple records should be updated
@@ -194,7 +196,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.BulkUpdateAsync(updatedRecords);
             //***
             //*** Then: multiple records should be updated
@@ -206,6 +208,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                     Assert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
                 }
             });
-        }
+        } 
+        #endregion
     }
 }

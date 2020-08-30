@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 namespace Crystal.EntityFrameworkCore.Tests
 {
     [TestFixture]
-    public class CreateRepositoryTests : BaseTests
+    public class InsertRepositoryTests : BaseTests
     {
-
-
         [SetUp]
         public void Setup()
         {
@@ -27,10 +25,10 @@ namespace Crystal.EntityFrameworkCore.Tests
             DbContext.SaveChanges();
         }
 
-        #region Create tests
+        #region Insert record tests
         [Test]
-        [Category("Create")]
-        public void CreateRecord()
+        [Category("Insert")]
+        public void InsertRecord()
         {
             //***
             //*** Given: Insert a new record to the dB
@@ -44,7 +42,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Insert(newRecord);
             DbContext.SaveChanges();
             //***
@@ -54,8 +52,8 @@ namespace Crystal.EntityFrameworkCore.Tests
         }
 
         [Test]
-        [Category("Create")]
-        public async Task CreateRecordAsync()
+        [Category("Insert")]
+        public async Task InsertRecordAsync()
         {
             //***
             //*** Given: Insert a new record to the dB
@@ -69,7 +67,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.InsertAsync(newRecord);
             DbContext.SaveChanges();
             //***
@@ -80,10 +78,10 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         #endregion
 
-        #region Create tests
+        #region Insert multiple tests
         [Test]
-        [Category("Create")]
-        public void CreateMultipleRecord()
+        [Category("Insert")]
+        public void InsertMultipleRecord()
         {
             //***
             //*** Given: Insert 2 records to the dB
@@ -106,7 +104,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Insert(records);
             DbContext.SaveChanges();
             //***
@@ -116,8 +114,8 @@ namespace Crystal.EntityFrameworkCore.Tests
         }
 
         [Test]
-        [Category("Create")]
-        public async Task CreateMultipleRecordAsync()
+        [Category("Insert")]
+        public async Task InsertMultipleRecordAsync()
         {
             //***
             //*** Given: Insert 2 records to the dB
@@ -140,7 +138,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.InsertAsync(records);
             DbContext.SaveChanges();
             //***
@@ -149,9 +147,12 @@ namespace Crystal.EntityFrameworkCore.Tests
             Assert.AreEqual(records.Count, DbContext.Orders.Count());
         }
 
+        #endregion
+
+        #region Bulk insert tests
         [Test]
-        [Category("Create")]
-        public void BulkCreateMultipleRecord()
+        [Category("Insert")]
+        public void BulkInsertMultipleRecord()
         {
             //***
             //*** Given: Insert 2 records to the dB
@@ -174,7 +175,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When bulk insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.BulkInsert(records);
             //***
             //*** Then: 2 record should be saved
@@ -183,8 +184,8 @@ namespace Crystal.EntityFrameworkCore.Tests
         }
 
         [Test]
-        [Category("Create")]
-        public async Task BulkCreateMultipleRecordAsync()
+        [Category("Insert")]
+        public async Task BulkInsertMultipleRecordAsync()
         {
             //***
             //*** Given: Insert 2 records to the dB
@@ -207,7 +208,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.BulkInsertAsync(records);
             //***
             //*** Then: 2 record should be saved
@@ -216,6 +217,5 @@ namespace Crystal.EntityFrameworkCore.Tests
         }
 
         #endregion
-
     }
 }
