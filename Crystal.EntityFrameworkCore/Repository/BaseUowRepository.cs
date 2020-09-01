@@ -1,8 +1,8 @@
 ﻿#region USING
 
 using Crystal.Patterns.Abstraction;
+using System;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage;
 
 #endregion
 
@@ -24,71 +24,45 @@ namespace Crystal.EntityFrameworkCore
         }
 
         public BaseContext DbContext { get; }
-        
-        public IDbContextTransaction Transaction { get; set; }
-
-        public Task<bool> CommitAsync()
-        {
-            return Task.FromResult(Commit());
-        }
 
         public void BeginTransaction()
         {
-            Transaction = DbContext.Database.BeginTransaction();
+            this.DbContext.Transaction = DbContext.Database.BeginTransaction();
         }
 
-        public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity:class
+        [Obsolete]
+        public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
         {
-            return instance ??= new BaseRepository<TEntity>(this.DbContext, Transaction);
+            return instance ??= new BaseRepository<TEntity>(this.DbContext);
         }
 
-        public bool Commit()
+        public void Commit()
         {
-            var returnValue = true;
-
-             if (DbContext != null && DbContext.ChangeTracker.HasChanges())
-            {
-                returnValue = DbContext.SaveChanges() > 0;
-            }
-
-             Transaction?.Commit();
-
-            return returnValue;
+            DbContext.Commit();
         }
 
-        public async Task<bool> CommitBulkChangesAsync()
+        public Task CommitAsync()
         {
-            var returnValue = true;
-
-            if (DbContext != null && DbContext.ChangeTracker.HasChanges())
-            {
-                await DbContext.BulkSaveChangesAsync();
-            }
-
-            Transaction?.Commit();
-
-            return returnValue;
+            this.Commit();
+            return Task.CompletedTask;
         }
 
-        public bool CommitBulkChanges()
+        public Task CommitBulkChangesAsync()
         {
-            var returnValue = true;
+            this.DbContext.CommitBulkChanges();
+            return Task.CompletedTask;
+        }
 
-            if (DbContext != null && DbContext.ChangeTracker.HasChanges())
-            {
-                DbContext.BulkSaveChanges();
-            }
-
-            Transaction?.Commit();
-
-            return returnValue;
+        public void CommitBulkChanges()
+        {
+            this.DbContext.CommitBulkChanges();
         }
 
         public void Rollback()
         {
-            Transaction?.Rollback();
+            this.DbContext.Rollback();
         }
-        
+
         public Task RollbackAsync()
         {
             this.Rollback();
@@ -97,8 +71,8 @@ namespace Crystal.EntityFrameworkCore
 
         public void Dispose()
         {
+            DbContext.Transaction?.Dispose();
             DbContext?.Dispose();
-            Transaction?.Dispose();
         }
     }
 }

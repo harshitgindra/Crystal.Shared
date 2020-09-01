@@ -39,7 +39,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             };
 
             DbContext.Orders.AddRange(_testOrders);
-            DbContext.SaveChanges();
+            DbContext.Commit();
         }
 
         #region Delete tests
@@ -53,7 +53,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Delete(record.OrderId);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Record should be deleted
             //***
@@ -71,7 +71,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.DeleteAsync(record.OrderId);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Record should be deleted
             //***
@@ -91,7 +91,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
                 uowRepo.Delete(99);
-                DbContext.SaveChanges();
+                DbContext.Commit();
                 //***
                 //*** Then: Test failed if Exception not generated
                 //***
@@ -118,7 +118,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
                 await uowRepo.DeleteAsync(99);
-                DbContext.SaveChanges();
+                DbContext.Commit();
                 //***
                 //*** Then: Test failed if Exception not generated
                 //***
@@ -147,7 +147,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Delete(x => x.OrderId == record.OrderId);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Record should be deleted
             //***
@@ -165,7 +165,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.DeleteAsync(x => x.OrderId == record.OrderId);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Record should be deleted
             //***
@@ -183,7 +183,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.DeleteAll();
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** All Records should be deleted
             //***
@@ -200,7 +200,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.DeleteAllAsync();
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** All Records should be deleted
             //***
@@ -236,7 +236,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.BulkDelete(x => x.OrderId == record.OrderId);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Record should be deleted
             //***
@@ -254,13 +254,180 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.BulkDeleteAsync(x => x.OrderId == record.OrderId);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Record should be deleted
             //***
             Assert.IsNull(DbContext.Orders.Find(record.OrderId));
             Assert.AreNotEqual(0, DbContext.Orders.Count());
-        } 
+        }
+        #endregion
+
+        #region Delete tests
+        [Test]
+        [Category("Delete")]
+        public void DeleteDataBulkSaveChanges()
+        {
+            var record = _testOrders.First();
+            //***
+            //*** When Delete method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            uowRepo.Delete(record.OrderId);
+            DbContext.CommitBulkChanges();
+            //***
+            //*** Record should be deleted
+            //***
+            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
+            Assert.AreNotEqual(0, DbContext.Orders.Count());
+        }
+
+        [Test]
+        [Category("Delete")]
+        public async Task DeleteDataAsyncBulkSaveChanges()
+        {
+            var record = _testOrders.First();
+            //***
+            //*** When Delete Async method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            await uowRepo.DeleteAsync(record.OrderId);
+            await DbContext.CommitBulkChangesAsync();
+            //***
+            //*** Record should be deleted
+            //***
+            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
+            Assert.AreNotEqual(0, DbContext.Orders.Count());
+        }
+
+        [Test]
+        [Category("Delete")]
+        public void DeleteDataWhenRecordNotExistBulkSaveChanges()
+        {
+            try
+            {
+                var record = _testOrders.First();
+                //***
+                //*** When Delete method is called
+                //***
+                using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+                uowRepo.Delete(99);
+                DbContext.CommitBulkChanges();
+                //***
+                //*** Then: Test failed if Exception not generated
+                //***
+                Assert.IsNotNull(DbContext.Orders.Find(record.OrderId));
+            }
+            catch
+            {
+                //***
+                //*** Then: Exception generated, test passed
+                //***
+                Assert.Pass("Exception generated as record not found");
+            }
+        }
+
+        [Test]
+        [Category("Delete")]
+        public async Task DeleteDataWhenRecordNotExistAsyncBulkSaveChanges()
+        {
+            try
+            {
+                var record = _testOrders.First();
+                //***
+                //*** When Delete method is called
+                //***
+                using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+                await uowRepo.DeleteAsync(99);
+                await DbContext.CommitBulkChangesAsync();
+                //***
+                //*** Then: Test failed if Exception not generated
+                //***
+                Assert.IsNotNull(DbContext.Orders.Find(record.OrderId));
+            }
+            catch
+            {
+                //***
+                //*** Then: Exception generated, test passed
+                //***
+                Assert.Pass("Exception generated as record not found");
+            }
+        }
+
+        #endregion
+
+        #region Delete multiple records tests
+
+        [Test]
+        [Category("Delete")]
+        public void DeleteDataExpressionBulkSaveChanges()
+        {
+            var record = _testOrders.First();
+            //***
+            //*** When Delete method is called with an expression
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            uowRepo.Delete(x => x.OrderId == record.OrderId);
+            DbContext.CommitBulkChanges();
+            //***
+            //*** Record should be deleted
+            //***
+            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
+            Assert.AreNotEqual(0, DbContext.Orders.Count());
+        }
+
+        [Test]
+        [Category("Delete")]
+        public async Task DeleteDataExpressionBulkSaveChangesAsync()
+        {
+            var record = _testOrders.First();
+            //***
+            //*** When Delete method is called with an expression
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            await uowRepo.DeleteAsync(x => x.OrderId == record.OrderId);
+            await DbContext.CommitBulkChangesAsync();
+            //***
+            //*** Record should be deleted
+            //***
+            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
+            Assert.AreNotEqual(0, DbContext.Orders.Count());
+        }
+
+        [Test]
+        [Category("Delete")]
+        public void DeleteAllDataBulkSaveChanges()
+        {
+            var record = _testOrders.First();
+            //***
+            //*** When Delete all method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            uowRepo.DeleteAll();
+            DbContext.CommitBulkChanges();
+            //***
+            //*** All Records should be deleted
+            //***
+            Assert.AreEqual(0, DbContext.Orders.Count());
+        }
+
+        [Test]
+        [Category("Delete")]
+        public async Task DeleteAllDataBulkSaveChangesAsync()
+        {
+            var record = _testOrders.First();
+            //***
+            //*** When Delete all method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            await uowRepo.DeleteAllAsync();
+            await DbContext.CommitBulkChangesAsync();
+            //***
+            //*** All Records should be deleted
+            //***
+            Assert.AreEqual(0, DbContext.Orders.Count());
+        }
+
         #endregion
     }
 }

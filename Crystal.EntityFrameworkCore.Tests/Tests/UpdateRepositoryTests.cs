@@ -38,7 +38,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                 }
             };
             DbContext.Orders.AddRange(_testOrders);
-            DbContext.SaveChanges();
+            DbContext.Commit();
         }
 
         #region Update tests
@@ -56,7 +56,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Update(order);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Then: 1 record should be updated
             //***
@@ -77,12 +77,12 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.UpdateAsync(order);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Then: 1 record should be updated
             //***
             Assert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
-        } 
+        }
         #endregion
 
         #region Update record tests
@@ -104,7 +104,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             uowRepo.Update(updatedRecords);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Then: multiple records should be updated
             //***
@@ -135,7 +135,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await uowRepo.UpdateAsync(updatedRecords);
-            DbContext.SaveChanges();
+            DbContext.Commit();
             //***
             //*** Then: multiple records should be updated
             //***
@@ -146,7 +146,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                     Assert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
                 }
             });
-        } 
+        }
         #endregion
 
         #region Bulk update tests
@@ -208,7 +208,115 @@ namespace Crystal.EntityFrameworkCore.Tests
                     Assert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
                 }
             });
-        } 
+        }
+        #endregion
+
+        #region Update tests
+        [Test]
+        [Category("Update")]
+        public void UpdateRecordCommitBulkChanges()
+        {
+            //***
+            //*** Given: Update a record
+            //***
+            var order = _testOrders.First();
+            order.Name = "Sample Updated";
+            //***
+            //*** When insert method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            uowRepo.Update(order);
+            DbContext.CommitBulkChanges();
+            //***
+            //*** Then: 1 record should be updated
+            //***
+            Assert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
+        }
+
+        [Test]
+        [Category("Update")]
+        public async Task UpdateRecordCommitBulkChangesAsync()
+        {
+            //***
+            //*** Given: Update a record
+            //***
+            var order = _testOrders.First();
+            order.Name = "Sample Updated";
+            //***
+            //*** When insert method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            await uowRepo.UpdateAsync(order);
+            await DbContext.CommitBulkChangesAsync();
+            //***
+            //*** Then: 1 record should be updated
+            //***
+            Assert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
+        }
+        #endregion
+
+        #region Update record tests
+        [Test]
+        [Category("Update")]
+        public void UpdateRecordsCommitBulkChanges()
+        {
+            //***
+            //*** Given: Update multiple record
+            //***
+            var updatedRecords = _testOrders.Select(x => new Order()
+            {
+                Name = x.Name + " Updated",
+                OrderId = x.OrderId,
+                Value = x.Value
+            });
+            //***
+            //*** When insert method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            uowRepo.Update(updatedRecords);
+            DbContext.CommitBulkChanges();
+            //***
+            //*** Then: multiple records should be updated
+            //***
+            Assert.Multiple(() =>
+            {
+                foreach (var item in updatedRecords)
+                {
+                    Assert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
+                }
+            });
+        }
+
+        [Test]
+        [Category("Update")]
+        public async Task UpdateRecordsCommitBulkChangesAsync()
+        {
+            //***
+            //*** Given: Update multiple record
+            //***
+            var updatedRecords = _testOrders.Select(x => new Order()
+            {
+                Name = x.Name + " Updated",
+                OrderId = x.OrderId,
+                Value = x.Value
+            });
+            //***
+            //*** When insert method is called
+            //***
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            await uowRepo.UpdateAsync(updatedRecords);
+            await DbContext.CommitBulkChangesAsync();
+            //***
+            //*** Then: multiple records should be updated
+            //***
+            Assert.Multiple(() =>
+            {
+                foreach (var item in updatedRecords)
+                {
+                    Assert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
+                }
+            });
+        }
         #endregion
     }
 }
