@@ -28,5 +28,18 @@ namespace Crystal.XamForms.Shared.Extension
             self.SetBinding(targetProperty, binding);
             return self;
         }
+
+        public static View AddToGrid(this View self, int row, int column)
+        {
+            Grid.SetColumn(self, column);
+            Grid.SetRow(self, row);
+            return self;
+        }
+
+        public static View SetBackgroundColor(this View self, Color backgroundColor)
+        {
+            self.BackgroundColor = backgroundColor;
+            return self;
+        }
     }
 }

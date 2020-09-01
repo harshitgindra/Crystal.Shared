@@ -10,7 +10,13 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Entry>(self, Entry.TextProperty, path, mode, converter, stringFormat);
+            return BaseExtension.Bind(self, Entry.TextProperty, path, mode, converter, stringFormat);
+        }
+
+        public static Entry SetFontSize(this Entry self, NamedSize namedSize)
+        {
+            self.FontSize = Device.GetNamedSize(namedSize, typeof(Label));
+            return self;
         }
     }
 }

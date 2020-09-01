@@ -8,7 +8,13 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Image>(self, Image.SourceProperty, path, mode, converter, stringFormat);
+            return BaseExtension.Bind(self, Image.SourceProperty, path, mode, converter, stringFormat);
         }
-    }
+
+        public static Image SetAspect(this Image self, Aspect aspect)
+        {
+            self.Aspect = aspect;
+            return self;
+        }
+        }
 }

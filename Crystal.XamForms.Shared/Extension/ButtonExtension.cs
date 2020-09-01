@@ -8,7 +8,7 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Button>(self, Button.CommandProperty, path, mode, converter, stringFormat);
+            return BaseExtension.Bind(self, Button.CommandProperty, path, mode, converter, stringFormat);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Editor>(self, Editor.TextProperty, path, mode, converter, stringFormat);
+            return BaseExtension.Bind(self, Editor.TextProperty, path, mode, converter, stringFormat);
         }
     }
 }

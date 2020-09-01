@@ -9,15 +9,14 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<ListView>(self, ListView.ItemsSourceProperty, path, mode, converter,
-                stringFormat);
+            return BaseExtension.Bind(self, ListView.ItemsSourceProperty, path, mode, converter, stringFormat);
         }
 
         public static ListView BindSelectedItem(this ListView self, string path, BindingMode mode = BindingMode.Default,
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<ListView>(self, ListView.SelectedItemProperty, path, mode, converter,
+            return BaseExtension.Bind(self, ListView.SelectedItemProperty, path, mode, converter,
                 stringFormat);
         }
 
@@ -25,7 +24,7 @@ namespace Crystal.XamForms.Shared.Extension
             BindingMode mode = BindingMode.Default, IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<ListView>(self, ListView.RefreshCommandProperty, path, mode, converter,
+            return BaseExtension.Bind(self, ListView.RefreshCommandProperty, path, mode, converter,
                 stringFormat);
         }
 
@@ -33,7 +32,7 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<ListView>(self, ListView.IsRefreshingProperty, path, mode, converter,
+            return BaseExtension.Bind(self, ListView.IsRefreshingProperty, path, mode, converter,
                 stringFormat);
         }
 

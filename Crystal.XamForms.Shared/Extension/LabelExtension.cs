@@ -8,21 +8,21 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Label>(self, Label.TextProperty, path, mode, converter, stringFormat);
+            return BaseExtension.Bind(self, Label.TextProperty, path, mode, converter, stringFormat);
         }
 
         public static Label BindTextColor(this Label self, string path, BindingMode mode = BindingMode.Default,
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Label>(self, Label.TextColorProperty, path, mode, converter, stringFormat);
+            return BaseExtension.Bind(self, Label.TextColorProperty, path, mode, converter, stringFormat);
         }
 
         public static Label BindBackgroundColor(this Label self, string path, BindingMode mode = BindingMode.Default,
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Label>(self, VisualElement.BackgroundColorProperty, path, mode, converter,
+            return BaseExtension.Bind(self, VisualElement.BackgroundColorProperty, path, mode, converter,
                 stringFormat);
         }
 
@@ -30,8 +30,20 @@ namespace Crystal.XamForms.Shared.Extension
             IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<Label>(self, VisualElement.IsVisibleProperty, path, mode, converter,
+            return BaseExtension.Bind(self, VisualElement.IsVisibleProperty, path, mode, converter,
                 stringFormat);
+        }
+
+        public static Label SetFontSize(this Label self, NamedSize namedSize)
+        {
+            self.FontSize = Device.GetNamedSize(namedSize, typeof(Label));
+            return self;
+        }
+
+        public static Label SetFontFamily(this Label self, string fontFamily)
+        {
+            self.FontFamily = fontFamily;
+            return self;
         }
     }
 }

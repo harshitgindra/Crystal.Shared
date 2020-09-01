@@ -8,8 +8,7 @@ namespace Crystal.XamForms.Shared.Extension
             BindingMode mode = BindingMode.Default, IValueConverter converter = null,
             string stringFormat = null)
         {
-            return BaseExtension.Bind<ImageButton>(self, ImageButton.CommandProperty, path, mode, converter,
-                stringFormat);
+            return BaseExtension.Bind(self, ImageButton.CommandProperty, path, mode, converter, stringFormat);
         }
     }
 }

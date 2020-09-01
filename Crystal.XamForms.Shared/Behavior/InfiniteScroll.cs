@@ -54,7 +54,7 @@ namespace Crystal.XamForms.Shared.Behavior
         private void InfiniteListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var items = AssociatedObject.ItemsSource as IList;
-            if (items != null && e.Item == items[items.Count - 1])
+            if (items != null && e.Item == items[^1])
                 if (LoadMoreCommand != null && LoadMoreCommand.CanExecute(null))
                     LoadMoreCommand.Execute(null);
         }

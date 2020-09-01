@@ -7,12 +7,12 @@ namespace Crystal.XamForms.Shared.Behavior
 {
     public class SwipeGesture : PanGestureRecognizer
     {
-        private readonly ISwipeCallBack mISwipeCallback;
-        private double translatedX, translatedY;
+        private readonly ISwipeCallBack _mISwipeCallback;
+        private double _translatedX, _translatedY;
 
         public SwipeGesture(View view, ISwipeCallBack iSwipeCallBack)
         {
-            mISwipeCallback = iSwipeCallBack;
+            _mISwipeCallback = iSwipeCallBack;
             var panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += OnPanUpdated;
             view.GestureRecognizers.Add(panGesture);
@@ -20,7 +20,7 @@ namespace Crystal.XamForms.Shared.Behavior
 
         private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            var Content = (View) sender;
+            var content = (View)sender;
 
             switch (e.StatusType)
             {
@@ -28,8 +28,8 @@ namespace Crystal.XamForms.Shared.Behavior
 
                     try
                     {
-                        translatedX = e.TotalX;
-                        translatedY = e.TotalY;
+                        _translatedX = e.TotalX;
+                        _translatedY = e.TotalY;
                     }
                     catch (Exception err)
                     {
@@ -40,19 +40,16 @@ namespace Crystal.XamForms.Shared.Behavior
 
                 case GestureStatus.Completed:
 
-                    Debug.WriteLine("translatedX : " + translatedX);
-                    Debug.WriteLine("translatedY : " + translatedY);
-
-                    if (translatedX < 0 && Math.Abs(translatedX) > Math.Abs(translatedY))
-                        mISwipeCallback.OnLeftSwipe(Content);
-                    else if (translatedX > 0 && translatedX > Math.Abs(translatedY))
-                        mISwipeCallback.OnRightSwipe(Content);
-                    else if (translatedY < 0 && Math.Abs(translatedY) > Math.Abs(translatedX))
-                        mISwipeCallback.OnTopSwipe(Content);
-                    else if (translatedY > 0 && translatedY > Math.Abs(translatedX))
-                        mISwipeCallback.OnBottomSwipe(Content);
+                    if (_translatedX < 0 && Math.Abs(_translatedX) > Math.Abs(_translatedY))
+                        _mISwipeCallback.OnLeftSwipe(content);
+                    else if (_translatedX > 0 && _translatedX > Math.Abs(_translatedY))
+                        _mISwipeCallback.OnRightSwipe(content);
+                    else if (_translatedY < 0 && Math.Abs(_translatedY) > Math.Abs(_translatedX))
+                        _mISwipeCallback.OnTopSwipe(content);
+                    else if (_translatedY > 0 && _translatedY > Math.Abs(_translatedX))
+                        _mISwipeCallback.OnBottomSwipe(content);
                     else
-                        mISwipeCallback.OnNothingSwiped(Content);
+                        _mISwipeCallback.OnNothingSwiped(content);
 
                     break;
             }
