@@ -33,75 +33,85 @@ namespace Crystal.Shared.Decorator
             return query;
         }
 
-        public static IQueryable<TEntity> Where<TEntity>(this IQueryable<TEntity> query,
-            DataTableRequest<TEntity> request)
-            where TEntity : class
+        public static IQueryable<TItem> GlobalFilter<TItem>(this IQueryable<TItem> query,
+            DataTableRequest<TItem> request)
+            where TItem : class
         {
-            var queryString = "";
-            IList<string> columnsToFilter = default;
-            if (!request.SearchColumns.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(request?.Search?.Value))
             {
+                string whereQuery = "";
                 //***
-                //*** Filter through all columns specified
-                //***
-                columnsToFilter = request.SearchColumns;
-            }
-            else
-            {
-                //***
-                //*** Looping through all columns from Datatable Request
-                //***
-                columnsToFilter = request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Data))
-                    .Select(x => x.Data)
-                    .ToList();
-            }
-
-            //***
-            //*** Prepare the query
-            //*** 
-            foreach (var columnName in columnsToFilter)
-            {
-                //***
-                //*** Fetching where clause depending on different data types
-                //***
-                var whrString = WhereString<TEntity>(columnName);
-                if (!string.IsNullOrEmpty(whrString))
+                //*** Prepare the query
+                //*** 
+                foreach (Column column in request.Columns.Where(x => x.Searchable))
                 {
                     //***
-                    //*** Appending to existing where query
+                    //*** Fetching where clause depending on different data types
                     //***
-                    queryString += whrString;
-                    //***
-                    //*** Adding OR clause in case of multiple Where conditions
-                    //***
-                    queryString += _orCondition;
+                    var whrString = WhereQueryBuilder<TItem>(column.Data);
+
+                    if (!string.IsNullOrEmpty(whereQuery) && !string.IsNullOrEmpty(whrString))
+                    {
+                        //***
+                        //*** Adding OR clause in case of multiple Where conditions
+                        //***
+                        whereQuery += _orCondition;
+                    }
+
+                    if (!string.IsNullOrEmpty(whrString))
+                    {
+                        //***
+                        //*** Appending to existing where query
+                        //***
+                        whereQuery += whrString;
+                    }
                 }
-            }
 
-            if (!string.IsNullOrEmpty(queryString) && queryString.EndsWith(_orCondition))
-            {
-                queryString = queryString.Remove(queryString.Length - 4, 4);
-            }
-
-            if (!string.IsNullOrEmpty(queryString))
-            {
-                query = query.Where(queryString, request.Search.Value);
+                if (!string.IsNullOrEmpty(whereQuery))
+                {
+                    query = query.Where(whereQuery, request.Search.Value.ToLower());
+                }
             }
 
             return query;
         }
 
-        private static string WhereString<TEntity>(string field) where TEntity : class
+        public static IQueryable<TEntity> ColumnFilter<TEntity>(this IQueryable<TEntity> query,
+            DataTableRequest<TEntity> request)
+            where TEntity : class
         {
-            var propertyInfo = typeof(TEntity).GetProperty(field,
-                BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            //***
+            //*** Prepare the query
+            //*** 
+            foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value)))
+            {
+                //***
+                //*** Fetching where clause depending on different data types
+                //***
+                var whereQuery = WhereQueryBuilder<TEntity>(column.Data, column.Search.Value);
+
+                if (!string.IsNullOrEmpty(whereQuery))
+                {
+                    //***
+                    //*** Appending to existing where query
+                    //***
+                    query = query.Where(whereQuery, column.Search.Value.ToLower());
+                }
+            }
+
+            return query;
+        }
+
+        private static string WhereQueryBuilder<TEntity>(string field, string value = "")
+        {
+            var propertyInfo = typeof(TEntity).GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
             if (propertyInfo != null)
             {
                 var typeCode = Type.GetTypeCode(propertyInfo.PropertyType);
                 switch (typeCode)
                 {
                     case TypeCode.String:
-                        return $"{field}.Contains(@0)";
+                        return $"{field}.ToLower().Contains(@0)";
                     case TypeCode.Boolean:
                         return $"{field} == @0";
                     case TypeCode.Int16:
@@ -111,8 +121,15 @@ namespace Crystal.Shared.Decorator
                     case TypeCode.UInt32:
                     case TypeCode.UInt64:
                         return $"{field}.ToString().Contains(@0)";
+                    case TypeCode.DateTime:
+                        if (DateTime.TryParse(value, out var _))
+                        {
+                            return $"{field}.ToShortDateString() == Convert.ToDateTime(@0).ToShortDateString()";
+                        }
 
-                    // todo: DateTime, float, double, decimals, and other types.
+                        return "";
+
+                        // todo: DateTime, float, double, decimals, and other types.
                 }
             }
             else

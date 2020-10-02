@@ -36,7 +36,7 @@ namespace Crystal.EntityFrameworkCore
             _transaction = transaction;
         }
 
-        public virtual IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
+        public virtual TEntity[] GetAll(Expression<Func<TEntity, bool>> filter = null,
             string includeProperties = "")
         {
             var query = _dbSet.AsNoTracking();
@@ -49,7 +49,7 @@ namespace Crystal.EntityFrameworkCore
                     (current, includeProperty) => current.Include(includeProperty));
             }
 
-            return query;
+            return query.ToArray();
         }
 
         public virtual bool Any(Expression<Func<TEntity, bool>> filter)
@@ -81,7 +81,8 @@ namespace Crystal.EntityFrameworkCore
                     //***
                     //*** Custom where clause to filter data
                     //***
-                    query = query.Where(request);
+                    query = query.GlobalFilter(request)
+                        .ColumnFilter(request);
                 }
 
                 response.TotalRecords = query.Count();
@@ -117,7 +118,7 @@ namespace Crystal.EntityFrameworkCore
 
             response.Echo = "sEcho";
             response.RecordsFiltered = query.Count();
-            response.Data = query.ToList();
+            response.Data = query.ToArray();
             return response;
         }
 
@@ -129,17 +130,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Insert(TEntity entity)
         {
-            //***
-            //*** update the state of the entity
-            //***
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                _dbSet.Attach(entity);
-            }
-            //***
-            //*** Add the entity
-            //***
-            _context.Entry(entity).State = EntityState.Added;
+            _dbSet.Add(entity);
         }
 
         public virtual void Insert(IEnumerable<TEntity> entities)
@@ -147,10 +138,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Add multiple entities
             //***
-            foreach (var item in entities)
-            {
-                this.Insert(item);
-            }
+            _dbSet.AddRangeAsync(entities);
         }
 
         public virtual Task InsertAsync(IEnumerable<TEntity> entities)
@@ -258,7 +246,7 @@ namespace Crystal.EntityFrameworkCore
             _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public virtual Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
+        public virtual Task<TEntity[]> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
             string includeProperties = "")
         {
             return Task.FromResult(GetAll(filter, includeProperties));

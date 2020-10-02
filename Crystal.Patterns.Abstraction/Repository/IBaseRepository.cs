@@ -18,7 +18,7 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         /// <param name="filter">Conditions to filter the records</param>
         /// <returns></returns>
-        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");
+        TEntity[] GetAll(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");
 
         /// <summary>
         ///     Get records from the database based on  input parameters
@@ -26,7 +26,7 @@ namespace Crystal.Patterns.Abstraction
         /// <param name="filter">Conditions to filter the records</param>
         /// <param name="includeProperties">specify the names of the properties that needs to be added to the entity</param>
         /// <returns></returns>
-        Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
+        Task<TEntity[]> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
             string includeProperties = "");
 
         /// <summary>

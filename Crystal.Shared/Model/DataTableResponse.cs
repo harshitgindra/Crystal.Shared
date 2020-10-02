@@ -22,7 +22,7 @@ namespace Crystal.Shared.Model
         /// The data to be displayed in the table. This is an array of data source objects, one for each row, which will be used by DataTables.
         /// </summary>
         [JsonProperty("aaData")]
-        public List<TEntity> Data { get; set; }
+        public TEntity[] Data { get; set; }
 
         /// <summary>
         /// Total records, before filtering (i.e. the total number of records in the database)

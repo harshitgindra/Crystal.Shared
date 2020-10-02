@@ -14,13 +14,13 @@ namespace Crystal.XamForms.Shared.Extension
             return self;
         }
 
-        public static TItem SetMargin2<TItem>(this View self, int margin) where TItem : class
+        public static TItem SetMargin<TItem>(this View self, int margin) where TItem : class
         {
             self.Margin = margin;
             return self as TItem;
         }
 
-        public static TItem SetMargin2<TItem>(this View self, Thickness margin) where TItem : class
+        public static TItem SetMargin<TItem>(this View self, Thickness margin) where TItem : class
         {
             self.Margin = margin;
             return self as TItem;
