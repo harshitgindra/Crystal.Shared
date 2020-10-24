@@ -30,12 +30,6 @@ namespace Crystal.EntityFrameworkCore
             this.DbContext.Transaction = DbContext.Database.BeginTransaction();
         }
 
-        [Obsolete]
-        public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
-        {
-            return instance ??= new BaseRepository<TEntity>(this.DbContext);
-        }
-
         public void Commit()
         {
             DbContext.Commit();

@@ -12,20 +12,33 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using AutoMapper.QueryableExtensions;
+using AutoMapper;
 
 #endregion
 
 namespace Crystal.EntityFrameworkCore
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+        where TEntity : class
     {
         private readonly DbSet<TEntity> _dbSet;
         private readonly DbContext _context;
         private readonly IDbContextTransaction _transaction;
+        private readonly MapperConfiguration _mapperConfiguration;
+        private readonly IMapper _mapper;
 
         public BaseRepository(DbContext context)
         {
             _context = context;
+            _dbSet = context.Set<TEntity>();
+        }
+
+        public BaseRepository(DbContext context, MapperConfiguration mapperConfiguration)
+        {
+            _context = context;
+            _mapperConfiguration = mapperConfiguration;
+            _mapper = _mapperConfiguration?.CreateMapper();
             _dbSet = context.Set<TEntity>();
         }
 
@@ -50,6 +63,28 @@ namespace Crystal.EntityFrameworkCore
             }
 
             return query.ToArray();
+        }
+
+        public virtual TModel[] GetAll<TModel>(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "")
+        {
+            if (_mapper != null)
+            {
+                var query = _dbSet.AsNoTracking();
+
+                if (filter != null) query = query.Where(filter);
+
+                if (!string.IsNullOrEmpty(includeProperties))
+                {
+                    query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query,
+                        (current, includeProperty) => current.Include(includeProperty));
+                }
+
+                return query.ProjectTo<TModel>(_mapperConfiguration).ToArray();
+            }
+            else
+            {
+                throw new MapperNotConfiguredException();
+            }
         }
 
         public virtual bool Any(Expression<Func<TEntity, bool>> filter)
@@ -81,9 +116,10 @@ namespace Crystal.EntityFrameworkCore
                     //***
                     //*** Custom where clause to filter data
                     //***
-                    query = query.GlobalFilter(request)
-                        .ColumnFilter(request);
+                    query = query.GlobalFilter(request);
                 }
+
+                query = query.ColumnFilter(request);
 
                 response.TotalRecords = query.Count();
 
@@ -120,6 +156,92 @@ namespace Crystal.EntityFrameworkCore
             response.RecordsFiltered = query.Count();
             response.Data = query.ToArray();
             return response;
+        }
+
+        public virtual DataTableResponse<TModel> GetAll<TModel>(DataTableRequest<TEntity> request) where TModel : class
+        {
+            if (_mapper != null)
+            {
+                var query = _dbSet.AsNoTracking();
+                var response = new DataTableResponse<TModel>();
+                if (request != null)
+                {
+                    if (!string.IsNullOrEmpty(request.IncludeProperties))
+                    {
+                        query = request.IncludeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+                    }
+
+                    if (request.SearchQuery != null)
+                    {
+                        query = query.Where(request.SearchQuery);
+                    }
+                    //***
+                    //*** Filter based on search content and search columns
+                    //***
+                    else if (request.Search != null && !string.IsNullOrEmpty(request.Search.Value))
+                    {
+                        //***
+                        //*** Custom where clause to filter data
+                        //***
+                        query = query.GlobalFilter(request);
+                    }
+
+                    query = query.ColumnFilter(request);
+
+                    response.TotalRecords = query.Count();
+
+                    if (request.OrderByQuery != null)
+                    {
+                        query = request.OrderByQuery(query);
+                        //***
+                        //*** Skip the records from the filtered dataset
+                        //***
+                        query = query.Skip(request.Start);
+                    }
+                    else if (!request.Order.IsNullOrEmpty())
+                    {
+                        query = query.OrderBy(request);
+                        //***
+                        //*** Skip the records from the filtered dataset
+                        //***
+                        query = query.Skip(request.Start);
+                    }
+
+                    //***
+                    //*** If length is -1, return all records
+                    //***
+                    if (request.Length != -1)
+                    {
+                        //***
+                        //*** Take selected count of records from the filtered dataset
+                        //***
+                        query = query.Take(request.Length);
+                    }
+                }
+
+                response.Echo = "sEcho";
+                response.RecordsFiltered = query.Count();
+                response.Data = query.ProjectTo<TModel>(_mapperConfiguration).ToArray();
+                return response;
+            }
+            else
+            {
+                throw new MapperNotConfiguredException();
+            }
+        }
+
+        public virtual TModel Get<TModel>(object id)
+        {
+            if (_mapper != null)
+            {
+                return _mapper.Map<TModel>(_dbSet
+               .Find(id));
+            }
+            else
+            {
+                throw new MapperNotConfiguredException();
+            }
         }
 
         public virtual TEntity Get(object id)
@@ -246,6 +368,12 @@ namespace Crystal.EntityFrameworkCore
             _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
+        public virtual Task<TModel[]> GetAllAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
+           string includeProperties = "")
+        {
+            return Task.FromResult(GetAll<TModel>(filter, includeProperties));
+        }
+
         public virtual Task<TEntity[]> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
             string includeProperties = "")
         {
@@ -257,9 +385,19 @@ namespace Crystal.EntityFrameworkCore
             return Task.FromResult(Any(filter));
         }
 
+        public virtual Task<DataTableResponse<TModel>> GetAllAsync<TModel>(DataTableRequest<TEntity> request) where TModel : class
+        {
+            return Task.FromResult(GetAll<TModel>(request));
+        }
+
         public virtual Task<DataTableResponse<TEntity>> GetAllAsync(DataTableRequest<TEntity> request)
         {
             return Task.FromResult(GetAll(request));
+        }
+
+        public virtual Task<TModel> GetAsync<TModel>(object id)
+        {
+            return Task.FromResult(this.Get<TModel>(id));
         }
 
         public virtual Task<TEntity> GetAsync(object id)
@@ -328,6 +466,11 @@ namespace Crystal.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
+        public Task<TModel> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
+        {
+            return Task.FromResult(this.Get<TModel>(filter, includeProperties));
+        }
+
         public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
         {
             return Task.FromResult(this.Get(filter, includeProperties));
@@ -336,6 +479,12 @@ namespace Crystal.EntityFrameworkCore
         public TEntity Get(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
         {
             return this.GetAll(filter, includeProperties)
+                .FirstOrDefault();
+        }
+
+        public TModel Get<TModel>(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
+        {
+            return this.GetAll<TModel>(filter, includeProperties)
                 .FirstOrDefault();
         }
 

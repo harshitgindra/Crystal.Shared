@@ -39,13 +39,5 @@ namespace Crystal.Patterns.Abstraction
         /// Rollback the transaction
         /// </summary>
         Task RollbackAsync();
-
-        /// <summary>
-        /// Get IBaseRepository instance
-        /// </summary>
-        /// <param name="instance"></param>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
-        IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class;
     }
 }

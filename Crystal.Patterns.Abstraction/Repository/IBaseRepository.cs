@@ -3,7 +3,6 @@
 using Crystal.Shared.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -11,17 +10,25 @@ using System.Threading.Tasks;
 
 namespace Crystal.Patterns.Abstraction
 {
-    public interface IBaseRepository<TEntity>: IDisposable where TEntity : class
+    public interface IBaseRepository<TEntity> : IDisposable
+        where TEntity : class
     {
         /// <summary>
-        ///     Get records from the database based on  input parameters
+        /// Get records from the database based on  input parameters
         /// </summary>
         /// <param name="filter">Conditions to filter the records</param>
         /// <returns></returns>
         TEntity[] GetAll(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");
 
         /// <summary>
-        ///     Get records from the database based on  input parameters
+        /// Get records from the database based on  input parameters and map to TModel
+        /// </summary>
+        /// <param name="filter">Conditions to filter the records</param>
+        /// <returns></returns>
+        TModel[] GetAll<TModel>(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");
+
+        /// <summary>
+        /// Get records from the database based on  input parameters
         /// </summary>
         /// <param name="filter">Conditions to filter the records</param>
         /// <param name="includeProperties">specify the names of the properties that needs to be added to the entity</param>
@@ -30,32 +37,77 @@ namespace Crystal.Patterns.Abstraction
             string includeProperties = "");
 
         /// <summary>
-        ///     Fetchs the record from the database based on unique identifier
+        /// Get records from the database based on input parameters and maps to TModel
+        /// </summary>
+        /// <param name="filter">Conditions to filter the records</param>
+        /// <param name="includeProperties">specify the names of the properties that needs to be added to the entity</param>
+        /// <returns></returns>
+        Task<TModel[]> GetAllAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
+            string includeProperties = "");
+
+        /// <summary>
+        ///  Fetchs the record from the database based on unique identifier
         /// </summary>
         /// <param name="id">Unique identifier of the table</param>
         /// <returns>Entity record</returns>
         TEntity Get(object id);
 
         /// <summary>
-        ///     Fetchs the record from the database based on unique identifier
+        /// Fetchs the record from the database based on unique identifier and maps to TModel
+        /// </summary>
+        /// <param name="id">Unique identifier of the table</param>
+        /// <returns>Entity record</returns>
+        TModel Get<TModel>(object id);
+
+        /// <summary>
+        /// Fetchs the record from the database based on unique identifier
         /// </summary>
         /// <param name="id">Unique identifier of the table</param>
         /// <returns>Entity record</returns>
         Task<TEntity> GetAsync(object id);
 
         /// <summary>
-        ///     Get records from the database based on DataTableRequest model
+        /// Fetchs the record from the database based on unique identifier and maps to TModel
+        /// </summary>
+        /// <param name="id">Unique identifier of the table</param>
+        /// <returns>Entity record</returns>
+        Task<TModel> GetAsync<TModel>(object id);
+
+        /// <summary>
+        /// Get records from the database based on DataTableRequest model and maps to TModel
+        /// </summary>
+        /// <param name="request">Datatable request with filters, columns, order details</param>
+        /// <returns>Datatable Response with filtered data and related information</returns>
+        DataTableResponse<TModel> GetAll<TModel>(DataTableRequest<TEntity> request) where TModel : class;
+
+        /// <summary>
+        /// Get records from the database based on DataTableRequest model
         /// </summary>
         /// <param name="request">Datatable request with filters, columns, order details</param>
         /// <returns>Datatable Response with filtered data and related information</returns>
         DataTableResponse<TEntity> GetAll(DataTableRequest<TEntity> request);
 
         /// <summary>
-        ///     Get records from the database based on DataTableRequest model
+        /// Get records from the database based on DataTableRequest model and maps to TModel
+        /// </summary>
+        /// <param name="request">Datatable request with filters, columns, order details</param>
+        /// <returns>Datatable Response with filtered data and related information</returns>
+        Task<DataTableResponse<TModel>> GetAllAsync<TModel>(DataTableRequest<TEntity> request) where TModel : class;
+
+        /// <summary>
+        /// Get records from the database based on DataTableRequest model
         /// </summary>
         /// <param name="request">Datatable request with filters, columns, order details</param>
         /// <returns>Datatable Response with filtered data and related information</returns>
         Task<DataTableResponse<TEntity>> GetAllAsync(DataTableRequest<TEntity> request);
+
+        /// <summary>
+        /// Get the record from the dB based on expression asynchronously and maps to TModel
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="includeProperties"></param>
+        /// <returns></returns>
+        Task<TModel> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
 
         /// <summary>
         /// Get the record from the dB based on expression asynchronously
@@ -64,6 +116,14 @@ namespace Crystal.Patterns.Abstraction
         /// <param name="includeProperties"></param>
         /// <returns></returns>
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
+
+        /// <summary>
+        /// Get the record from the dB based on expression asynchronously and maps to TModel
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="includeProperties"></param>
+        /// <returns></returns>
+        TModel Get<TModel>(Expression<Func<TEntity, bool>> filter, string includeProperties = "");
 
         /// <summary>
         /// Get the record from the dB based on expression asynchronously
@@ -156,7 +216,7 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         /// <param name="entityToUpdate">entity record to be updated</param>
         /// <returns></returns>
-        void Update(TEntity entityToUpdate); 
+        void Update(TEntity entityToUpdate);
         #endregion
 
         #region Delete methods
@@ -236,7 +296,7 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        Task BulkDeleteAsync(Expression<Func<TEntity, bool>> filter); 
+        Task BulkDeleteAsync(Expression<Func<TEntity, bool>> filter);
         #endregion
 
         /// <summary>
