@@ -1,45 +1,39 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
-        <Title>Crystal.EntityFramework</Title>
-        <Authors>Harshit Gindra</Authors>
-        <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
-        <Copyright>Harshit Gindra</Copyright>
-        <Version>1.3.0.12</Version>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
-        <PackOnBuild>true</PackOnBuild>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <Compile Remove="Entity\**" />
-      <EmbeddedResource Remove="Entity\**" />
-      <None Remove="Entity\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="10.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="3.0.96" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
-      <ProjectReference Include="..\Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj" />
-    </ItemGroup>
-
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Title>Crystal.EntityFramework</Title>
+    <Authors>Harshit Gindra</Authors>
+    <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
+    <Copyright>Harshit Gindra</Copyright>
+    <Version>1.4.1.14</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
+    <PackOnBuild>true</PackOnBuild>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Entity\**" />
+    <EmbeddedResource Remove="Entity\**" />
+    <None Remove="Entity\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="3.0.96" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
+    <ProjectReference Include="..\Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
   </PropertyGroup>
-
 </Project>
