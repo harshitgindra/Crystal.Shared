@@ -45,5 +45,11 @@ namespace Crystal.XamForms.Shared.Extension
             self.FontFamily = fontFamily;
             return self;
         }
+
+        public static Label SetTextColor(this Label self, Color color)
+        {
+            self.TextColor = color;
+            return self;
+        }
     }
 }
