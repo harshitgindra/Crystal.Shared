@@ -1,6 +1,5 @@
 ﻿using Crystal.Shared.Model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
@@ -11,8 +10,7 @@ namespace Crystal.Shared.Decorator
     {
         private static readonly string _orCondition = " || ";
 
-        public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> query,
-            DataTableRequest<TEntity> request)
+        public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> query, DataTableRequest<TEntity> request)
         {
             //***
             //*** Get the property name based on column name
@@ -33,9 +31,9 @@ namespace Crystal.Shared.Decorator
             return query;
         }
 
-        public static IQueryable<TItem> GlobalFilter<TItem>(this IQueryable<TItem> query,
-            DataTableRequest<TItem> request)
-            where TItem : class
+        public static IQueryable<TEntity> GlobalFilter<TEntity>(this IQueryable<TEntity> query,
+            DataTableRequest<TEntity> request)
+            where TEntity : class
         {
             if (!string.IsNullOrEmpty(request?.Search?.Value))
             {
@@ -48,7 +46,7 @@ namespace Crystal.Shared.Decorator
                     //***
                     //*** Fetching where clause depending on different data types
                     //***
-                    var whrString = WhereQueryBuilder<TItem>(column.Data);
+                    var whrString = WhereQueryBuilder<TEntity>(column.Data, request.Search.Value);
 
                     if (!string.IsNullOrEmpty(whereQuery) && !string.IsNullOrEmpty(whrString))
                     {
@@ -80,26 +78,30 @@ namespace Crystal.Shared.Decorator
             DataTableRequest<TEntity> request)
             where TEntity : class
         {
-            //***
-            //*** Prepare the query
-            //*** 
-            foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value)))
+            if (request != null && !request.Columns.IsNullOrEmpty())
             {
                 //***
-                //*** Fetching where clause depending on different data types
-                //***
-                var whereQuery = WhereQueryBuilder<TEntity>(column.Data, column.Search.Value);
-
-                if (!string.IsNullOrEmpty(whereQuery))
+                //*** Prepare the query
+                //*** 
+                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value)))
                 {
                     //***
-                    //*** Appending to existing where query
+                    //*** Fetching where clause depending on different data types
                     //***
-                    query = query.Where(whereQuery, column.Search.Value.ToLower());
+                    var whereQuery = WhereQueryBuilder<TEntity>(column.Data, column.Search.Value);
+
+                    if (!string.IsNullOrEmpty(whereQuery))
+                    {
+                        //***
+                        //*** Appending to existing where query
+                        //***
+                        query = query.Where(whereQuery, column.Search.Value);
+                    }
                 }
             }
 
             return query;
+
         }
 
         private static string WhereQueryBuilder<TEntity>(string field, string value = "")
@@ -107,29 +109,66 @@ namespace Crystal.Shared.Decorator
             var propertyInfo = typeof(TEntity).GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
             if (propertyInfo != null)
             {
-                var typeCode = Type.GetTypeCode(propertyInfo.PropertyType);
-                switch (typeCode)
+                var typeCode = propertyInfo.PropertyType;
+                if (typeCode == typeof(string))
                 {
-                    case TypeCode.String:
-                        return $"{field}.ToLower().Contains(@0)";
-                    case TypeCode.Boolean:
-                        return $"{field} == @0";
-                    case TypeCode.Int16:
-                    case TypeCode.Int32:
-                    case TypeCode.Int64:
-                    case TypeCode.UInt16:
-                    case TypeCode.UInt32:
-                    case TypeCode.UInt64:
-                        return $"{field}.ToString().Contains(@0)";
-                    case TypeCode.DateTime:
-                        if (DateTime.TryParse(value, out var _))
+                    return $"{field}.ToLower().Contains(@0)";
+                }
+                else if (typeCode == typeof(bool))
+                {
+                    return $"{field} == @0";
+                }
+                else if (typeCode == typeof(bool?))
+                {
+                    return $"{field}.HasValue && {field}.Value == @0";
+                }
+                else if (typeCode == typeof(int))
+                {
+                    return $"{field}.ToString().Contains(@0)";
+                }
+                else if (typeCode == typeof(int?))
+                {
+                    return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                }
+                else if (typeCode == typeof(DateTime))
+                {
+                    //***
+                    //*** Check for range
+                    //*** Eg. 09/01/2020 - 10/13/2020
+                    if (value.Contains(" - "))
+                    {
+                        var dates = value.Split(" - ");
+                        if (DateTime.TryParse(dates[0], out var startDate)
+                            && DateTime.TryParse(dates[1], out var endDate))
                         {
-                            return $"{field}.ToShortDateString() == Convert.ToDateTime(@0).ToShortDateString()";
+                            return $"{field} >= Convert.ToDateTime(\"{startDate}\")" +
+                                   $" && {field}.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
                         }
-
-                        return "";
-
-                        // todo: DateTime, float, double, decimals, and other types.
+                    }
+                    else if (DateTime.TryParse(value, out var date))
+                    {
+                        return $"{field}.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
+                    }
+                }
+                else if (typeCode == typeof(DateTime?))
+                {
+                    //***
+                    //*** Check for range
+                    //*** Eg. 09/01/2020 - 10/13/2020
+                    if (value.Contains(" - "))
+                    {
+                        var dates = value.Split(" - ");
+                        if (DateTime.TryParse(dates[0], out var startDate)
+                            && DateTime.TryParse(dates[1], out var endDate))
+                        {
+                            return $"{field}.HasValue && {field}.Value >= Convert.ToDateTime(\"{startDate}\")" +
+                                   $" && {field}.Value.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
+                        }
+                    }
+                    else if (DateTime.TryParse(value, out var date))
+                    {
+                        return $"{field}.HasValue && {field}.Value.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
+                    }
                 }
             }
             else
@@ -139,7 +178,7 @@ namespace Crystal.Shared.Decorator
                 //***
             }
 
-            return string.Empty;
+            return "";
         }
     }
 }
