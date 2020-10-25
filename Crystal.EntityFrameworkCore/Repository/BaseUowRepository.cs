@@ -23,6 +23,12 @@ namespace Crystal.EntityFrameworkCore
             }
         }
 
+        public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
+        {
+            return instance ??= new BaseRepository<TEntity>(this.DbContext);
+        }
+
+
         public BaseContext DbContext { get; }
 
         public void BeginTransaction()

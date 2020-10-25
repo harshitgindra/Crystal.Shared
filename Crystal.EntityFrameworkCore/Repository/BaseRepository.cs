@@ -260,7 +260,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Add multiple entities
             //***
-            _dbSet.AddRangeAsync(entities);
+            _dbSet.AddRange(entities);
         }
 
         public virtual Task InsertAsync(IEnumerable<TEntity> entities)

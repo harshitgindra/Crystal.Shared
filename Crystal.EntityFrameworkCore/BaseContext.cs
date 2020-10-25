@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
 using System.Threading.Tasks;
 
 namespace Crystal.EntityFrameworkCore
@@ -27,9 +28,8 @@ namespace Crystal.EntityFrameworkCore
         {
             var returnValue = base.SaveChanges();
             Transaction?.Commit();
-            var entityEntries = this.ChangeTracker.Entries();
 
-            foreach (var entityEntry in entityEntries)
+            foreach (var entityEntry in this.ChangeTracker.Entries())
             {
                 entityEntry.State = EntityState.Detached;
             }
@@ -51,9 +51,8 @@ namespace Crystal.EntityFrameworkCore
         {
             this.BulkSaveChanges();
             Transaction?.Commit();
-            var entityEntries = this.ChangeTracker.Entries();
 
-            foreach (var entityEntry in entityEntries)
+            foreach (var entityEntry in this.ChangeTracker.Entries())
             {
                 entityEntry.State = EntityState.Detached;
             }

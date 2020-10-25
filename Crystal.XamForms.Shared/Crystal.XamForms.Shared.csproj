@@ -8,7 +8,7 @@
     <Description>Extension and Utility methods of using Xamarin View Elements in a structured way with the use of MVVMCROSS and its dependency injection library.</Description>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
-    <Version>1.4.1.14</Version>
+    <Version>1.4.3.0</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
