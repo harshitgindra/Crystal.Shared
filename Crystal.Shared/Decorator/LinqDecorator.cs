@@ -83,7 +83,7 @@ namespace Crystal.Shared.Decorator
                 //***
                 //*** Prepare the query
                 //*** 
-                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value)))
+                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value) && !string.IsNullOrEmpty(x.Data)))
                 {
                     //***
                     //*** Fetching where clause depending on different data types
