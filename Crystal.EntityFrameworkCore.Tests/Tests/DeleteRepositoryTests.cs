@@ -43,23 +43,6 @@ namespace Crystal.EntityFrameworkCore.Tests
         }
 
         #region Delete tests
-        [Test]
-        [Category("Delete")]
-        public void DeleteData()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Delete method is called
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.Delete(record.OrderId);
-            DbContext.Commit();
-            //***
-            //*** Record should be deleted
-            //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
 
         [Test]
         [Category("Delete")]
@@ -77,33 +60,6 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             Assert.IsNull(DbContext.Orders.Find(record.OrderId));
             Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
-        [Test]
-        [Category("Delete")]
-        public void DeleteDataWhenRecordNotExist()
-        {
-            try
-            {
-                var record = _testOrders.First();
-                //***
-                //*** When Delete method is called
-                //***
-                using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-                uowRepo.Delete(99);
-                DbContext.Commit();
-                //***
-                //*** Then: Test failed if Exception not generated
-                //***
-                Assert.IsNotNull(DbContext.Orders.Find(record.OrderId));
-            }
-            catch
-            {
-                //***
-                //*** Then: Exception generated, test passed
-                //***
-                Assert.Pass("Exception generated as record not found");
-            }
         }
 
         [Test]
@@ -139,24 +95,6 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Delete")]
-        public void DeleteDataExpression()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Delete method is called with an expression
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.Delete(x => x.OrderId == record.OrderId);
-            DbContext.Commit();
-            //***
-            //*** Record should be deleted
-            //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
-        [Test]
-        [Category("Delete")]
         public async Task DeleteDataExpressionAsync()
         {
             var record = _testOrders.First();
@@ -171,23 +109,6 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             Assert.IsNull(DbContext.Orders.Find(record.OrderId));
             Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
-        [Test]
-        [Category("Delete")]
-        public void DeleteAllData()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Delete all method is called
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.DeleteAll();
-            DbContext.Commit();
-            //***
-            //*** All Records should be deleted
-            //***
-            Assert.AreEqual(0, DbContext.Orders.Count());
         }
 
         [Test]
@@ -209,79 +130,61 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         #endregion
 
-        #region Bulk delete tests
+        //#region Bulk delete tests
 
-        [Test]
-        [Category("Delete")]
-        public void BulkDeleteAllData()
-        {
-            //***
-            //*** When Delete all method is called
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.BulkDelete();
-            //***
-            //*** All Records should be deleted
-            //***
-            Assert.AreEqual(0, DbContext.Orders.Count());
-        }
+        //[Test]
+        //[Category("Delete")]
+        //public void BulkDeleteAllData()
+        //{
+        //    //***
+        //    //*** When Delete all method is called
+        //    //***
+        //    using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+        //    uowRepo.BulkDelete();
+        //    //***
+        //    //*** All Records should be deleted
+        //    //***
+        //    Assert.AreEqual(0, DbContext.Orders.Count());
+        //}
 
-        [Test]
-        [Category("Delete")]
-        public void BulkDeleteDataWithExpression()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Bulk Delete method is called with an expression
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.BulkDelete(x => x.OrderId == record.OrderId);
-            DbContext.Commit();
-            //***
-            //*** Record should be deleted
-            //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
+        //[Test]
+        //[Category("Delete")]
+        //public void BulkDeleteDataWithExpression()
+        //{
+        //    var record = _testOrders.First();
+        //    //***
+        //    //*** When Bulk Delete method is called with an expression
+        //    //***
+        //    using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+        //    uowRepo.BulkDelete(x => x.OrderId == record.OrderId);
+        //    DbContext.Commit();
+        //    //***
+        //    //*** Record should be deleted
+        //    //***
+        //    Assert.IsNull(DbContext.Orders.Find(record.OrderId));
+        //    Assert.AreNotEqual(0, DbContext.Orders.Count());
+        //}
 
-        [Test]
-        [Category("Delete")]
-        public void BulkDeleteDataWithExpressionAsync()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Bulk Delete method is called with an expression
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.BulkDeleteAsync(x => x.OrderId == record.OrderId);
-            DbContext.Commit();
-            //***
-            //*** Record should be deleted
-            //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-        #endregion
+        //[Test]
+        //[Category("Delete")]
+        //public void BulkDeleteDataWithExpressionAsync()
+        //{
+        //    var record = _testOrders.First();
+        //    //***
+        //    //*** When Bulk Delete method is called with an expression
+        //    //***
+        //    using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+        //    uowRepo.BulkDeleteAsync(x => x.OrderId == record.OrderId);
+        //    DbContext.Commit();
+        //    //***
+        //    //*** Record should be deleted
+        //    //***
+        //    Assert.IsNull(DbContext.Orders.Find(record.OrderId));
+        //    Assert.AreNotEqual(0, DbContext.Orders.Count());
+        //}
+        //#endregion
 
         #region Delete tests
-        [Test]
-        [Category("Delete")]
-        public void DeleteDataBulkSaveChanges()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Delete method is called
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.Delete(record.OrderId);
-            DbContext.CommitBulkChanges();
-            //***
-            //*** Record should be deleted
-            //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
         [Test]
         [Category("Delete")]
         public async Task DeleteDataAsyncBulkSaveChanges()
@@ -298,33 +201,6 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             Assert.IsNull(DbContext.Orders.Find(record.OrderId));
             Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
-        [Test]
-        [Category("Delete")]
-        public void DeleteDataWhenRecordNotExistBulkSaveChanges()
-        {
-            try
-            {
-                var record = _testOrders.First();
-                //***
-                //*** When Delete method is called
-                //***
-                using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-                uowRepo.Delete(99);
-                DbContext.CommitBulkChanges();
-                //***
-                //*** Then: Test failed if Exception not generated
-                //***
-                Assert.IsNotNull(DbContext.Orders.Find(record.OrderId));
-            }
-            catch
-            {
-                //***
-                //*** Then: Exception generated, test passed
-                //***
-                Assert.Pass("Exception generated as record not found");
-            }
         }
 
         [Test]
@@ -360,24 +236,6 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Delete")]
-        public void DeleteDataExpressionBulkSaveChanges()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Delete method is called with an expression
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.Delete(x => x.OrderId == record.OrderId);
-            DbContext.CommitBulkChanges();
-            //***
-            //*** Record should be deleted
-            //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
-        [Test]
-        [Category("Delete")]
         public async Task DeleteDataExpressionBulkSaveChangesAsync()
         {
             var record = _testOrders.First();
@@ -392,23 +250,6 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             Assert.IsNull(DbContext.Orders.Find(record.OrderId));
             Assert.AreNotEqual(0, DbContext.Orders.Count());
-        }
-
-        [Test]
-        [Category("Delete")]
-        public void DeleteAllDataBulkSaveChanges()
-        {
-            var record = _testOrders.First();
-            //***
-            //*** When Delete all method is called
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            uowRepo.DeleteAll();
-            DbContext.CommitBulkChanges();
-            //***
-            //*** All Records should be deleted
-            //***
-            Assert.AreEqual(0, DbContext.Orders.Count());
         }
 
         [Test]

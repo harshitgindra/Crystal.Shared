@@ -1,19 +1,18 @@
 ﻿#region USING
 
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Crystal.Patterns.Abstraction;
 using Crystal.Shared.Decorator;
 using Crystal.Shared.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using AutoMapper.QueryableExtensions;
-using AutoMapper;
 
 #endregion
 
@@ -22,7 +21,7 @@ namespace Crystal.EntityFrameworkCore
     public class BaseRepository<TEntity> : IBaseRepository<TEntity>
         where TEntity : class
     {
-        private readonly DbSet<TEntity> _dbSet;
+        public DbSet<TEntity> DbSet { get; }
         private readonly DbContext _context;
         private readonly IDbContextTransaction _transaction;
         private readonly MapperConfiguration _mapperConfiguration;
@@ -31,7 +30,7 @@ namespace Crystal.EntityFrameworkCore
         public BaseRepository(DbContext context)
         {
             _context = context;
-            _dbSet = context.Set<TEntity>();
+            DbSet = context.Set<TEntity>();
         }
 
         public BaseRepository(DbContext context, MapperConfiguration mapperConfiguration)
@@ -39,62 +38,143 @@ namespace Crystal.EntityFrameworkCore
             _context = context;
             _mapperConfiguration = mapperConfiguration;
             _mapper = _mapperConfiguration?.CreateMapper();
-            _dbSet = context.Set<TEntity>();
+            DbSet = context.Set<TEntity>();
         }
 
-        public BaseRepository(DbContext context, IDbContextTransaction transaction)
+        public virtual Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes)
         {
-            _context = context;
-            _dbSet = context.Set<TEntity>();
-            _transaction = transaction;
+            IQueryable<TEntity> query = DbSet.AsNoTracking();
+
+            foreach (Expression<Func<TEntity, object>> include in includes)
+                query = query.Include(include);
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            return Task.FromResult(query.ToList());
         }
 
-        public virtual TEntity[] GetAll(Expression<Func<TEntity, bool>> filter = null,
-            string includeProperties = "")
+        public virtual Task<List<TModel>> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
+    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+    params Expression<Func<TEntity, object>>[] includes)
         {
-            var query = _dbSet.AsNoTracking();
-
-            if (filter != null) query = query.Where(filter);
-
-            if (!string.IsNullOrEmpty(includeProperties))
+            if (_mapperConfiguration == null)
             {
-                query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query,
-                    (current, includeProperty) => current.Include(includeProperty));
-            }
-
-            return query.ToArray();
-        }
-
-        public virtual TModel[] GetAll<TModel>(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "")
-        {
-            if (_mapper != null)
-            {
-                var query = _dbSet.AsNoTracking();
-
-                if (filter != null) query = query.Where(filter);
-
-                if (!string.IsNullOrEmpty(includeProperties))
-                {
-                    query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(query,
-                        (current, includeProperty) => current.Include(includeProperty));
-                }
-
-                return query.ProjectTo<TModel>(_mapperConfiguration).ToArray();
+                throw new Exception("Automapper not configured");
             }
             else
             {
-                throw new MapperNotConfiguredException();
+                IQueryable<TEntity> query = DbSet.AsNoTracking();
+
+                foreach (Expression<Func<TEntity, object>> include in includes)
+                    query = query.Include(include);
+
+                if (filter != null)
+                    query = query.Where(filter);
+
+                if (orderBy != null)
+                    query = orderBy(query);
+
+                return Task.FromResult(query.ProjectTo<TModel>(_mapperConfiguration).ToList());
             }
         }
 
-        public virtual bool Any(Expression<Func<TEntity, bool>> filter)
+        public virtual Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
-            return _dbSet.AsNoTracking().Any(filter);
+            IQueryable<TEntity> query = DbSet.AsNoTracking();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return Task.FromResult(query);
         }
 
-        public virtual DataTableResponse<TEntity> GetAll(DataTableRequest<TEntity> request)
+        public virtual Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
+    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
-            var query = _dbSet.AsNoTracking();
+            if (_mapperConfiguration == null)
+            {
+                throw new Exception("Automapper not configured");
+            }
+            else
+            {
+                IQueryable<TEntity> query = DbSet.AsNoTracking();
+
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+
+                if (orderBy != null)
+                {
+                    query = orderBy(query);
+                }
+
+                Task.FromResult(query.ProjectTo<TModel>(_mapperConfiguration));
+            }
+            return null;
+        }
+
+        public virtual Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null,
+            params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = DbSet.AsNoTracking();
+
+            foreach (Expression<Func<TEntity, object>> include in includes)
+                query = query.Include(include);
+
+            return Task.FromResult(query.FirstOrDefault(filter));
+        }
+
+        public virtual Task<TModel> GetFirstOrDefaultAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
+            params Expression<Func<TEntity, object>>[] includes)
+        {
+            if (_mapperConfiguration == null)
+            {
+                throw new Exception("Automapper not configured");
+            }
+            else
+            {
+                IQueryable<TEntity> query = DbSet.AsNoTracking();
+
+                foreach (Expression<Func<TEntity, object>> include in includes)
+                    query = query.Include(include);
+
+                return Task.FromResult(_mapperConfiguration
+                    .CreateMapper()
+                    .Map<TModel>(query.FirstOrDefault(filter)));
+            }
+        }
+
+
+        public virtual Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter == null)
+            {
+                return Task.FromResult(DbSet.AsNoTracking().Any());
+            }
+            else
+            {
+                return Task.FromResult(DbSet.AsNoTracking().Any(filter));
+            }
+        }
+
+        public virtual Task<DataTableResponse<TEntity>> GetAsync(DataTableRequest<TEntity> request)
+        {
+            var query = DbSet.AsNoTracking();
             var response = new DataTableResponse<TEntity>();
             if (request != null)
             {
@@ -155,14 +235,14 @@ namespace Crystal.EntityFrameworkCore
             response.Echo = "sEcho";
             response.RecordsFiltered = query.Count();
             response.Data = query.ToArray();
-            return response;
+            return Task.FromResult(response);
         }
 
-        public virtual DataTableResponse<TModel> GetAll<TModel>(DataTableRequest<TEntity> request) where TModel : class
+        public virtual Task<DataTableResponse<TModel>> GetAsync<TModel>(DataTableRequest<TEntity> request) where TModel : class
         {
             if (_mapper != null)
             {
-                var query = _dbSet.AsNoTracking();
+                var query = DbSet.AsNoTracking();
                 var response = new DataTableResponse<TModel>();
                 if (request != null)
                 {
@@ -223,7 +303,7 @@ namespace Crystal.EntityFrameworkCore
                 response.Echo = "sEcho";
                 response.RecordsFiltered = query.Count();
                 response.Data = query.ProjectTo<TModel>(_mapperConfiguration).ToArray();
-                return response;
+                return Task.FromResult(response);
             }
             else
             {
@@ -231,36 +311,27 @@ namespace Crystal.EntityFrameworkCore
             }
         }
 
-        public virtual TModel Get<TModel>(object id)
+        public virtual Task<TEntity> FindAsync(object id)
         {
-            if (_mapper != null)
+            return Task.FromResult(DbSet.Find(id));
+        }
+
+        public virtual Task<TModel> FindAsync<TModel>(object id)
+        {
+            if (_mapperConfiguration == null)
             {
-                return _mapper.Map<TModel>(_dbSet
-               .Find(id));
+                throw new Exception("Automapper not configured");
             }
             else
             {
-                throw new MapperNotConfiguredException();
+                return Task.FromResult(_mapperConfiguration.CreateMapper().Map<TModel>(DbSet.Find(id)));
             }
         }
 
-        public virtual TEntity Get(object id)
+        public virtual Task InsertAsync(TEntity entity)
         {
-            return _dbSet
-                .Find(id);
-        }
-
-        public virtual void Insert(TEntity entity)
-        {
-            _dbSet.Add(entity);
-        }
-
-        public virtual void Insert(IEnumerable<TEntity> entities)
-        {
-            //***
-            //*** Add multiple entities
-            //***
-            _dbSet.AddRange(entities);
+            DbSet.Add(entity);
+            return Task.CompletedTask;
         }
 
         public virtual Task InsertAsync(IEnumerable<TEntity> entities)
@@ -268,237 +339,97 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Add multiple entities
             //***
-            this.Insert(entities);
+            DbSet.AddRange(entities);
             return Task.CompletedTask;
         }
 
-        public virtual void BulkInsert(IEnumerable<TEntity> entities)
+        public virtual void BulkInsertAsync(IEnumerable<TEntity> entities)
         {
             //***
             //*** Add multiple entities
             //***
-            _dbSet.BulkInsert(entities);
+            DbSet.BulkInsert(entities);
         }
 
-        public virtual void Delete(object id)
+        public virtual async Task DeleteAsync(object id)
         {
             //***
             //*** find the entity and delete it
             //***
-            Delete(_dbSet.Find(id));
+            await this.DeleteAsync(DbSet.Find(id));
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public virtual Task DeleteAsync(TEntity entityToDelete)
         {
             //***
             //*** update the state of the entity
             //***
             if (_context.Entry(entityToDelete).State == EntityState.Detached)
             {
-                _dbSet.Attach(entityToDelete);
+                DbSet.Attach(entityToDelete);
             }
             //***
             //*** Remove the entity
             //***
             _context.Entry(entityToDelete).State = EntityState.Deleted;
+            return Task.CompletedTask;
         }
 
-        public virtual void BulkDeleteAll()
+        public virtual void BulkDeleteAllAsync()
         {
             //***
             //*** Bulk delete
             //***
-            _dbSet.BulkDelete(_dbSet);
+            DbSet.BulkDelete(DbSet);
         }
 
-        public virtual void DeleteAll()
+        public virtual Task DeleteAllAsync()
         {
             //***
             //*** Delete all entities
             //***
-            _dbSet.RemoveRange(_dbSet);
+            DbSet.RemoveRange(DbSet);
+            return Task.CompletedTask;
         }
 
-        public virtual void BulkDelete()
+        public virtual void BulkDeleteAsync()
         {
             //***
             //*** Bulk Delete all entities
             //***
-            _dbSet.BulkDelete(_dbSet);
+            DbSet.BulkDelete(DbSet);
         }
 
-        public virtual Task BulkDeleteAsync()
-        {
-            //***
-            //*** Bulk Delete all entities
-            //***
-            this.BulkDelete();
-            return Task.CompletedTask;
-        }
-
-        public virtual void BulkDelete(Expression<Func<TEntity, bool>> filter)
+        public virtual void BulkDeleteAsync(Expression<Func<TEntity, bool>> filter)
         {
             //***
             //*** Bulk Delete entities
             //***
-            _dbSet.BulkDelete(_dbSet.Where(filter));
+            DbSet.BulkDelete(DbSet.Where(filter));
         }
 
-        public virtual Task BulkDeleteAsync(Expression<Func<TEntity, bool>> filter)
-        {
-            //***
-            //*** Bulk Delete entities
-            //***
-            this.BulkDelete(filter);
-            return Task.CompletedTask;
-        }
-
-        public virtual void Update(TEntity entityToUpdate)
+        public virtual Task UpdateAsync(TEntity entityToUpdate)
         {
             //***
             //*** update the state of the entity
             //***
             if (_context.Entry(entityToUpdate).State == EntityState.Detached)
             {
-                _dbSet.Attach(entityToUpdate);
+                DbSet.Attach(entityToUpdate);
             }
             //***
             //*** Update the entity
             //***
             _context.Entry(entityToUpdate).State = EntityState.Modified;
-        }
-
-        public virtual Task<TModel[]> GetAllAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-           string includeProperties = "")
-        {
-            return Task.FromResult(GetAll<TModel>(filter, includeProperties));
-        }
-
-        public virtual Task<TEntity[]> GetAllAsync(Expression<Func<TEntity, bool>> filter = null,
-            string includeProperties = "")
-        {
-            return Task.FromResult(GetAll(filter, includeProperties));
-        }
-
-        public virtual Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter)
-        {
-            return Task.FromResult(Any(filter));
-        }
-
-        public virtual Task<DataTableResponse<TModel>> GetAllAsync<TModel>(DataTableRequest<TEntity> request) where TModel : class
-        {
-            return Task.FromResult(GetAll<TModel>(request));
-        }
-
-        public virtual Task<DataTableResponse<TEntity>> GetAllAsync(DataTableRequest<TEntity> request)
-        {
-            return Task.FromResult(GetAll(request));
-        }
-
-        public virtual Task<TModel> GetAsync<TModel>(object id)
-        {
-            return Task.FromResult(this.Get<TModel>(id));
-        }
-
-        public virtual Task<TEntity> GetAsync(object id)
-        {
-            return Task.FromResult(this.Get(id));
-        }
-
-        public virtual Task InsertAsync(TEntity entity)
-        {
-            this.Insert(entity);
             return Task.CompletedTask;
-        }
-
-        public virtual Task BulkInsertAsync(IEnumerable<TEntity> entities)
-        {
-            this.BulkInsert(entities);
-            return Task.CompletedTask;
-        }
-
-        public virtual Task DeleteAsync(object id)
-        {
-            this.Delete(id);
-            return Task.CompletedTask;
-        }
-
-        public virtual Task DeleteAsync(TEntity entityToDelete)
-        {
-            this.Delete(entityToDelete);
-            return Task.CompletedTask;
-        }
-
-        public virtual Task DeleteAllAsync()
-        {
-            this.DeleteAll();
-            return Task.CompletedTask;
-        }
-
-        public virtual Task UpdateAsync(TEntity entityToUpdate)
-        {
-            this.Update(entityToUpdate);
-            return Task.CompletedTask;
-        }
-
-        public virtual void Update(IEnumerable<TEntity> entities)
-        {
-            foreach (var item in entities)
-            {
-                this.Update(item);
-            }
-        }
-
-        public virtual Task UpdateAsync(IEnumerable<TEntity> entities)
-        {
-            this.Update(entities);
-            return Task.CompletedTask;
-        }
-
-        public virtual void BulkUpdate(IEnumerable<TEntity> entities)
-        {
-            _dbSet.BulkUpdate(entities);
-        }
-
-        public virtual Task BulkUpdateAsync(IEnumerable<TEntity> entities)
-        {
-            this.BulkUpdate(entities);
-            return Task.CompletedTask;
-        }
-
-        public Task<TModel> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
-        {
-            return Task.FromResult(this.Get<TModel>(filter, includeProperties));
-        }
-
-        public Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
-        {
-            return Task.FromResult(this.Get(filter, includeProperties));
-        }
-
-        public TEntity Get(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
-        {
-            return this.GetAll(filter, includeProperties)
-                .FirstOrDefault();
-        }
-
-        public TModel Get<TModel>(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
-        {
-            return this.GetAll<TModel>(filter, includeProperties)
-                .FirstOrDefault();
-        }
-
-        public virtual void Delete(Expression<Func<TEntity, bool>> filter)
-        {
-            //***
-            //*** Remove/Delete the entities
-            //***
-            _dbSet.RemoveRange(_dbSet.Where(filter));
         }
 
         public virtual Task DeleteAsync(Expression<Func<TEntity, bool>> filter)
         {
-            this.Delete(filter);
+            //***
+            //*** Remove/Delete the entities
+            //***
+            DbSet.RemoveRange(DbSet.Where(filter));
             return Task.CompletedTask;
         }
 
@@ -509,6 +440,14 @@ namespace Crystal.EntityFrameworkCore
             //***
             _context?.Dispose();
             _transaction?.Dispose();
+        }
+
+        public virtual async Task UpdateAsync(IEnumerable<TEntity> entities)
+        {
+            foreach (var item in entities)
+            {
+                await this.UpdateAsync(item);
+            }
         }
     }
 }

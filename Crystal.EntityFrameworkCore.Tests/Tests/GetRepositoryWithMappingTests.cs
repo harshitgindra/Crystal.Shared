@@ -53,21 +53,6 @@ namespace Crystal.EntityFrameworkCore.Tests
 
 
         #region Get all tests
-        [Test]
-        [Category("Get")]
-        public void GetAllData()
-        {
-            //***
-            //*** When Get all method is called
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = uowRepo.GetAll<OrderDto>();
-
-            //***
-            //*** Return all records
-            //***
-            Assert.AreEqual(_testOrders.Count, response.Count());
-        }
 
         [Test]
         [Category("Get")]
@@ -77,28 +62,12 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** When Get all method is called
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = await uowRepo.GetAllAsync<OrderDto>();
+            var response = await uowRepo.GetAsync<OrderDto>();
 
             //***
             //*** Return all records
             //***
             Assert.AreEqual(_testOrders.Count, response.Count());
-        }
-
-        [Test]
-        [Category("Get")]
-        public void GetAllDataWithExpression()
-        {
-            //***
-            //*** When Get all method is called with expression
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = uowRepo.GetAll<OrderDto>(x => x.OrderId == 1);
-
-            //***
-            //*** Return selected records
-            //***
-            Assert.AreEqual(_testOrders.Count(x => x.OrderId == 1), response.Count());
         }
 
         [Test]
@@ -109,7 +78,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** When Get all method is called with expression
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = await uowRepo.GetAllAsync<OrderDto>(x => x.OrderId == 1);
+            var response = await uowRepo.GetAsync<OrderDto>(x => x.OrderId == 1);
 
             //***
             //*** Return all records
@@ -121,23 +90,6 @@ namespace Crystal.EntityFrameworkCore.Tests
         #region Get with expression tests
         [Test]
         [Category("Get")]
-        public void GetDataWithId()
-        {
-            //***
-            //*** When Get method is called with primary identifier
-            //***
-            var frstRec = _testOrders.First();
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = uowRepo.Get<OrderDto>(frstRec.OrderId);
-
-            //***
-            //*** Return 1 record
-            //***
-            Assert.AreEqual(frstRec.Name, response.OrderName);
-        }
-
-        [Test]
-        [Category("Get")]
         public async Task GetDataWithIdAsync()
         {
             //***
@@ -145,31 +97,12 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             var frstRec = _testOrders.First();
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = await uowRepo.GetAsync<OrderDto>(frstRec.OrderId);
+            var response = await uowRepo.FindAsync<OrderDto>(frstRec.OrderId);
 
             //***
             //*** Return 1 record
             //***
             Assert.AreEqual(frstRec.Name, response.OrderName);
-        }
-
-        [Test]
-        [Category("Get")]
-        public void GetDataWithIdWhenDataDoNotExist()
-        {
-            //***
-            //*** Given: Data record with id 99 do not exist
-            //***
-            //***
-            //*** When Get method is called with primary identifier
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = uowRepo.Get<OrderDto>(99);
-
-            //***
-            //*** Return null
-            //***
-            Assert.IsNull(response);
         }
 
         [Test]
@@ -183,28 +116,11 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** When Get method is called with primary identifier
             //***
             using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = await uowRepo.GetAsync<OrderDto>(99);
+            var response = await uowRepo.FindAsync<OrderDto>(99);
             //***
             //*** Return null
             //***
             Assert.IsNull(response);
-        }
-
-        [Test]
-        [Category("Get")]
-        public void GetOneRecordWithExpression()
-        {
-            //***
-            //*** When Get method is called with expression
-            //***
-            var frstRec = _testOrders.First();
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = uowRepo.Get<OrderDto>(x => x.OrderId == frstRec.OrderId);
-
-            //***
-            //*** Return 1 record
-            //***
-            Assert.AreEqual(frstRec.OrderId, response.OrderId);
         }
 
         [Test]
@@ -221,30 +137,14 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-            Assert.AreEqual(frstRec.OrderId, response.OrderId);
+            Assert.AreEqual(frstRec.OrderId, response.First().OrderId);
         }
         #endregion
 
         #region Any tests
         [Test]
         [Category("Any")]
-        public void AnyDataExist()
-        {
-            var firstRecord = _testOrders.First();
-            //***
-            //*** When Any all method is called
-            //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = uowRepo.Any(x => x.OrderId == firstRecord.OrderId);
-            //***
-            //*** Return true
-            //***
-            Assert.IsTrue(response);
-        }
-
-        [Test]
-        [Category("Any")]
-        public async Task AnyDataExistAsync()
+        public async Task AnyDataExist()
         {
             var firstRecord = _testOrders.First();
             //***
@@ -256,22 +156,6 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** Return true
             //***
             Assert.IsTrue(response);
-        }
-
-        [Test]
-        [Category("Any")]
-        public void AnyDataNotExist()
-        {
-            var firstRecord = _testOrders.First();
-            //***
-            //*** When Any all method is called
-            //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
-            var response = uowRepo.Any(x => x.OrderId == 99);
-            //***
-            //*** Return false
-            //***
-            Assert.IsFalse(response);
         }
 
         [Test]

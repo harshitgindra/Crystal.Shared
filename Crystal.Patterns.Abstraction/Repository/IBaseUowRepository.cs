@@ -6,12 +6,12 @@ namespace Crystal.Patterns.Abstraction
     public interface IBaseUowRepository : IDisposable
     {
         /// <summary>
-        ///     Commiting pending changes to the database
+        /// Commiting pending changes to the database
         /// </summary>
         void Commit();
 
         /// <summary>
-        ///     Commiting pending changes to the database
+        /// Commiting pending changes to the database
         /// </summary>
         Task CommitAsync();
 
