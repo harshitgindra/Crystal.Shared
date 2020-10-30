@@ -14,10 +14,11 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         }
 
-        public TestContext Context => (TestContext)this.DbContext;
+        public TestContext Context => (TestContext)this.Context;
     }
 
     public interface IUowRepository : IBaseUowRepository
     {
+        TestContext Context { get; }
     }
 }

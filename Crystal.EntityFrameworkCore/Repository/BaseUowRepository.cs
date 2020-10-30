@@ -1,7 +1,6 @@
 ﻿#region USING
 
 using Crystal.Patterns.Abstraction;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -13,65 +12,65 @@ namespace Crystal.EntityFrameworkCore
     {
         public BaseUowRepository(BaseContext context)
         {
-            DbContext = context;
+            Context = context;
         }
 
         public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
         {
-            return instance ??= new BaseRepository<TEntity>(this.DbContext);
+            return instance ??= new BaseRepository<TEntity>(this.Context);
         }
 
-        public BaseContext DbContext { get; }
+        public BaseContext Context { get; }
 
         public void BeginTransaction()
         {
-            if(DbContext == null)
+            if (Context == null)
             {
                 throw new NullReferenceException("Database context is not initialized");
             }
             else
             {
-                this.DbContext.Transaction = DbContext.Database.BeginTransaction();
+                this.Context.Transaction = Context.Database.BeginTransaction();
             }
         }
 
-        public void Commit()
+        public virtual void Commit()
         {
-            DbContext.Commit();
+            Context.Commit();
         }
 
-        public Task CommitAsync()
+        public virtual Task CommitAsync()
         {
             this.Commit();
             return Task.CompletedTask;
         }
 
-        public Task CommitBulkChangesAsync()
+        public virtual Task CommitBulkChangesAsync()
         {
-            this.DbContext.CommitBulkChanges();
+            this.Context.CommitBulkChanges();
             return Task.CompletedTask;
         }
 
-        public void CommitBulkChanges()
+        public virtual void CommitBulkChanges()
         {
-            this.DbContext.CommitBulkChanges();
+            this.Context.CommitBulkChanges();
         }
 
-        public void Rollback()
+        public virtual void Rollback()
         {
-            this.DbContext.Rollback();
+            this.Context.Rollback();
         }
 
-        public Task RollbackAsync()
+        public virtual Task RollbackAsync()
         {
             this.Rollback();
             return Task.CompletedTask;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
-            DbContext.Transaction?.Dispose();
-            DbContext?.Dispose();
+            Context.Transaction?.Dispose();
+            Context?.Dispose();
         }
     }
 }

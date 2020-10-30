@@ -46,13 +46,20 @@ namespace Crystal.EntityFrameworkCore
             IQueryable<TEntity> query = Entity.AsNoTracking();
 
             foreach (Expression<Func<TEntity, object>> include in includes)
+            {
                 query = query.Include(include);
 
+            }
+
             if (filter != null)
+            {
                 query = query.Where(filter);
+            }
 
             if (orderBy != null)
+            {
                 query = orderBy(query);
+            }
 
             return Task.FromResult(query.ToList());
         }
@@ -132,7 +139,9 @@ namespace Crystal.EntityFrameworkCore
             IQueryable<TEntity> query = Entity.AsNoTracking();
 
             foreach (Expression<Func<TEntity, object>> include in includes)
+            {
                 query = query.Include(include);
+            }
 
             return Task.FromResult(query.FirstOrDefault(filter));
         }
@@ -149,7 +158,9 @@ namespace Crystal.EntityFrameworkCore
                 IQueryable<TEntity> query = Entity.AsNoTracking();
 
                 foreach (Expression<Func<TEntity, object>> include in includes)
+                {
                     query = query.Include(include);
+                }
 
                 return Task.FromResult(_mapperConfiguration
                     .CreateMapper()
