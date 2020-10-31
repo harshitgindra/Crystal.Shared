@@ -1,4 +1,6 @@
-﻿using Crystal.Patterns.Abstraction;
+﻿using AutoMapper;
+using Crystal.EntityFrameworkCore.Tests.Model;
+using Crystal.Patterns.Abstraction;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,13 +11,18 @@ using System.Threading.Tasks;
 namespace Crystal.EntityFrameworkCore.Tests
 {
     [TestFixture]
-    public class GetRepositoryTests : BaseTests
+    public class GetRepositoryUowWithMappingTests : BaseTests
     {
         private List<Order> _testOrders;
+        private MapperConfiguration _mapper;
 
         [SetUp]
         public void Setup()
         {
+            _mapper = new MapperConfiguration(cfg =>
+                       cfg.CreateMap<Order, OrderDto>()
+                       .ForMember(dto => dto.OrderName, conf => conf.MapFrom(ol => ol.Name)));
+
             DbContext = new TestContext();
             //***
             //*** Clean data
@@ -42,6 +49,7 @@ namespace Crystal.EntityFrameworkCore.Tests
 
             DbContext.Orders.AddRange(_testOrders);
             DbContext.SaveChanges();
+            Uow = new UowRepository(DbContext, _mapper);
         }
 
 
@@ -49,13 +57,13 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Get")]
+        [Category("Uow")]
         public async Task GetAllDataAsync()
         {
             //***
             //*** When Get all method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            var response = await uowRepo.GetAsync();
+            var response = await Uow.Order.GetAsync<OrderDto>();
 
             //***
             //*** Return all records
@@ -65,13 +73,13 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Get")]
+        [Category("Uow")]
         public async Task GetAllDataWithExpressionAsync()
         {
             //***
             //*** When Get all method is called with expression
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            var response = await uowRepo.GetAsync(x => x.OrderId == 1);
+            var response = await Uow.Order.GetAsync<OrderDto>(x => x.OrderId == 1);
 
             //***
             //*** Return all records
@@ -81,26 +89,26 @@ namespace Crystal.EntityFrameworkCore.Tests
         #endregion
 
         #region Get with expression tests
-
         [Test]
         [Category("Get")]
+        [Category("Uow")]
         public async Task GetDataWithIdAsync()
         {
             //***
             //*** When Get method is called with primary identifier
             //***
             var frstRec = _testOrders.First();
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            var response = await uowRepo.FindAsync(frstRec.OrderId);
+            var response = await Uow.Order.FindAsync<OrderDto>(frstRec.OrderId);
 
             //***
             //*** Return 1 record
             //***
-            Assert.AreEqual(frstRec.Name, response.Name);
+            Assert.AreEqual(frstRec.Name, response.OrderName);
         }
 
         [Test]
         [Category("Get")]
+        [Category("Uow")]
         public async Task GetDataWithIdWhenDataDoNotExistAsync()
         {
             //***
@@ -109,8 +117,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Get method is called with primary identifier
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            var response = await uowRepo.FindAsync(99);
+            var response = await Uow.Order.FindAsync<OrderDto>(99);
             //***
             //*** Return null
             //***
@@ -119,34 +126,33 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Get")]
+        [Category("Uow")]
         public async Task GetOneRecordWithExpressionAsync()
         {
             //***
             //*** When Get method is called with expression
             //***
             var frstRec = _testOrders.First();
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            var response = await uowRepo.GetFirstOrDefaultAsync(x => x.OrderId == frstRec.OrderId);
+            var response = await Uow.Order.GetAsync<OrderDto>(x => x.OrderId == frstRec.OrderId);
 
             //***
             //*** Return 1 record
             //***
-            Assert.AreEqual(frstRec.OrderId, response.OrderId);
+            Assert.AreEqual(frstRec.OrderId, response.First().OrderId);
         }
         #endregion
 
         #region Any tests
-
         [Test]
         [Category("Any")]
-        public async Task AnyDataExistAsync()
+        [Category("Uow")]
+        public async Task AnyDataExist()
         {
             var firstRecord = _testOrders.First();
             //***
             //*** When Any all method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            var response = await uowRepo.AnyAsync(x => x.OrderId == firstRecord.OrderId);
+            var response = await Uow.Order.AnyAsync(x => x.OrderId == firstRecord.OrderId);
             //***
             //*** Return true
             //***
@@ -155,19 +161,19 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Any")]
+        [Category("Uow")]
         public async Task AnyDataNotExistAsync()
         {
             var firstRecord = _testOrders.First();
             //***
             //*** When Any all method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            var response = await uowRepo.AnyAsync(x => x.OrderId == 99);
+            var response = await Uow.Order.AnyAsync(x => x.OrderId == 99);
             //***
             //*** Return false
             //***
             Assert.IsFalse(response);
-        } 
+        }
         #endregion
     }
 }

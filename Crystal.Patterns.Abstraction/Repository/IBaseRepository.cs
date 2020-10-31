@@ -1,6 +1,7 @@
 #region USING
 
 using Crystal.Shared.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace Crystal.Patterns.Abstraction
     public interface IBaseRepository<TEntity> : IDisposable
         where TEntity : class
     {
+        /// <summary>
+        /// dB entity
+        /// </summary>
+        DbSet<TEntity> Entity { get; }
         /// <summary>
         /// Get records from the database based on  input parameters
         /// </summary>
@@ -42,18 +47,22 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="orderBy"></param>
+        /// <param name="includes"></param>
         /// <returns></returns>
         Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes);
         /// <summary>
         /// Get queryable data from database based on input parameters
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <param name="filter"></param>
         /// <param name="orderBy"></param>
+        /// <param name="includes"></param>
         /// <returns></returns>
         Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
+    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+    params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
         /// Get records from the database based on  input parameters
@@ -73,11 +82,11 @@ namespace Crystal.Patterns.Abstraction
         Task<TModel> GetFirstOrDefaultAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
             params Expression<Func<TEntity, object>>[] includes);
 
-       /// <summary>
-       /// Checks if there are any records in the dB for the query
-       /// </summary>
-       /// <param name="filter"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// Checks if there are any records in the dB for the query
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null);
 
         /// <summary>
@@ -108,20 +117,6 @@ namespace Crystal.Patterns.Abstraction
         /// <param name="entities"></param>
         /// <returns></returns>
         Task InsertAsync(IEnumerable<TEntity> entities);
-
-        /// <summary>
-        /// jQuery datatable implementation for filtering sorting and pagination
-        /// </summary>
-        /// <param name="request">Datatable request with filters, columns, order details</param>
-        /// <returns>Datatable Response with filtered data and related information</returns>
-        Task<DataTableResponse<TModel>> GetAsync<TModel>(DataTableRequest<TEntity> request) where TModel : class;
-
-        /// <summary>
-        /// jQuery datatable implementation for filtering sorting pagination and mapping
-        /// </summary>
-        /// <param name="request">Datatable request with filters, columns, order details</param>
-        /// <returns>Datatable Response with filtered data and related information</returns>
-        Task<DataTableResponse<TEntity>> GetAsync(DataTableRequest<TEntity> request);
 
         /// <summary>
         /// Delete record based on primary key from the dB

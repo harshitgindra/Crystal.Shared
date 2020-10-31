@@ -1,4 +1,5 @@
-﻿using Crystal.Patterns.Abstraction;
+﻿using AutoMapper;
+using Crystal.Patterns.Abstraction;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {
@@ -14,6 +15,12 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         }
 
+        public UowRepository(BaseContext context, MapperConfiguration mapperConfiguration)
+            : base(context, mapperConfiguration)
+        {
+
+        }
+
         public TestContext Context => (TestContext)this.DbContext;
 
         private IBaseRepository<Order> _order;
@@ -23,7 +30,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             {
                 if (_order == null)
                 {
-                    _order = new BaseRepository<Order>(this.DbContext);
+                    _order = new BaseRepository<Order>(this.DbContext, this.MapperConfiguration);
                 }
 
                 return _order;

@@ -41,7 +41,7 @@ namespace Crystal.Shared.Decorator
                 //***
                 //*** Prepare the query
                 //*** 
-                foreach (Column column in request.Columns.Where(x => x.Searchable))
+                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Data)))
                 {
                     //***
                     //*** Fetching where clause depending on different data types
@@ -83,7 +83,7 @@ namespace Crystal.Shared.Decorator
                 //***
                 //*** Prepare the query
                 //*** 
-                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value)))
+                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value) && !string.IsNullOrEmpty(x.Data)))
                 {
                     //***
                     //*** Fetching where clause depending on different data types
@@ -116,11 +116,17 @@ namespace Crystal.Shared.Decorator
                 }
                 else if (typeCode == typeof(bool))
                 {
-                    return $"{field} == @0";
+                    if (bool.TryParse(value, out bool val))
+                    {
+                        return $"{field} == @0";
+                    }
                 }
                 else if (typeCode == typeof(bool?))
                 {
-                    return $"{field}.HasValue && {field}.Value == @0";
+                    if (bool.TryParse(value, out bool val))
+                    {
+                        return $"{field}.HasValue && {field}.Value == @0";
+                    }
                 }
                 else if (typeCode == typeof(int))
                 {

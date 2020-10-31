@@ -10,11 +10,14 @@ namespace Crystal.EntityFrameworkCore.Tests
         protected TestContext DbContext { get; set; }
         protected IUowRepository Uow { get; set; }
 
+        protected IUowRepository UowRepo { get; set; }
+
         [TearDown]
         public void TearDown()
         {
             Uow?.Dispose();
             DbContext?.Dispose();
+           
         }
     }
 }

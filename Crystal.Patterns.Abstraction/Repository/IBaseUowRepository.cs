@@ -8,32 +8,12 @@ namespace Crystal.Patterns.Abstraction
         /// <summary>
         /// Commiting pending changes to the database
         /// </summary>
-        void Commit();
-
-        /// <summary>
-        /// Commiting pending changes to the database
-        /// </summary>
         Task CommitAsync();
-
-        /// <summary>
-        /// Commiting bulk pending changes to the database
-        /// </summary>
-        void CommitBulkChanges();
-
-        /// <summary>
-        /// Commiting bulk pending changes to the database
-        /// </summary>
-        Task CommitBulkChangesAsync();
 
         /// <summary>
         /// Begin a new transaction
         /// </summary>
         void BeginTransaction();
-
-        /// <summary>
-        /// Rollback the transaction
-        /// </summary>
-        void Rollback();
 
         /// <summary>
         /// Rollback the transaction

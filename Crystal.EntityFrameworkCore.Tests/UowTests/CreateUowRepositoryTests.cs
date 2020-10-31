@@ -30,6 +30,7 @@ namespace Crystal.EntityFrameworkCore.Tests
         #region Insert record tests
         [Test]
         [Category("Insert")]
+        [Category("Uow")]
         public async Task InsertRecord()
         {
             //***
@@ -45,7 +46,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** When insert method is called
             //***
             await Uow.Order.InsertAsync(newRecord);
-            DbContext.Commit();
+            await Uow.CommitAsync();
             //***
             //*** Then: 1 record should be saved
             //***
@@ -54,6 +55,7 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Insert")]
+        [Category("Uow")]
         public async Task InsertRecordAsync()
         {
             //***
@@ -68,9 +70,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
             await Uow.Order.InsertAsync(newRecord);
-            Uow.CommitAsync();
+            await Uow.CommitAsync();
             //***
             //*** Then: 1 record should be saved
             //***
@@ -82,6 +83,7 @@ namespace Crystal.EntityFrameworkCore.Tests
         #region Insert multiple tests
         [Test]
         [Category("Insert")]
+        [Category("Uow")]
         public async Task InsertMultipleRecord()
         {
             //***
@@ -105,9 +107,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            await uowRepo.InsertAsync(records);
-            DbContext.Commit();
+            await Uow.Order.InsertAsync(records);
+            await Uow.CommitAsync();
             //***
             //*** Then: 2 record should be saved
             //***
@@ -116,6 +117,7 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Insert")]
+        [Category("Uow")]
         public async Task InsertMultipleRecordAsync()
         {
             //***
@@ -139,9 +141,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            await uowRepo.InsertAsync(records);
-            DbContext.Commit();
+            await Uow.Order.InsertAsync(records);
+            await Uow.CommitAsync();
             //***
             //*** Then: 2 record should be saved
             //***
@@ -153,6 +154,7 @@ namespace Crystal.EntityFrameworkCore.Tests
         #region Insert multiple tests commit bulk changes
         [Test]
         [Category("Insert")]
+        [Category("Uow")]
         public async Task InsertMultipleRecordBulkSaveChanges()
         {
             //***
@@ -176,9 +178,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            await uowRepo.InsertAsync(records);
-            DbContext.CommitBulkChanges();
+            await Uow.Order.InsertAsync(records);
+            await Uow.CommitAsync();
             //***
             //*** Then: 2 record should be saved
             //***
@@ -187,6 +188,7 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         [Test]
         [Category("Insert")]
+        [Category("Uow")]
         public async Task InsertMultipleRecordAsyncBulkSaveChanges()
         {
             //***
@@ -210,9 +212,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            await uowRepo.InsertAsync(records);
-            await DbContext.CommitBulkChangesAsync();
+            await Uow.Order.InsertAsync(records);
+            await Uow.CommitAsync();
             //***
             //*** Then: 2 record should be saved
             //***

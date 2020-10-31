@@ -1,7 +1,7 @@
 ﻿#region USING
 
+using AutoMapper;
 using Crystal.Patterns.Abstraction;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -13,7 +13,13 @@ namespace Crystal.EntityFrameworkCore
     {
         public BaseUowRepository(BaseContext context)
         {
-            DbContext = context;
+            this.DbContext = context;
+        }
+
+        public BaseUowRepository(BaseContext context, MapperConfiguration mapperConfiguration)
+        {
+            this.DbContext = context;
+            this.MapperConfiguration = mapperConfiguration;
         }
 
         public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
@@ -21,11 +27,12 @@ namespace Crystal.EntityFrameworkCore
             return instance ??= new BaseRepository<TEntity>(this.DbContext);
         }
 
-        public BaseContext DbContext { get; }
+        protected BaseContext DbContext { get; }
+        protected MapperConfiguration MapperConfiguration { get; }
 
         public void BeginTransaction()
         {
-            if(DbContext == null)
+            if (DbContext == null)
             {
                 throw new NullReferenceException("Database context is not initialized");
             }
@@ -35,40 +42,40 @@ namespace Crystal.EntityFrameworkCore
             }
         }
 
-        public void Commit()
+        public virtual void Commit()
         {
             DbContext.Commit();
         }
 
-        public Task CommitAsync()
+        public virtual Task CommitAsync()
         {
             this.Commit();
             return Task.CompletedTask;
         }
 
-        public Task CommitBulkChangesAsync()
+        public virtual Task CommitBulkChangesAsync()
         {
             this.DbContext.CommitBulkChanges();
             return Task.CompletedTask;
         }
 
-        public void CommitBulkChanges()
+        public virtual void CommitBulkChanges()
         {
             this.DbContext.CommitBulkChanges();
         }
 
-        public void Rollback()
+        public virtual void Rollback()
         {
             this.DbContext.Rollback();
         }
 
-        public Task RollbackAsync()
+        public virtual Task RollbackAsync()
         {
             this.Rollback();
             return Task.CompletedTask;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             DbContext.Transaction?.Dispose();
             DbContext?.Dispose();
