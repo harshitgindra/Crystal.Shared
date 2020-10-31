@@ -1,9 +1,4 @@
 ﻿using Crystal.Patterns.Abstraction;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {
@@ -14,10 +9,30 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         }
 
+        public UowRepository(BaseContext context) : base(context)
+        {
+
+        }
+
         public TestContext Context => (TestContext)this.DbContext;
+
+        private IBaseRepository<Order> _order;
+        public IBaseRepository<Order> Order
+        {
+            get
+            {
+                if (_order == null)
+                {
+                    _order = new BaseRepository<Order>(this.DbContext);
+                }
+
+                return _order;
+            }
+        }
     }
 
     public interface IUowRepository : IBaseUowRepository
     {
+        IBaseRepository<Order> Order { get; }
     }
 }
