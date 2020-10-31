@@ -30,7 +30,7 @@ namespace Crystal.EntityFrameworkCore
         protected BaseContext DbContext { get; }
         protected MapperConfiguration MapperConfiguration { get; }
 
-        public void BeginTransaction()
+        public async Task BeginTransactionAsync()
         {
             if (DbContext == null)
             {
@@ -38,7 +38,7 @@ namespace Crystal.EntityFrameworkCore
             }
             else
             {
-                this.DbContext.Transaction = DbContext.Database.BeginTransaction();
+                this.DbContext.Transaction = await DbContext.Database.BeginTransactionAsync();
             }
         }
 

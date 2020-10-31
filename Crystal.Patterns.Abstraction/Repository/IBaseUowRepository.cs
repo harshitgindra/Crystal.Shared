@@ -13,7 +13,7 @@ namespace Crystal.Patterns.Abstraction
         /// <summary>
         /// Begin a new transaction
         /// </summary>
-        void BeginTransaction();
+        Task BeginTransactionAsync();
 
         /// <summary>
         /// Rollback the transaction

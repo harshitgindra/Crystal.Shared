@@ -8,11 +8,14 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         public TestContext()
         {
+            this.Database.EnsureDeleted();
+            this.Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase($"TestDb");
+            optionsBuilder.UseSqlite($"Filename=testdb.sqlite");
+            //optionsBuilder.UseInMemoryDatabase($"TestDb");
 
             optionsBuilder.EnableSensitiveDataLogging();
         }
