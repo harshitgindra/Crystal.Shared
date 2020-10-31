@@ -45,10 +45,12 @@ namespace Crystal.EntityFrameworkCore
         {
             IQueryable<TEntity> query = Entity.AsNoTracking();
 
-            foreach (Expression<Func<TEntity, object>> include in includes)
+            if (includes != null)
             {
-                query = query.Include(include);
-
+                foreach (Expression<Func<TEntity, object>> include in includes)
+                {
+                    query = query.Include(include);
+                }
             }
 
             if (filter != null)
@@ -76,8 +78,13 @@ namespace Crystal.EntityFrameworkCore
             {
                 IQueryable<TEntity> query = Entity.AsNoTracking();
 
-                foreach (Expression<Func<TEntity, object>> include in includes)
-                    query = query.Include(include);
+                if (includes != null)
+                {
+                    foreach (Expression<Func<TEntity, object>> include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
 
                 if (filter != null)
                     query = query.Where(filter);
@@ -90,9 +97,18 @@ namespace Crystal.EntityFrameworkCore
         }
 
         public virtual Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = Entity.AsNoTracking();
+
+            if (includes != null)
+            {
+                foreach (Expression<Func<TEntity, object>> include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
 
             if (filter != null)
             {
@@ -108,7 +124,8 @@ namespace Crystal.EntityFrameworkCore
         }
 
         public virtual Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
+    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+    params Expression<Func<TEntity, object>>[] includes)
         {
             if (_mapperConfiguration == null)
             {
@@ -117,6 +134,14 @@ namespace Crystal.EntityFrameworkCore
             else
             {
                 IQueryable<TEntity> query = Entity.AsNoTracking();
+
+                if (includes != null)
+                {
+                    foreach (Expression<Func<TEntity, object>> include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
 
                 if (filter != null)
                 {

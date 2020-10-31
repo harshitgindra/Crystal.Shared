@@ -11,11 +11,13 @@ namespace Crystal.Shared.Model
 {
     public class DataTableRequest<TEntity>
     {
+        [Obsolete]
         public Expression<Func<TEntity, bool>> SearchQuery { get; set; }
-        public List<string> SearchColumns { get; set; }
-        public Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> OrderByQuery { get; set; }
-        public string IncludeProperties { get; set; }
 
+        public List<string> SearchColumns { get; set; }
+
+        [Obsolete]
+        public Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> OrderByQuery { get; set; }
         /// <summary>
         ///     Paging first record indicator. This is the start point in the current data set
         ///     (0 index based - i.e. 0 is the first record)

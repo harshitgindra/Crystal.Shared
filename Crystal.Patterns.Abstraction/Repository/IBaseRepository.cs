@@ -47,18 +47,22 @@ namespace Crystal.Patterns.Abstraction
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="orderBy"></param>
+        /// <param name="includes"></param>
         /// <returns></returns>
         Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes);
         /// <summary>
         /// Get queryable data from database based on input parameters
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <param name="filter"></param>
         /// <param name="orderBy"></param>
+        /// <param name="includes"></param>
         /// <returns></returns>
         Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
+    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+    params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
         /// Get records from the database based on  input parameters

@@ -4,6 +4,7 @@ using Crystal.Shared.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -30,6 +31,11 @@ namespace Crystal.Shared.Decorator
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
             return source.OrderBy(x => Guid.NewGuid());
+        }
+
+        public static Task<DataTableResponse<TEntity>> ToDatatableAsync<TEntity>(this IQueryable<TEntity> query, DataTableRequest<TEntity> request) where TEntity : class
+        {
+            return Task.FromResult(query.ToDatatable(request));
         }
 
         public static DataTableResponse<TEntity> ToDatatable<TEntity>(this IQueryable<TEntity> query, DataTableRequest<TEntity> request) where TEntity : class
