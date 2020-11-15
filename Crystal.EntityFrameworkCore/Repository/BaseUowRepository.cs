@@ -49,6 +49,7 @@ namespace Crystal.EntityFrameworkCore
         {
             _context.Commit();
             _context.SaveChanges();
+            _context.ChangeTracker.Clear();
         }
 
         public virtual Task CommitAsync()
@@ -59,18 +60,21 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual Task CommitBulkChangesAsync()
         {
-            _context.CommitBulkChanges();
+            CommitBulkChanges();
+            _context.ChangeTracker.Clear();
             return Task.CompletedTask;
         }
 
         public virtual void CommitBulkChanges()
         {
             _context.CommitBulkChanges();
+            _context.ChangeTracker.Clear();
         }
 
         public virtual void Rollback()
         {
             _context.Rollback();
+            _context.ChangeTracker.Clear();
         }
 
         public virtual Task RollbackAsync()
