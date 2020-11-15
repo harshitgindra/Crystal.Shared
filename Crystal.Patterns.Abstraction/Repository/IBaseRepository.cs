@@ -19,6 +19,7 @@ namespace Crystal.Patterns.Abstraction
         /// dB entity
         /// </summary>
         DbSet<TEntity> Entity { get; }
+
         /// <summary>
         /// Get records from the database based on  input parameters
         /// </summary>
@@ -52,6 +53,7 @@ namespace Crystal.Patterns.Abstraction
         Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
+
         /// <summary>
         /// Get queryable data from database based on input parameters
         /// </summary>
@@ -61,8 +63,8 @@ namespace Crystal.Patterns.Abstraction
         /// <param name="includes"></param>
         /// <returns></returns>
         Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-    params Expression<Func<TEntity, object>>[] includes);
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
         /// Get records from the database based on  input parameters

@@ -16,27 +16,28 @@ namespace Crystal.EntityFrameworkCore
         {
         }
 
-        protected DbContextOptionsBuilder ContextBuilder { get; set; }
-        public IDbContextTransaction Transaction { get; set; }
+        protected virtual DbContextOptionsBuilder ContextBuilder { get; set; }
+        public virtual IDbContextTransaction Transaction { get; set; }
 
-        public void BeginTransaction()
+        public virtual void BeginTransaction()
         {
             Transaction = this.Database.BeginTransaction();
         }
 
         public override int SaveChanges()
         {
-            var returnValue = base.SaveChanges();
             Transaction?.Commit();
+            var returnValue = base.SaveChanges();
 
             foreach (var entityEntry in this.ChangeTracker.Entries())
             {
                 entityEntry.State = EntityState.Detached;
             }
+
             return returnValue;
         }
 
-        public void Commit()
+        public virtual void Commit()
         {
             _ = this.SaveChanges();
         }
@@ -47,7 +48,7 @@ namespace Crystal.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
-        public void CommitBulkChanges()
+        public virtual void CommitBulkChanges()
         {
             this.BulkSaveChanges();
             Transaction?.Commit();

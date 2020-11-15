@@ -4,6 +4,7 @@ using AutoMapper;
 using Crystal.Patterns.Abstraction;
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 #endregion
 
@@ -13,24 +14,26 @@ namespace Crystal.EntityFrameworkCore
     {
         public BaseUowRepository(BaseContext context)
         {
-            this.DbContext = context;
+            _context = context;
         }
 
         public BaseUowRepository(BaseContext context, MapperConfiguration mapperConfiguration)
         {
-            this.DbContext = context;
+            _context = context;
             this.MapperConfiguration = mapperConfiguration;
         }
 
-        public IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
+        public virtual IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
         {
             return instance ??= new BaseRepository<TEntity>(this.DbContext);
         }
 
-        protected BaseContext DbContext { get; }
+        public virtual DbContext DbContext => this._context;
+
+        private readonly BaseContext _context;
         protected MapperConfiguration MapperConfiguration { get; }
 
-        public async Task BeginTransactionAsync()
+        public virtual async Task BeginTransactionAsync()
         {
             if (DbContext == null)
             {
@@ -38,13 +41,14 @@ namespace Crystal.EntityFrameworkCore
             }
             else
             {
-                this.DbContext.Transaction = await DbContext.Database.BeginTransactionAsync();
+                _context.Transaction = await DbContext.Database.BeginTransactionAsync();
             }
         }
 
         public virtual void Commit()
         {
-            DbContext.Commit();
+            _context.Commit();
+            _context.SaveChanges();
         }
 
         public virtual Task CommitAsync()
@@ -55,18 +59,18 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual Task CommitBulkChangesAsync()
         {
-            this.DbContext.CommitBulkChanges();
+            _context.CommitBulkChanges();
             return Task.CompletedTask;
         }
 
         public virtual void CommitBulkChanges()
         {
-            this.DbContext.CommitBulkChanges();
+            _context.CommitBulkChanges();
         }
 
         public virtual void Rollback()
         {
-            this.DbContext.Rollback();
+            _context.Rollback();
         }
 
         public virtual Task RollbackAsync()
@@ -77,7 +81,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Dispose()
         {
-            DbContext.Transaction?.Dispose();
+            _context.Transaction?.Dispose();
             DbContext?.Dispose();
         }
     }

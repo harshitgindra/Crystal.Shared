@@ -24,7 +24,7 @@ namespace Crystal.EntityFrameworkCore
         private readonly DbContext _context;
         private readonly MapperConfiguration _mapperConfiguration;
 
-        public DbSet<TEntity> Entity { get; }
+        public virtual DbSet<TEntity> Entity { get; }
 
         public BaseRepository(DbContext context)
         {
@@ -67,8 +67,8 @@ namespace Crystal.EntityFrameworkCore
         }
 
         public virtual Task<List<TModel>> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-    params Expression<Func<TEntity, object>>[] includes)
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             if (_mapperConfiguration == null)
             {
@@ -87,10 +87,15 @@ namespace Crystal.EntityFrameworkCore
                 }
 
                 if (filter != null)
+                {
                     query = query.Where(filter);
+                }
+
 
                 if (orderBy != null)
+                {
                     query = orderBy(query);
+                }
 
                 return Task.FromResult(query.ProjectTo<TModel>(_mapperConfiguration).ToList());
             }
@@ -124,8 +129,8 @@ namespace Crystal.EntityFrameworkCore
         }
 
         public virtual Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-    params Expression<Func<TEntity, object>>[] includes)
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             if (_mapperConfiguration == null)
             {
@@ -155,6 +160,7 @@ namespace Crystal.EntityFrameworkCore
 
                 Task.FromResult(query.ProjectTo<TModel>(_mapperConfiguration));
             }
+
             return null;
         }
 
@@ -263,6 +269,7 @@ namespace Crystal.EntityFrameworkCore
             {
                 Entity.Attach(entityToDelete);
             }
+
             //***
             //*** Remove the entity
             //***
@@ -312,6 +319,7 @@ namespace Crystal.EntityFrameworkCore
             {
                 Entity.Attach(entityToUpdate);
             }
+
             //***
             //*** Update the entity
             //***
@@ -328,7 +336,7 @@ namespace Crystal.EntityFrameworkCore
             return Task.CompletedTask;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             //***
             //*** Dispose the context and transaction
