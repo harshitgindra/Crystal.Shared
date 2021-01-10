@@ -5,7 +5,7 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
     <Copyright>Harshit Gindra</Copyright>
-    <Version>2.0.0.0</Version>
+    <Version>2.1.0.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
@@ -13,22 +13,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Entity\**" />
+    <Compile Remove="NewFolder\**" />
     <EmbeddedResource Remove="Entity\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Entity\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Crystal.Patterns.Abstraction\Interface\IBaseRepository.cs" Link="Interface\IBaseRepository.cs" />
+    <Compile Include="..\Crystal.Patterns.Abstraction\Interface\IBaseUowRepository.cs" Link="Interface\IBaseUowRepository.cs" />
+    <Compile Include="..\Crystal.Shared\Decorator\DatatableDecorator.cs" Link="Decorator\DatatableDecorator.cs" />
+    <Compile Include="..\Crystal.Shared\Decorator\ListDecorator.cs" Link="Decorator\ListDecorator.cs" />
+    <Compile Include="..\Crystal.Shared\Decorator\StringDecorator.cs" Link="Decorator\StringDecorator.cs" />
+    <Compile Include="..\Crystal.Shared\Model\DataTableRequest.cs" Link="Model\DataTableRequest.cs" />
+    <Compile Include="..\Crystal.Shared\Model\DataTableResponse.cs" Link="Model\DataTableResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.1.1" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.7" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.1.11" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
-    <ProjectReference Include="..\Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj" />
+    <Folder Include="Interface\" />
+    <Folder Include="Model\" />
+    <Folder Include="Decorator\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>

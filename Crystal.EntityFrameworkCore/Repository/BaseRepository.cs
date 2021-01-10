@@ -2,11 +2,8 @@
 
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Crystal.Patterns.Abstraction;
-using Crystal.Shared.Decorator;
-using Crystal.Shared.Model;
+using Crystal.Abstraction;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;

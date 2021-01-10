@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Crystal.EntityFrameworkCore.Tests.Model;
-using Crystal.Patterns.Abstraction;
+using Crystal.Abstraction;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

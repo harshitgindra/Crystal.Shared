@@ -1,10 +1,10 @@
 ﻿#region USING
 
 using AutoMapper;
-using Crystal.Patterns.Abstraction;
+using Crystal.Abstraction;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 #endregion
 

@@ -1,8 +1,10 @@
-﻿using System;
+﻿#region USING
+using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+#endregion
 
-namespace Crystal.Patterns.Abstraction
+namespace Crystal.Abstraction
 {
     public interface IBaseUowRepository : IDisposable
     {

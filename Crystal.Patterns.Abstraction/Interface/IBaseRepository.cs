@@ -1,4 +1,4 @@
-#region USING
+﻿#region USING
 
 using Crystal.Shared.Model;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace Crystal.Patterns.Abstraction
+namespace Crystal.Abstraction
 {
     public interface IBaseRepository<TEntity> : IDisposable
-        where TEntity : class
+       where TEntity : class
     {
         /// <summary>
         /// dB entity

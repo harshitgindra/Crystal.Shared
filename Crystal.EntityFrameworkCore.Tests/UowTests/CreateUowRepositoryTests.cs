@@ -1,4 +1,4 @@
-﻿using Crystal.Patterns.Abstraction;
+﻿using Crystal.Abstraction;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
