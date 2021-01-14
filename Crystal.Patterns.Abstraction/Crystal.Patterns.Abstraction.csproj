@@ -16,12 +16,15 @@
     <OutputPath>../Output</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <Compile Include="..\Crystal.Shared\Model\DataTableRequest.cs" Link="Model\DataTableRequest.cs" />
+    <Compile Include="..\Crystal.Shared\Model\DataTableResponse.cs" Link="Model\DataTableResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exception\" />
+    <Folder Include="Model\" />
   </ItemGroup>
 </Project>
