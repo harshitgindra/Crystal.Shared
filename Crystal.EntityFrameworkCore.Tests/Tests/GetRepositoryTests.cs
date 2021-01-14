@@ -1,4 +1,5 @@
 ﻿using Crystal.Abstraction;
+using Microsoft.Data.Sqlite;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -167,7 +168,43 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** Return false
             //***
             Assert.IsFalse(response);
-        } 
+        }
+        #endregion
+
+        #region Get all with sql tests
+
+        //[Test]
+        //[Category("Get")]
+        //public async Task GetAllDataSqlAsync()
+        //{
+        //    //***
+        //    //*** When Run sql method is called
+        //    //***
+        //    using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+        //    var response = await uowRepo.GetAsync();
+
+        //    //***
+        //    //*** Return all records
+        //    //***
+        //    Assert.AreEqual(_testOrders.Count, response.Count());
+        //}
+
+        //[Test]
+        //[Category("Get")]
+        //public async Task GetAllDataWithRunSqlAsync()
+        //{
+        //    //***
+        //    //*** When Run sql method is called with expression
+        //    //***
+        //    var p1 = new SqliteParameter("@Order", 1);
+        //    using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+        //    var response = (await uowRepo.RunSql("Select OrderId from Order ", p1)).ToList();
+
+        //    //***
+        //    //*** Return all records
+        //    //***
+        //    Assert.AreEqual(_testOrders.Count(x => x.OrderId == 1), response.Count());
+        //}
         #endregion
     }
 }

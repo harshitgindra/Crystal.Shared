@@ -164,5 +164,13 @@ namespace Crystal.Abstraction
         /// <param name="entities"></param>
         /// <returns></returns>
         Task UpdateAsync(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        /// Execute sql query against the entity
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="paramters"></param>
+        /// <returns></returns>
+        Task<IQueryable<TEntity>> RunSql(string sql, params object[] paramters);
     }
 }

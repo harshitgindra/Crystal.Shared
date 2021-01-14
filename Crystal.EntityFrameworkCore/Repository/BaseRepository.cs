@@ -348,5 +348,13 @@ namespace Crystal.EntityFrameworkCore
                 await this.UpdateAsync(item);
             }
         }
+
+        public virtual Task<IQueryable<TEntity>> RunSql(string sql, params object[] paramters)
+        {
+            //***
+            //*** Execute raw sql query with parameters against the entity
+            //***
+            return Task.FromResult(this.Entity.FromSqlRaw(sql, paramters));
+        }
     }
 }
