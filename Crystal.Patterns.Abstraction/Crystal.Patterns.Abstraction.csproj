@@ -5,7 +5,7 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains all interfaces used by the Crystal pattern libraries</Description>
     <Copyright>Harshit Gindra</Copyright>
-    <Version>2.1.1.0</Version>
+    <Version>2.1.2.0</Version>
     <AssemblyName>Crystal.Patterns.Abstraction</AssemblyName>
     <RootNamespace>Crystal.Patterns.Abstraction</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -20,7 +20,7 @@
     <Compile Include="..\Crystal.Shared\Model\DataTableResponse.cs" Link="Model\DataTableResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
