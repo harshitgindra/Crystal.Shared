@@ -24,7 +24,7 @@ jobs:
           PROJECT_FILE_PATH: Crystal.EntityFrameworkCore/Crystal.EntityFrameworkCore.csproj
           
           # NuGet package id, used for version detection & defaults to project name
-          # PACKAGE_NAME: CrystalEntityFrameworkCore
+#PACKAGE_NAME: CrystalEntityFrameworkCore
           
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
           # VERSION_FILE_PATH: Directory.Build.props
@@ -42,7 +42,7 @@ jobs:
           # TAG_FORMAT: v*
 
           # API key to authenticate with NuGet server
-           #NUGET_KEY: ${{secrets.PUBLISH_SECRET}}
+          NUGET_KEY: ${{secrets.NUGET_KEY}}
 
           # NuGet server uri hosting the packages, defaults to https://api.nuget.org
            #NUGET_SOURCE: https://api.nuget.org
