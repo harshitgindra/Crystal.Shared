@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Patterns.Abstractio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.EntityFrameworkCore.Tests", "Crystal.EntityFrameworkCore.Tests\Crystal.EntityFrameworkCore.Tests.csproj", "{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.EntityFrameworkCore.Tests", "Crystal.EntityFrameworkCore.Tests\Crystal.EntityFrameworkCore.Tests.csproj", "{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{251E8D2D-C0C1-404A-AA55-5460DB01FB89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{CECF33F6-EA60-4E83-A4B0-79C706146996}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9} = {FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}
+		{CECF33F6-EA60-4E83-A4B0-79C706146996} = {251E8D2D-C0C1-404A-AA55-5460DB01FB89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {610FF09B-265B-4730-9213-0D0225D8D4F5}
