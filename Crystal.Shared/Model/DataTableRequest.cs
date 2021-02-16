@@ -11,13 +11,8 @@ namespace Crystal.Shared.Model
 {
     public class DataTableRequest<TEntity>
     {
-        [Obsolete]
-        public Expression<Func<TEntity, bool>> SearchQuery { get; set; }
-
         public List<string> SearchColumns { get; set; }
 
-        [Obsolete]
-        public Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> OrderByQuery { get; set; }
         /// <summary>
         ///     Paging first record indicator. This is the start point in the current data set
         ///     (0 index based - i.e. 0 is the first record)
@@ -91,6 +86,11 @@ namespace Crystal.Shared.Model
         ///     data sets, but it is technically possible and at the discretion of your script
         /// </summary>
         public string Regex { get; set; }
+
+        /// <summary>
+        /// Specifies if the filter needs to be an exact match
+        /// </summary>
+        public bool ExactMatch { get; set; }
     }
 
     public class Order

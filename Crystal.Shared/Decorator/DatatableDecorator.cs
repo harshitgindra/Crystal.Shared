@@ -19,10 +19,6 @@ namespace Crystal.Shared
             var response = new DataTableResponse<TEntity>();
             if (request != null)
             {
-                if (request.SearchQuery != null)
-                {
-                    query = query.Where(request.SearchQuery);
-                }
                 //***
                 //*** Filter based on search content and search columns
                 //***
@@ -38,15 +34,7 @@ namespace Crystal.Shared
 
                 response.TotalRecords = query.Count();
 
-                if (request.OrderByQuery != null)
-                {
-                    query = request.OrderByQuery(query);
-                    //***
-                    //*** Skip the records from the filtered dataset
-                    //***
-                    query = query.Skip(request.Start);
-                }
-                else if (!request.Order.IsNullOrEmpty())
+                if (!request.Order.IsNullOrEmpty())
                 {
                     query = query.OrderBy(request);
                     //***
@@ -68,7 +56,7 @@ namespace Crystal.Shared
             }
 
             response.Echo = "sEcho";
-            response.RecordsFiltered = query.Count();
+            response.TotalRecords = query.Count();
             response.Data = query.ToArray();
             return response;
         }
@@ -106,12 +94,12 @@ namespace Crystal.Shared
                 //***
                 //*** Prepare the query
                 //*** 
-                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Data)))
+                foreach (Column column in request.Columns.Where(x => x.Searchable))
                 {
                     //***
                     //*** Fetching where clause depending on different data types
                     //***
-                    var whrString = WhereQueryBuilder<TEntity>(column.Data, request.Search.Value);
+                    var whrString = _WhereQueryBuilder<TEntity>(column.Data, request.Search);
 
                     if (!string.IsNullOrEmpty(whereQuery) && !string.IsNullOrEmpty(whrString))
                     {
@@ -143,25 +131,24 @@ namespace Crystal.Shared
             DataTableRequest<TEntity> request)
             where TEntity : class
         {
-            if (request != null && !request.Columns.IsNullOrEmpty())
+            //***
+            //*** Prepare the query
+            //*** 
+            foreach (Column column in request.Columns.Where(x => x.Searchable &&
+                                                                 x.Search != null
+                                                                 && !string.IsNullOrEmpty(x.Search?.Value)))
             {
                 //***
-                //*** Prepare the query
-                //*** 
-                foreach (Column column in request.Columns.Where(x => x.Searchable && !string.IsNullOrEmpty(x.Search?.Value) && !string.IsNullOrEmpty(x.Data)))
+                //*** Fetching where clause depending on different data types
+                //***
+                var whereQuery = _WhereQueryBuilder<TEntity>(column.Data, column.Search);
+
+                if (!string.IsNullOrEmpty(whereQuery))
                 {
                     //***
-                    //*** Fetching where clause depending on different data types
+                    //*** Appending to existing where query
                     //***
-                    var whereQuery = WhereQueryBuilder<TEntity>(column.Data, column.Search.Value);
-
-                    if (!string.IsNullOrEmpty(whereQuery))
-                    {
-                        //***
-                        //*** Appending to existing where query
-                        //***
-                        query = query.Where(whereQuery, column.Search.Value);
-                    }
+                    query = query.Where(whereQuery, column.Search.Value);
                 }
             }
 
@@ -169,29 +156,31 @@ namespace Crystal.Shared
 
         }
 
-        private static string WhereQueryBuilder<TEntity>(string field, string value = "")
+        private static string _WhereQueryBuilder<TEntity>(string field, Search search)
         {
-            var propertyInfo = typeof(TEntity).GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            var propertyInfo = _GetPropertyInfo(typeof(TEntity), field);
+
             if (propertyInfo != null)
             {
                 var typeCode = propertyInfo.PropertyType;
                 if (typeCode == typeof(string))
                 {
-                    return $"{field}.ToLower().Contains(@0)";
+                    if (search.ExactMatch)
+                    {
+                        return $"{field}.ToLower() == @0.ToLower()";
+                    }
+                    else
+                    {
+                        return $"{field}.ToLower().Contains(@0.ToLower())";
+                    }
                 }
                 else if (typeCode == typeof(bool))
                 {
-                    if (bool.TryParse(value, out bool val))
-                    {
-                        return $"{field} == @0";
-                    }
+                    return $"{field} == @0";
                 }
                 else if (typeCode == typeof(bool?))
                 {
-                    if (bool.TryParse(value, out bool val))
-                    {
-                        return $"{field}.HasValue && {field}.Value == @0";
-                    }
+                    return $"{field}.HasValue && {field}.Value == @0";
                 }
                 else if (typeCode == typeof(int))
                 {
@@ -206,9 +195,9 @@ namespace Crystal.Shared
                     //***
                     //*** Check for range
                     //*** Eg. 09/01/2020 - 10/13/2020
-                    if (value.Contains(" - "))
+                    if (search.Value.Contains(" - "))
                     {
-                        var dates = value.Split(" - ");
+                        var dates = search.Value.Split(" - ");
                         if (DateTime.TryParse(dates[0], out var startDate)
                             && DateTime.TryParse(dates[1], out var endDate))
                         {
@@ -216,7 +205,7 @@ namespace Crystal.Shared
                                    $" && {field}.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
                         }
                     }
-                    else if (DateTime.TryParse(value, out var date))
+                    else if (DateTime.TryParse(search.Value, out var date))
                     {
                         return $"{field}.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
                     }
@@ -226,9 +215,9 @@ namespace Crystal.Shared
                     //***
                     //*** Check for range
                     //*** Eg. 09/01/2020 - 10/13/2020
-                    if (value.Contains(" - "))
+                    if (search.Value.Contains(" - "))
                     {
-                        var dates = value.Split(" - ");
+                        var dates = search.Value.Split(" - ");
                         if (DateTime.TryParse(dates[0], out var startDate)
                             && DateTime.TryParse(dates[1], out var endDate))
                         {
@@ -236,7 +225,7 @@ namespace Crystal.Shared
                                    $" && {field}.Value.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
                         }
                     }
-                    else if (DateTime.TryParse(value, out var date))
+                    else if (DateTime.TryParse(search.Value, out var date))
                     {
                         return $"{field}.HasValue && {field}.Value.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
                     }
@@ -250,6 +239,45 @@ namespace Crystal.Shared
             }
 
             return "";
+        }
+
+        /// <summary>
+        /// Get properties from the Entity including nested properties
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        private static PropertyInfo _GetPropertyInfo(Type type, string propertyName)
+        {
+            //***
+            //*** Check if the property name is a complex nested type
+            //***
+            if (propertyName.Contains("."))
+            {
+                //***
+                //*** Get the first property name of the complex type
+                //***
+                var tempPropertyName = propertyName.Split(".", 2);
+                //***
+                //*** Check if the property exists in the type
+                //***
+                var prop = _GetPropertyInfo(type, tempPropertyName[0]);
+                if (prop != null)
+                {
+                    //***
+                    //*** Drill down to check if the nested property exists in the complex type
+                    //***
+                    return _GetPropertyInfo(prop.PropertyType, tempPropertyName[1]);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return type.GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            }
         }
     }
 }
