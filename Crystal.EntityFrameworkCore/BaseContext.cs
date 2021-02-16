@@ -11,7 +11,7 @@ namespace Crystal.EntityFrameworkCore
         {
         }
 
-        public BaseContext(DbContextOptions<BaseContext> options)
+        public BaseContext(DbContextOptions options)
             : base(options)
         {
         }
@@ -29,11 +29,7 @@ namespace Crystal.EntityFrameworkCore
             Transaction?.Commit();
             var returnValue = base.SaveChanges();
 
-            foreach (var entityEntry in this.ChangeTracker.Entries())
-            {
-                entityEntry.State = EntityState.Detached;
-            }
-
+            this.ChangeTracker.Clear();
             return returnValue;
         }
 
@@ -53,10 +49,7 @@ namespace Crystal.EntityFrameworkCore
             this.BulkSaveChanges();
             Transaction?.Commit();
 
-            foreach (var entityEntry in this.ChangeTracker.Entries())
-            {
-                entityEntry.State = EntityState.Detached;
-            }
+            this.ChangeTracker.Clear();
         }
 
         public virtual Task CommitBulkChangesAsync()
@@ -68,12 +61,19 @@ namespace Crystal.EntityFrameworkCore
         public virtual void Rollback()
         {
             Transaction?.Rollback();
+            this.ChangeTracker.Clear();
         }
 
         public virtual Task RollbackAsync()
         {
             this.Rollback();
             return Task.CompletedTask;
+        }
+
+        public override void Dispose()
+        {
+            this.Transaction?.Dispose();
+            base.Dispose();
         }
     }
 }

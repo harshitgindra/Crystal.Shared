@@ -27,3 +27,5 @@
 /Crystal.Shared/bin/Debug
 /Crystal.EntityFrameworkCore.Tests/bin
 /Crystal.EntityFrameworkCore.Tests/obj
+/Samples.EfCore.Web/bin/Debug/net5.0
+/Samples.EfCore.Web/obj
