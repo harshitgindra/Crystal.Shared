@@ -184,11 +184,11 @@ namespace Crystal.Shared
                 }
                 else if (typeCode == typeof(int))
                 {
-                    return $"{field}.ToString().Contains(@0)";
+                    return $"{field} == @0";
                 }
                 else if (typeCode == typeof(int?))
                 {
-                    return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                    return $"{field}.HasValue && {field} == @0";
                 }
                 else if (typeCode == typeof(DateTime))
                 {

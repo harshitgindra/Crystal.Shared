@@ -1,7 +1,10 @@
-﻿using Crystal.Shared;
+﻿using System;
+using System.Linq;
+using Crystal.Shared;
 using Crystal.Shared.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Samples.EfCore.Web.Controllers
 {
@@ -14,15 +17,54 @@ namespace Samples.EfCore.Web.Controllers
             _uowRepository = uowRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _Datasetup();
             return View();
         }
 
-        public async Task<IActionResult> GetAll(DataTableRequest<Author> request)
+        public async Task<JsonResult> GetAll(DataTableRequest<Author> request)
         {
-            var data = await _uowRepository.Authors.Entity.ToDatatableAsync(request);
-            return Json(data);
+            try
+            {
+                var data = (await _uowRepository.Authors.QueryAsync())
+                    .ToDatatable(request);
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        private async Task _Datasetup()
+        {
+            if (!await _uowRepository.Authors.AnyAsync())
+            {
+                await _uowRepository.Authors.InsertAsync(new Author()
+                {
+                    Age = 10,
+                    BooksPublished = 5,
+                    Country = "Aus",
+                    Name = "Author 1"
+                });
+                await _uowRepository.Authors.InsertAsync(new Author()
+                {
+                    Age = 10,
+                    BooksPublished = 21,
+                    Country = "UK",
+                    Name = "Author 2"
+                });
+                await _uowRepository.Authors.InsertAsync(new Author()
+                {
+                    Age = 10,
+                    BooksPublished = 5,
+                    Country = "IND",
+                    Name = "Author 3"
+                });
+
+                await _uowRepository.CommitAsync();
+            }
         }
     }
 }

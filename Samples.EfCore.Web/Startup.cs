@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Serialization;
 
 namespace Samples.EfCore.Web
 {
@@ -24,7 +25,8 @@ namespace Samples.EfCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.AddDbContext<SampleContext>(
                 options => options.UseSqlite("filename=sample.sqlite"));
