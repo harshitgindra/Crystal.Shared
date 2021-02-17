@@ -41,6 +41,7 @@ namespace Samples.EfCore.Web.Controllers
         {
             if (!await _uowRepository.Authors.AnyAsync())
             {
+                await _uowRepository.BeginTransactionAsync();
                 await _uowRepository.Authors.InsertAsync(new Author()
                 {
                     Age = 10,
