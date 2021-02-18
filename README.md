@@ -12,6 +12,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Nuget](https://img.shields.io/nuget/v/Crystal.EntityFrameworkCore)](https://www.nuget.org/packages/Crystal.EntityFrameworkCore/)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
