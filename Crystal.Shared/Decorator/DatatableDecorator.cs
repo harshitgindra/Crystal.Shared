@@ -54,9 +54,12 @@ namespace Crystal.Shared
                     query = query.Take(request.Length);
                 }
             }
+            else
+            {
+                response.TotalRecords = query.Count();
+            }
 
             response.Echo = "sEcho";
-            response.TotalRecords = query.Count();
             response.Data = query.ToArray();
             return response;
         }

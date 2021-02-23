@@ -5,7 +5,7 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
     <Copyright>Harshit Gindra</Copyright>
-    <Version>2.1.4.0</Version>
+    <Version>2.1.5.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>

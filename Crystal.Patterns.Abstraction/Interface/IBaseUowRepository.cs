@@ -24,5 +24,11 @@ namespace Crystal.Abstraction
         /// Rollback the transaction
         /// </summary>
         Task RollbackAsync();
+
+        /// <summary>
+        /// Commit bulk changes
+        /// </summary>
+        /// <returns></returns>
+        Task CommitBulkChangesAsync();
     }
 }
