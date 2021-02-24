@@ -1,0 +1,29 @@
+name: Main workflow
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    env:
+      Prerelease: ci
+
+    steps:
+    - name: Print GITHUB_RUN_NUMBER
+      run: |
+        echo "GITHUB_RUN_NUMBER is ${env:GITHUB_RUN_NUMBER}"
+          
+    - uses: actions/checkout@v1
+      
+    - name: Build Projects
+      run: |
+        dotnet build ./Crystal.EntityFrameworkCore/Crystal.EntityFrameworkCore.csproj -c Release
+        dotnet build ./Crystal.Patterns.Abstraction/Crystal.Patterns.Abstraction.csproj -c Release
+        dotnet build ./Crystal.Shared/Crystal.Shared.csproj -c Release
+        dotnet build ./Crystal.XamForms.Shared/Crystal.XamForms.Shared.csproj -c Release
+    
+    - name: Run Tests
+      run: |
+        dotnet test ./Crystal.EntityFrameworkCore.Tests/Crystal.EntityFrameworkCore.Tests.csproj -c Release
