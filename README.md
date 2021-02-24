@@ -6,13 +6,20 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** reference: https://github.com/harshitgindra/Crystal.Shared/edit/master/README.md
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-[![Nuget](https://img.shields.io/nuget/v/Crystal.EntityFrameworkCore)](https://www.nuget.org/packages/Crystal.EntityFrameworkCore/)
+
+
+| | |
+|-|-|
+| Contributors | [![Contributors][contributors-shield]][contributors-url]
+| Forks | [![Forks][forks-shield]][forks-url]
+| Issues | [![Issues][issues-shield]][issues-url]
+| MIT License | [![MIT License][license-shield]][license-url]
+| LinkedIn | [![LinkedIn][linkedin-shield]][linkedin-url]
+| Nuget | [![Nuget](https://img.shields.io/nuget/v/Crystal.EntityFrameworkCore)](https://www.nuget.org/packages/Crystal.EntityFrameworkCore/)
+| Stargazers | [![Stargazers][stars-shield]][stars-url]
+| Github Actions | [![Actions](https://github.com/harshitgindra/Crystal.Shared/workflows/Main%20workflow/badge.svg)](https://github.com/harshitgindra/Crystal.Shared/actions?query=workflow%3A%22Main+workflow%22) |
+
+
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
