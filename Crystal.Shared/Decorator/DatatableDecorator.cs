@@ -187,11 +187,69 @@ namespace Crystal.Shared
                 }
                 else if (typeCode == typeof(int))
                 {
-                    return $"{field} == @0";
+                    if (Int32.TryParse(search.Value, out int val))
+                    {
+                        return $"{field} == @0";
+                    }
+                    else
+                    {
+                        return "";
+                    }
                 }
                 else if (typeCode == typeof(int?))
                 {
-                    return $"{field}.HasValue && {field} == @0";
+                    if (Int32.TryParse(search.Value, out int val))
+                    {
+                        return $"{field}.HasValue && {field} == @0";
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else if (typeCode == typeof(long))
+                {
+                    if (Int64.TryParse(search.Value, out long val))
+                    {
+                        return $"{field} == @0";
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else if (typeCode == typeof(long?))
+                {
+                    if (Int64.TryParse(search.Value, out long val))
+                    {
+                        return $"{field}.HasValue && {field} == @0";
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else if (typeCode == typeof(short))
+                {
+                    if (Int16.TryParse(search.Value, out short val))
+                    {
+                        return $"{field} == @0";
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else if (typeCode == typeof(short?))
+                {
+                    if (Int16.TryParse(search.Value, out short val))
+                    {
+                        return $"{field}.HasValue && {field} == @0";
+                    }
+                    else
+                    {
+                        return "";
+                    }
                 }
                 else if (typeCode == typeof(DateTime))
                 {
