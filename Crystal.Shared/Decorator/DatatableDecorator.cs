@@ -97,7 +97,7 @@ namespace Crystal.Shared
                 //***
                 //*** Prepare the query
                 //*** 
-                foreach (Column column in request.Columns.Where(x => x.Searchable))
+                foreach (Column column in request.Columns.Where(x => x.Searchable && !x.Data.IsNullEmptyWhiteSpace()))
                 {
                     //***
                     //*** Fetching where clause depending on different data types
@@ -139,6 +139,7 @@ namespace Crystal.Shared
             //*** 
             foreach (Column column in request.Columns.Where(x => x.Searchable &&
                                                                  x.Search != null
+                                                                 && !x.Data.IsNullEmptyWhiteSpace()
                                                                  && !string.IsNullOrEmpty(x.Search?.Value)))
             {
                 //***
@@ -165,130 +166,203 @@ namespace Crystal.Shared
 
             if (propertyInfo != null)
             {
-                var typeCode = propertyInfo.PropertyType;
-                if (typeCode == typeof(string))
-                {
-                    if (search.ExactMatch)
-                    {
-                        return $"{field}.ToLower() == @0.ToLower()";
-                    }
-                    else
-                    {
-                        return $"{field}.ToLower().Contains(@0.ToLower())";
-                    }
-                }
-                else if (typeCode == typeof(bool))
-                {
-                    return $"{field} == @0";
-                }
-                else if (typeCode == typeof(bool?))
-                {
-                    return $"{field}.HasValue && {field}.Value == @0";
-                }
-                else if (typeCode == typeof(int))
-                {
-                    if (Int32.TryParse(search.Value, out int val))
-                    {
-                        return $"{field} == @0";
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-                else if (typeCode == typeof(int?))
-                {
-                    if (Int32.TryParse(search.Value, out int val))
-                    {
-                        return $"{field}.HasValue && {field} == @0";
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-                else if (typeCode == typeof(long))
-                {
-                    if (Int64.TryParse(search.Value, out long val))
-                    {
-                        return $"{field} == @0";
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-                else if (typeCode == typeof(long?))
-                {
-                    if (Int64.TryParse(search.Value, out long val))
-                    {
-                        return $"{field}.HasValue && {field} == @0";
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-                else if (typeCode == typeof(short))
-                {
-                    if (Int16.TryParse(search.Value, out short val))
-                    {
-                        return $"{field} == @0";
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-                else if (typeCode == typeof(short?))
-                {
-                    if (Int16.TryParse(search.Value, out short val))
-                    {
-                        return $"{field}.HasValue && {field} == @0";
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-                else if (typeCode == typeof(DateTime))
+                if (!propertyInfo.CanWrite)
                 {
                     //***
-                    //*** Check for range
-                    //*** Eg. 09/01/2020 - 10/13/2020
-                    if (search.Value.Contains(" - "))
-                    {
-                        var dates = search.Value.Split(" - ");
-                        if (DateTime.TryParse(dates[0], out var startDate)
-                            && DateTime.TryParse(dates[1], out var endDate))
-                        {
-                            return $"{field} >= Convert.ToDateTime(\"{startDate}\")" +
-                                   $" && {field}.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
-                        }
-                    }
-                    else if (DateTime.TryParse(search.Value, out var date))
-                    {
-                        return $"{field}.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
-                    }
+                    //*** Property not found 
+                    //***
+                    Console.WriteLine($"Property {field} is not a writable field in entity {nameof(TEntity)}");
                 }
-                else if (typeCode == typeof(DateTime?))
+                else if (!propertyInfo.CanRead)
                 {
                     //***
-                    //*** Check for range
-                    //*** Eg. 09/01/2020 - 10/13/2020
-                    if (search.Value.Contains(" - "))
+                    //*** Property not found 
+                    //***
+                    Console.WriteLine($"Property {field} is not a readable field in entity {nameof(TEntity)}");
+                }
+                else
+                {
+                    var typeCode = propertyInfo.PropertyType;
+                    if (typeCode == typeof(string))
                     {
-                        var dates = search.Value.Split(" - ");
-                        if (DateTime.TryParse(dates[0], out var startDate)
-                            && DateTime.TryParse(dates[1], out var endDate))
+                        if (search.ExactMatch)
                         {
-                            return $"{field}.HasValue && {field}.Value >= Convert.ToDateTime(\"{startDate}\")" +
-                                   $" && {field}.Value.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
+                            return $"{field}.ToLower() == @0.ToLower()";
+                        }
+                        else
+                        {
+                            return $"{field}.ToLower().Contains(@0.ToLower())";
                         }
                     }
-                    else if (DateTime.TryParse(search.Value, out var date))
+                    else if (typeCode == typeof(bool))
                     {
-                        return $"{field}.HasValue && {field}.Value.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
+                        if (bool.TryParse(search.Value, out _))
+                        {
+                            return $"{field} == @0";
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(bool?))
+                    {
+                        if (bool.TryParse(search.Value, out _))
+                        {
+                            return $"{field}.HasValue && {field}.Value == @0";
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(int))
+                    {
+                        if (int.TryParse(search.Value, out int val))
+                        {
+                            if (search.ExactMatch)
+                            {
+                                return $"{field} == @0";
+                            }
+                            else
+                            {
+                                return $"{field}.ToString().Contains(@0)";
+                            }
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(int?))
+                    {
+                        if (int.TryParse(search.Value, out int val))
+                        {
+                            if (search.ExactMatch)
+                            {
+                                return $"{field}.HasValue && {field} == @0";
+                            }
+                            else
+                            {
+                                return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                            }
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(long))
+                    {
+                        if (long.TryParse(search.Value, out long val))
+                        {
+                            if (search.ExactMatch)
+                            {
+                                return $"{field} == @0";
+                            }
+                            else
+                            {
+                                return $"{field}.ToString().Contains(@0)";
+                            }
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(long?))
+                    {
+                        if (long.TryParse(search.Value, out long val))
+                        {
+                            if (search.ExactMatch)
+                            {
+                                return $"{field}.HasValue && {field} == @0";
+                            }
+                            else
+                            {
+                                return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                            }
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(short))
+                    {
+                        if (short.TryParse(search.Value, out short val))
+                        {
+                            if (search.ExactMatch)
+                            {
+                                return $"{field} == @0";
+                            }
+                            else
+                            {
+                                return $"{field}.ToString().Contains(@0)";
+                            }
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(short?))
+                    {
+                        if (short.TryParse(search.Value, out short val))
+                        {
+                            if (search.ExactMatch)
+                            {
+                                return $"{field}.HasValue && {field} == @0";
+                            }
+                            else
+                            {
+                                return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                            }
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                    }
+                    else if (typeCode == typeof(DateTime))
+                    {
+                        //***
+                        //*** Check for range
+                        //*** Eg. 09/01/2020 - 10/13/2020
+                        if (search.Value.Contains(" - "))
+                        {
+                            var dates = search.Value.Split(" - ");
+                            if (DateTime.TryParse(dates[0], out var startDate)
+                                && DateTime.TryParse(dates[1], out var endDate))
+                            {
+                                return $"{field} >= Convert.ToDateTime(\"{startDate}\")" +
+                                       $" && {field}.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
+                            }
+                        }
+                        else if (DateTime.TryParse(search.Value, out var date))
+                        {
+                            return $"{field}.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
+                        }
+                    }
+                    else if (typeCode == typeof(DateTime?))
+                    {
+                        //***
+                        //*** Check for range
+                        //*** Eg. 09/01/2020 - 10/13/2020
+                        if (search.Value.Contains(" - "))
+                        {
+                            var dates = search.Value.Split(" - ");
+                            if (DateTime.TryParse(dates[0], out var startDate)
+                                && DateTime.TryParse(dates[1], out var endDate))
+                            {
+                                return $"{field}.HasValue && {field}.Value >= Convert.ToDateTime(\"{startDate}\")" +
+                                       $" && {field}.Value.Date <= Convert.ToDateTime(\"{endDate}\").Date && !string.IsNullOrEmpty(@0)";
+                            }
+                        }
+                        else if (DateTime.TryParse(search.Value, out var date))
+                        {
+                            return $"{field}.HasValue && {field}.Value.Date == \"{date.Date}\" && !string.IsNullOrEmpty(@0)";
+                        }
                     }
                 }
             }
@@ -297,6 +371,7 @@ namespace Crystal.Shared
                 //***
                 //*** Property not found 
                 //***
+                Console.WriteLine($"Property {field} not found in entity {nameof(TEntity)}");
             }
 
             return "";
