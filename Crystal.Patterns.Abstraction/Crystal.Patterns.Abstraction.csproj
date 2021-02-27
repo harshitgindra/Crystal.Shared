@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Crystal.Abstraction</Title>
@@ -11,9 +11,13 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageIcon>Crystal.Icon.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Source\Github\Crystal.Shared\Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\Crystal.Shared\Model\DataTableRequest.cs" Link="Model\DataTableRequest.cs" />
@@ -26,5 +30,11 @@
   <ItemGroup>
     <Folder Include="Exception\" />
     <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Images\Crystal.Icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>

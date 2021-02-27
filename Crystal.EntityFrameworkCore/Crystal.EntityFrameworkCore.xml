@@ -1,0 +1,318 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Crystal.EntityFrameworkCore</name>
+    </assembly>
+    <members>
+        <member name="M:Crystal.EntityFrameworkCore.UnitOfWorkServiceCollectionExtension.ConfigureUnitOfWork``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures unit of work repositories in the service collection to support the implementation
+            Make sur that the dB context is registered before registering unit of work repositories
+            </summary>
+            <typeparam name="TContext">Derived class of BaseContext</typeparam>
+            <param name="serviceCollection">Service collection</param>
+            <returns></returns>
+        </member>
+        <member name="P:Crystal.Abstraction.IBaseRepository`1.Entity">
+            <summary>
+            dB entity
+            </summary>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Get records from the database based on  input parameters
+            </summary>
+            <param name="filter"></param>
+            <param name="orderBy"></param>
+            <param name="includes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.GetAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Get records from the database based on  input parameters
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="filter"></param>
+            <param name="orderBy"></param>
+            <param name="includes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.QueryAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Get queryable data from database based on input parameters
+            </summary>
+            <param name="filter"></param>
+            <param name="orderBy"></param>
+            <param name="includes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.QueryAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Get queryable data from database based on input parameters
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="filter"></param>
+            <param name="orderBy"></param>
+            <param name="includes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.GetFirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Get records from the database based on  input parameters
+            </summary>
+            <param name="filter"></param>
+            <param name="includes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.GetFirstOrDefaultAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Get first record from the database based in input parameters
+            </summary>
+            <param name="filter">Conditions to filter the records</param>
+            <param name="includeProperties">specify the names of the properties that needs to be added to the entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Checks if there are any records in the dB for the query
+            </summary>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.FindAsync(System.Object)">
+            <summary>
+            Returns a record from the dB with the matching primary key
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.FindAsync``1(System.Object)">
+            <summary>
+            Returns a record from the dB with the matching primary key and maps it to different model
+            </summary>
+            <typeparam name="TModel"></typeparam>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.InsertAsync(`0)">
+            <summary>
+            Inserts a new record in the dB
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.InsertAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Inserts a list of records in the dB
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAsync(System.Object)">
+            <summary>
+            Delete record based on primary key from the dB
+            </summary>
+            <param name="request">Datatable request with filters, columns, order details</param>
+            <returns>Datatable Response with filtered data and related information</returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAsync(`0)">
+            <summary>
+            Delete single record from the dB
+            </summary>
+            <param name="request">Datatable request with filters, columns, order details</param>
+            <returns>Datatable Response with filtered data and related information</returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAllAsync">
+            <summary>
+            Delete all entries from the dB
+            </summary>
+            <param name="filter"></param>
+            <param name="includeProperties"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.UpdateAsync(`0)">
+            <summary>
+            Update single record in the dB
+            </summary>
+            <param name="filter"></param>
+            <param name="includeProperties"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            delete all the records from the dB based on the expression
+            </summary>
+            <param name="filter"></param>
+            <param name="includeProperties"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.UpdateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Update list of records
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.RunSql(System.String,System.Object[])">
+            <summary>
+            Execute sql query against the entity
+            </summary>
+            <param name="sql"></param>
+            <param name="paramters"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Crystal.Abstraction.IBaseUowRepository.DbContext">
+            <summary>
+            DbContext instance
+            </summary>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseUowRepository.CommitAsync">
+            <summary>
+            Commiting pending changes to the database
+            </summary>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseUowRepository.BeginTransactionAsync">
+            <summary>
+            Begin a new transaction
+            </summary>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseUowRepository.RollbackAsync">
+            <summary>
+            Rollback the transaction
+            </summary>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseUowRepository.CommitBulkChangesAsync">
+            <summary>
+            Commit bulk changes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseUowRepository.Repository``1">
+            <summary>
+            Returns the base repository instance of the entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator._GetPropertyInfo(System.Type,System.String)">
+            <summary>
+            Get properties from the Entity including nested properties
+            </summary>
+            <param name="type"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Start">
+            <summary>
+                Paging first record indicator. This is the start point in the current data set
+                (0 index based - i.e. 0 is the first record)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Length">
+            <summary>
+                Number of records that the table can display in the current draw. It is expected
+                that the number of records returned will be equal to this number, unless the
+                server has fewer records to return. Note that this can be -1 to indicate that
+                all records should be returned (although that negates any benefits of
+                server-side processing!)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Search">
+            <summary>
+                Global Search for the table
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Order">
+            <summary>
+                Collection of all column indexes and their sort directions
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Columns">
+            <summary>
+                Collection of all columns in the table
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Column.Data">
+            <summary>
+                Column's data source
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Column.Name">
+            <summary>
+                Column's name
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Column.Searchable">
+            <summary>
+                Flag to indicate if this column is searchable (true) or not (false)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Column.Orderable">
+            <summary>
+                Flag to indicate if this column is orderable (true) or not (false)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Column.Search">
+            <summary>
+                Search to apply to this specific column.
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Search.Value">
+            <summary>
+                Global search value. To be applied to all columns which have searchable as true
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Search.Regex">
+            <summary>
+                true if the global filter should be treated as a regular expression for advanced
+                searching, false otherwise. Note that normally server-side processing scripts
+                will not perform regular expression searching for performance reasons on large
+                data sets, but it is technically possible and at the discretion of your script
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Search.ExactMatch">
+            <summary>
+            Specifies if the filter needs to be an exact match
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Order.Column">
+            <summary>
+                Column to which ordering should be applied. This is an index reference to the
+                columns array of information that is also submitted to the server
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.Order.Dir">
+            <summary>
+                Ordering direction for this column. It will be asc or desc to indicate ascending
+                ordering or descending ordering, respectively
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalRecords">
+            <summary>
+            Total records, before filtering (i.e. the total number of records in the database)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableResponse`1.RecordsFiltered">
+            <summary>
+            Total records, after filtering (i.e. the total number of records after filtering has been applied -
+            not just the number of records being returned for this page of data).
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableResponse`1.Data">
+            <summary>
+            The data to be displayed in the table. This is an array of data source objects, one for each row, which will be used by DataTables.
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalDisplayRecords">
+            <summary>
+            Total records, before filtering (i.e. the total number of records in the database)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableResponse`1.Error">
+            <summary>
+            f an error occurs during the running of the server-side processing script, 
+            you can inform the user of this error by passing back the error message to be displayed using this parameter. 
+            </summary>
+        </member>
+    </members>
+</doc>

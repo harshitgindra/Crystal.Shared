@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Crystal.EntityFramework</Title>
@@ -10,6 +10,7 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
+    <PackageIcon>Crystal.Icon.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Entity\**" />
@@ -18,6 +19,10 @@
     <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Entity\**" />
     <None Remove="NewFolder\**" />
+    <None Include="..\Images\Crystal.Icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Crystal.Patterns.Abstraction\Interface\IBaseRepository.cs" Link="Interface\IBaseRepository.cs" />
@@ -47,5 +52,8 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Source\Github\Crystal.Shared\Crystal.EntityFrameworkCore\Crystal.EntityFrameworkCore.xml</DocumentationFile>
   </PropertyGroup>
 </Project>
