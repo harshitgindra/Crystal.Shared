@@ -4,6 +4,9 @@ using AutoMapper;
 using Crystal.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
 using System.Threading.Tasks;
 
 #endregion
@@ -15,17 +18,44 @@ namespace Crystal.EntityFrameworkCore
         public BaseUowRepository(BaseContext context)
         {
             _context = context;
+            _repositoryInstances = new Dictionary<Type, object>();
         }
 
-        public BaseUowRepository(BaseContext context, MapperConfiguration mapperConfiguration)
+        public BaseUowRepository(BaseContext context, MapperConfiguration mapperConfiguration) : this(context)
         {
-            _context = context;
             this.MapperConfiguration = mapperConfiguration;
         }
 
         public virtual IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
         {
             return instance ??= new BaseRepository<TEntity>(this.DbContext);
+        }
+
+        private readonly IDictionary<Type, object> _repositoryInstances;
+
+        public virtual IBaseRepository<TEntity> Repository<TEntity>() where TEntity : class
+        {
+            //***
+            //*** Check if the instance is already created
+            //***
+            if (_repositoryInstances.ContainsKey(typeof(TEntity)))
+            {
+                //***
+                //*** Instance already created, return the instance from the dictionary
+                //***
+                return (IBaseRepository<TEntity>)_repositoryInstances[typeof(TEntity)];
+            }
+            else
+            {
+                //***
+                //*** Create a new instance of base repository 
+                //*** Save it to the dictionary
+                //*** Return the instance
+                //***
+                var repo = new BaseRepository<TEntity>(this.DbContext);
+                _repositoryInstances.Add(typeof(TEntity), repo);
+                return repo;
+            }
         }
 
         public virtual DbContext DbContext => this._context;
@@ -35,7 +65,7 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual async Task BeginTransactionAsync()
         {
-            if (DbContext == null)
+            if (_context == null)
             {
                 throw new NullReferenceException("Database context is not initialized");
             }
@@ -64,11 +94,17 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void CommitBulkChanges()
         {
+            //***
+            //*** Commit bulk changes
+            //***
             _context.CommitBulkChanges();
         }
 
         public virtual void Rollback()
         {
+            //***
+            //*** rollback the changes
+            //***
             _context.Rollback();
         }
 
@@ -80,7 +116,10 @@ namespace Crystal.EntityFrameworkCore
 
         public virtual void Dispose()
         {
-            DbContext?.Dispose();
+            //***
+            //*** Dispose the dB context
+            //***
+            _context?.Dispose();
         }
     }
 }

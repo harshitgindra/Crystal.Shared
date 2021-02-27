@@ -11,8 +11,6 @@ namespace Crystal.Shared.Model
 {
     public class DataTableRequest<TEntity>
     {
-        public List<string> SearchColumns { get; set; }
-
         /// <summary>
         ///     Paging first record indicator. This is the start point in the current data set
         ///     (0 index based - i.e. 0 is the first record)

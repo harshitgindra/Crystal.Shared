@@ -6,21 +6,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Crystal.Abstraction;
 
 namespace Samples.EfCore.Web.Controllers
 {
     public class BookController : Controller
     {
-        private readonly IUowRepository _uowRepository;
+        private readonly IBaseUowRepository _uowRepository;
 
-        public BookController(IUowRepository uowRepository)
+        public BookController(IBaseUowRepository uowRepository)
         {
             _uowRepository = uowRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            var data = await _uowRepository.Books.GetAsync();
+            var data = await _uowRepository.Repository<Book>().GetAsync();
             return View(data);
         }
 
@@ -32,7 +33,7 @@ namespace Samples.EfCore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Book book)
         {
-            await _uowRepository.Books.InsertAsync(book);
+            await _uowRepository.Repository<Book>().InsertAsync(book);
             await _uowRepository.CommitAsync();
             return RedirectToAction("Index");
         }
@@ -40,17 +41,17 @@ namespace Samples.EfCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var book = await _uowRepository.Books.FindAsync(id);
+            var book = await _uowRepository.Repository<Book>().FindAsync(id);
             return View(book);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(Book model)
         {
-            var book = await _uowRepository.Books.FindAsync(model.BookId);
+            var book = await _uowRepository.Repository<Book>().FindAsync(model.BookId);
             book.Name = model.Name;
 
-            await _uowRepository.Books.UpdateAsync(book);
+            await _uowRepository.Repository<Book>().UpdateAsync(book);
             await _uowRepository.CommitAsync();
 
             return RedirectToAction("Index");
@@ -59,14 +60,14 @@ namespace Samples.EfCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var book = await _uowRepository.Books.FindAsync(id);
+            var book = await _uowRepository.Repository<Book>().FindAsync(id);
             return View(book);
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            await _uowRepository.Books.DeleteAsync(id);
+            await _uowRepository.Repository<Book>().DeleteAsync(id);
             await _uowRepository.CommitAsync();
 
             return RedirectToAction("Index");

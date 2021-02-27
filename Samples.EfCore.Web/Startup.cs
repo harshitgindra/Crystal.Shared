@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Crystal.Abstraction;
+using Crystal.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
 namespace Samples.EfCore.Web
@@ -32,6 +34,10 @@ namespace Samples.EfCore.Web
                 options => options.UseSqlite("filename=sample.sqlite"));
 
             services.AddTransient<IUowRepository, UowRepository>();
+            //***
+            //*** Configuring unit of work services
+            //***
+            services.ConfigureUnitOfWork<SampleContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

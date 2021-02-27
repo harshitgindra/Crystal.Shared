@@ -4,15 +4,16 @@ using Crystal.Shared;
 using Crystal.Shared.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Crystal.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
 namespace Samples.EfCore.Web.Controllers
 {
     public class DatatableController : Controller
     {
-        private readonly IUowRepository _uowRepository;
+        private readonly IBaseUowRepository _uowRepository;
 
-        public DatatableController(IUowRepository uowRepository)
+        public DatatableController(IBaseUowRepository uowRepository)
         {
             _uowRepository = uowRepository;
         }
@@ -27,7 +28,7 @@ namespace Samples.EfCore.Web.Controllers
         {
             try
             {
-                var data = (await _uowRepository.Authors.QueryAsync())
+                var data = (await _uowRepository.Repository<Author>().QueryAsync())
                     .ToDatatable(request);
                 return Json(data);
             }
@@ -39,30 +40,31 @@ namespace Samples.EfCore.Web.Controllers
 
         private async Task _Datasetup()
         {
-            if (!await _uowRepository.Authors.AnyAsync())
+            if (!await _uowRepository.Repository<Author>().AnyAsync())
             {
                 await _uowRepository.BeginTransactionAsync();
-                await _uowRepository.Authors.InsertAsync(new Author()
+                await _uowRepository.Repository<Author>().InsertAsync(new Author()
                 {
                     Age = 10,
                     BooksPublished = 5,
                     Country = "Aus",
                     Name = "Author 1"
                 });
-                await _uowRepository.Authors.InsertAsync(new Author()
+                await _uowRepository.Repository<Author>().InsertAsync(new Author()
                 {
                     Age = 10,
                     BooksPublished = 21,
                     Country = "UK",
                     Name = "Author 2"
                 });
-                await _uowRepository.Authors.InsertAsync(new Author()
+                await _uowRepository.Repository<Author>().InsertAsync(new Author()
                 {
                     Age = 10,
                     BooksPublished = 5,
                     Country = "IND",
                     Name = "Author 3"
                 });
+                var data = await _uowRepository.Repository<Book>().GetAsync();
 
                 await _uowRepository.CommitAsync();
             }
