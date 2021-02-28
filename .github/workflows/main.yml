@@ -24,6 +24,3 @@ jobs:
         dotnet build ./Crystal.Shared/Crystal.Shared.csproj -c Release
         dotnet build ./Crystal.XamForms.Shared/Crystal.XamForms.Shared.csproj -c Release
     
-    - name: Run Tests
-      run: |
-        dotnet test ./Crystal.EntityFrameworkCore.Tests/Crystal.EntityFrameworkCore.Tests.csproj -c Release
