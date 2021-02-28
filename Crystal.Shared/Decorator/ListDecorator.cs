@@ -10,27 +10,59 @@ using System.Threading.Tasks;
 
 namespace Crystal.Shared
 {
+    /// <summary>
+    /// List extensions
+    /// </summary>
     public static class ListDecorator
     {
-        public static bool IsNullOrEmpty<TItem>(this IEnumerable<TItem> dataset)
+        /// <summary>
+        /// Return true if records is null oe empty
+        /// </summary>
+        /// <typeparam name="TItem"></typeparam>
+        /// <param name="records"></param>
+        /// <returns></returns>
+        public static bool IsNullOrEmpty<TItem>(this IEnumerable<TItem> records)
         {
-            var returnValue = dataset == null || !dataset.Any();
-            return returnValue;
+            return records == null || !records.Any();
         }
 
-        public static T PickRandom<T>(this IEnumerable<T> source)
+        /// <summary>
+        /// Pick a random record from the records
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="records"></param>
+        /// <returns></returns>
+        public static T PickRandom<T>(this IEnumerable<T> records)
         {
-            return source.PickRandom(1).Single();
+            //***
+            //*** Shuffles and return the first record
+            //***
+            return records.PickRandom(1).Single();
+        }
+        /// <summary>
+        /// Pick a random list of record from the records
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="records"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> PickRandom<T>(this IEnumerable<T> records, int count)
+        {
+            //***
+            //*** Shuffles and return the selected count of records
+            //***
+            return records.Shuffle().Take(count);
         }
 
-        public static IEnumerable<T> PickRandom<T>(this IEnumerable<T> source, int count)
+        /// <summary>
+        /// Shuffle the records randomly
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="records"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> records)
         {
-            return source.Shuffle().Take(count);
-        }
-
-        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
-        {
-            return source.OrderBy(x => Guid.NewGuid());
+            return records.OrderBy(x => Guid.NewGuid());
         }
     }
 }

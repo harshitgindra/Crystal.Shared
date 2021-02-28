@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Crystal.Shared.Model
 {
+    /// <summary>
+    /// Datatable response
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public class DataTableResponse<TEntity> where TEntity : class
     {
         /// <summary>
@@ -30,8 +34,11 @@ namespace Crystal.Shared.Model
         [JsonProperty("iTotalDisplayRecords")]
         public int TotalDisplayRecords => TotalRecords;
 
-
-        [JsonProperty("sEcho")] public string Echo { get; set; } = "sEcho";
+        /// <summary>
+        /// Echo
+        /// </summary>
+        [JsonProperty("sEcho")]
+        public string Echo { get; set; } = "sEcho";
 
         /// <summary>
         /// f an error occurs during the running of the server-side processing script, 

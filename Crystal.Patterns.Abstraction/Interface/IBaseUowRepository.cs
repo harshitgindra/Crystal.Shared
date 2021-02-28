@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Crystal.Abstraction
 {
+    /// <summary>
+    /// Base unit of work repository interface
+    /// </summary>
     public interface IBaseUowRepository : IDisposable
     {
         /// <summary>

@@ -4,13 +4,119 @@
         <name>Crystal.Shared</name>
     </assembly>
     <members>
-        <member name="M:Crystal.Shared.DatatableDecorator._GetPropertyInfo(System.Type,System.String)">
+        <member name="T:Crystal.Shared.DatatableDecorator">
+            <summary>
+            Datatable decorator with extension methods
+            </summary>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatableAsync``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Performs datatable operations on the result based on input
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query">Collection of data</param>
+            <param name="request">Datatable request</param>
+            <returns>Datatable response</returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatable``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Performs datatable operations on the result based on input
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query">Collection of data</param>
+            <param name="request">Datatable request</param>
+            <returns>Datatable response</returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.OrderBy``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Perform order by operation with datatable request
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.GlobalFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Perform global filter on all searchable columns
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.ColumnFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Perform column level filtering based on datatable request
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.GetPropertyInfo(System.Type,System.String)">
             <summary>
             Get properties from the Entity including nested properties
             </summary>
             <param name="type"></param>
             <param name="propertyName"></param>
             <returns></returns>
+        </member>
+        <member name="T:Crystal.Shared.ListDecorator">
+            <summary>
+            List extensions
+            </summary>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.IsNullOrEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Return true if records is null oe empty
+            </summary>
+            <typeparam name="TItem"></typeparam>
+            <param name="records"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.PickRandom``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Pick a random record from the records
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="records"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.PickRandom``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Pick a random list of record from the records
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="records"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.Shuffle``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Shuffle the records randomly
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="records"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Crystal.Shared.StringDecorator">
+            <summary>
+            String extensions
+            </summary>
+        </member>
+        <member name="M:Crystal.Shared.StringDecorator.IsNullEmptyWhiteSpace(System.String)">
+            <summary>
+            Returns true if string is null, empty or empty space
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Crystal.Shared.Model.DataTableRequest`1">
+            <summary>
+            Datatable request
+            </summary>
+            <typeparam name="TEntity"></typeparam>
         </member>
         <member name="P:Crystal.Shared.Model.DataTableRequest`1.Start">
             <summary>
@@ -42,6 +148,11 @@
                 Collection of all columns in the table
             </summary>
         </member>
+        <member name="T:Crystal.Shared.Model.Column">
+            <summary>
+            Datatable column
+            </summary>
+        </member>
         <member name="P:Crystal.Shared.Model.Column.Data">
             <summary>
                 Column's data source
@@ -67,6 +178,11 @@
                 Search to apply to this specific column.
             </summary>
         </member>
+        <member name="T:Crystal.Shared.Model.Search">
+            <summary>
+            Datatable search/filter
+            </summary>
+        </member>
         <member name="P:Crystal.Shared.Model.Search.Value">
             <summary>
                 Global search value. To be applied to all columns which have searchable as true
@@ -85,6 +201,11 @@
             Specifies if the filter needs to be an exact match
             </summary>
         </member>
+        <member name="T:Crystal.Shared.Model.Order">
+            <summary>
+            Datatable ordering
+            </summary>
+        </member>
         <member name="P:Crystal.Shared.Model.Order.Column">
             <summary>
                 Column to which ordering should be applied. This is an index reference to the
@@ -96,6 +217,12 @@
                 Ordering direction for this column. It will be asc or desc to indicate ascending
                 ordering or descending ordering, respectively
             </summary>
+        </member>
+        <member name="T:Crystal.Shared.Model.DataTableResponse`1">
+            <summary>
+            Datatable response
+            </summary>
+            <typeparam name="TEntity"></typeparam>
         </member>
         <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalRecords">
             <summary>
@@ -116,6 +243,11 @@
         <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalDisplayRecords">
             <summary>
             Total records, before filtering (i.e. the total number of records in the database)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableResponse`1.Echo">
+            <summary>
+            Echo
             </summary>
         </member>
         <member name="P:Crystal.Shared.Model.DataTableResponse`1.Error">

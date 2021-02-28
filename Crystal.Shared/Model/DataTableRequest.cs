@@ -9,6 +9,10 @@ using System.Linq.Expressions;
 
 namespace Crystal.Shared.Model
 {
+    /// <summary>
+    /// Datatable request
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public class DataTableRequest<TEntity>
     {
         /// <summary>
@@ -41,7 +45,9 @@ namespace Crystal.Shared.Model
         /// </summary>
         public List<Column> Columns { get; set; }
     }
-
+    /// <summary>
+    /// Datatable column
+    /// </summary>
     public class Column
     {
         /// <summary>
@@ -69,7 +75,9 @@ namespace Crystal.Shared.Model
         /// </summary>
         public Search Search { get; set; }
     }
-
+    /// <summary>
+    /// Datatable search/filter
+    /// </summary>
     public class Search
     {
         /// <summary>
@@ -90,7 +98,9 @@ namespace Crystal.Shared.Model
         /// </summary>
         public bool ExactMatch { get; set; }
     }
-
+    /// <summary>
+    /// Datatable ordering
+    /// </summary>
     public class Order
     {
         /// <summary>

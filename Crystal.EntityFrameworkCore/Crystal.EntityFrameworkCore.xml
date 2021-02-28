@@ -4,6 +4,352 @@
         <name>Crystal.EntityFrameworkCore</name>
     </assembly>
     <members>
+        <member name="T:Crystal.EntityFrameworkCore.BaseContext">
+            <summary>
+            Base context derived from DbContext
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.#ctor">
+            <summary>
+            Default base context constructor 
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Default base context constructor with DbContextOptions
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:Crystal.EntityFrameworkCore.BaseContext.ContextBuilder">
+            <summary>
+            Context builder
+            </summary>
+        </member>
+        <member name="P:Crystal.EntityFrameworkCore.BaseContext.Transaction">
+            <summary>
+            Database transaction
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.BeginTransaction">
+            <summary>
+            Starts a new transaction
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.SaveChanges">
+            <summary>
+            Saves uncommitted changes to the database
+            </summary>
+            <returns>The number of records added/updated</returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.Commit">
+            <summary>
+            Commits pending changes to the database
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.CommitAsync">
+            <summary>
+            Commits pending changes to the database
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.CommitBulkChanges">
+            <summary>
+            Commits pending bulk changes to the database
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.CommitBulkChangesAsync">
+            <summary>
+            Commits pending bulk changes to the database
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.Rollback">
+            <summary>
+            Rollback any pending changes
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.RollbackAsync">
+            <summary>
+            Rollback any pending changes
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseContext.Dispose">
+            <summary>
+            Dispose transaction and dBContext
+            </summary>
+        </member>
+        <member name="T:Crystal.EntityFrameworkCore.BaseRepository`1">
+            <summary>
+            Base repository to perform dB operations
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:Crystal.EntityFrameworkCore.BaseRepository`1.Entity">
+            <summary>
+            Database entity
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Base repository constructor
+            </summary>
+            <param name="context">Database context</param>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.#ctor(Microsoft.EntityFrameworkCore.DbContext,AutoMapper.MapperConfiguration)">
+            <summary>
+            Base repository constructor
+            </summary>
+            <param name="context">Database context</param>
+            <param name="mapperConfiguration">Auto-mapper configuration</param>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Returns IEnumerable of data based on filters
+            </summary>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>IEnumerable of data</returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.GetAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Returns IEnumerable of data based on filters
+            </summary>
+            <typeparam name="TModel">Model to which result should be mapped</typeparam>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>IEnumerable of data</returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.QueryAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Returns IQueryable of data based on filters
+            </summary>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>IQueryable of data</returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.QueryAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+             Returns IQueryable of data based on filters
+            </summary>
+            <typeparam name="TModel">Model to which result should be mapped to</typeparam>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>Maps the data to TModel and return IQueryable of data</returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.GetFirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Gets first or default record based on filter
+            </summary>
+            <param name="filter">Where expression to filter the data</param>
+            <param name="includes">Properties to be included in the response</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.GetFirstOrDefaultAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
+            <summary>
+            Gets first or default record based on filter
+            Maps the response to TModel
+            </summary>
+            <typeparam name="TModel">Model to which the response should be mapped to</typeparam>
+            <param name="filter">Where expression to filter the data</param>
+            <param name="includes">Properties to be included in the response</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Return true/false if the record exists based on filter
+            </summary>
+            <param name="filter">Where expression based on filter</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.FindAsync(System.Object)">
+            <summary>
+            Finds and returns the entity based on primary key of the table
+            </summary>
+            <param name="id">primary key of the table</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.FindAsync``1(System.Object)">
+            <summary>
+            Finds and returns the mapped model based on primary key of the table
+            </summary>
+            <typeparam name="TModel">Model to which the response should be mapped to</typeparam>
+            <param name="id">primary key of the table</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.InsertAsync(`0)">
+            <summary>
+            Inserts a record to the database
+            </summary>
+            <param name="entity">entity to be inserted</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.InsertAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Inserts multiple records to the database
+            </summary>
+            <param name="entities">List of entities to be inserted</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.BulkInsertAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Bulk inserts the records to the database
+            </summary>
+            <param name="entities">list of entities to be inserted</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.DeleteAsync(System.Object)">
+            <summary>
+            Deletes the record from the database
+            </summary>
+            <param name="id">Primary identifier of the entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.DeleteAsync(`0)">
+            <summary>
+            Deletes the record from the database
+            </summary>
+            <param name="entity">entity to be deleted</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.BulkDeleteAllAsync">
+            <summary>
+            Deletes all records from the table
+            <remarks>This method will commit the changes to the database</remarks>
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.DeleteAllAsync">
+            <summary>
+            Deletes all the records from the table
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.UpdateAsync(`0)">
+            <summary>
+            Updates the entity to the database
+            </summary>
+            <param name="entity">Record to the updated</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.DeleteAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Deletes the record from the context
+            </summary>
+            <param name="filter">filter to select records to be deleted</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.Dispose">
+            <summary>
+            Disposes the dBContext
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.UpdateAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Updates list of records in the database
+            </summary>
+            <param name="entities">list of entities to be updated</param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.RunSql(System.String,System.Object[])">
+            <summary>
+            Executes raw sql query on the context
+            </summary>
+            <param name="sql">sql statement to be executed</param>
+            <param name="parameters">parameters to be injected in the sql query</param>
+            <returns>IQueryable of TEntity</returns>
+        </member>
+        <member name="T:Crystal.EntityFrameworkCore.BaseUowRepository">
+            <summary>
+            Base unit of work repository providing functionality to perform database operations
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.#ctor(Crystal.EntityFrameworkCore.BaseContext)">
+            <summary>
+            Base unit of work constructor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.#ctor(Crystal.EntityFrameworkCore.BaseContext,AutoMapper.MapperConfiguration)">
+            <summary>
+            Base unit of work constructor
+            </summary>
+            <param name="context"></param>
+            <param name="mapperConfiguration"></param>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.GetInstance``1(Crystal.Abstraction.IBaseRepository{``0})">
+            <summary>
+            Returns the instance of IBaseRepository of the entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="instance"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.Repository``1">
+            <summary>
+            Returns IBaseRepository instance of the entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="P:Crystal.EntityFrameworkCore.BaseUowRepository.DbContext">
+            <summary>
+            Database context instance
+            </summary>
+        </member>
+        <member name="P:Crystal.EntityFrameworkCore.BaseUowRepository.MapperConfiguration">
+            <summary>
+            Auto-mapper configuration
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.BeginTransactionAsync">
+            <summary>
+            Starts a transaction which can be used across multiple data change requests
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.Commit">
+            <summary>
+            Commit changes to database
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.CommitAsync">
+            <summary>
+            Commit changes to database
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.CommitBulkChangesAsync">
+            <summary>
+            Commit bulk changes
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.CommitBulkChanges">
+            <summary>
+            Commit bulk changes
+            </summary>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.Rollback">
+            <summary>
+            Rollback any uncommitted changes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.RollbackAsync">
+            <summary>
+            Rollback any uncommitted changes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.Dispose">
+            <summary>
+            Dispose dB context and repository instances
+            </summary>
+        </member>
+        <member name="T:Crystal.EntityFrameworkCore.UnitOfWorkServiceCollectionExtension">
+            <summary>
+            Service collection extension to configure unit of work
+            </summary>
+        </member>
         <member name="M:Crystal.EntityFrameworkCore.UnitOfWorkServiceCollectionExtension.ConfigureUnitOfWork``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Configures unit of work repositories in the service collection to support the implementation
@@ -13,153 +359,175 @@
             <param name="serviceCollection">Service collection</param>
             <returns></returns>
         </member>
+        <member name="T:Crystal.Abstraction.IBaseRepository`1">
+            <summary>
+            Base repository interface to perform dB operations
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
         <member name="P:Crystal.Abstraction.IBaseRepository`1.Entity">
             <summary>
-            dB entity
+            Database entity
             </summary>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
             <summary>
-            Get records from the database based on  input parameters
+            Returns IEnumerable of data based on filters
             </summary>
-            <param name="filter"></param>
-            <param name="orderBy"></param>
-            <param name="includes"></param>
-            <returns></returns>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>IEnumerable of data</returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.GetAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
             <summary>
-            Get records from the database based on  input parameters
+            Returns IEnumerable of data based on filters
             </summary>
-            <typeparam name="TModel"></typeparam>
-            <param name="filter"></param>
-            <param name="orderBy"></param>
-            <param name="includes"></param>
-            <returns></returns>
+            <typeparam name="TModel">Model to which result should be mapped</typeparam>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>IEnumerable of data</returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.QueryAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
             <summary>
-            Get queryable data from database based on input parameters
+            Returns IQueryable of data based on filters
             </summary>
-            <param name="filter"></param>
-            <param name="orderBy"></param>
-            <param name="includes"></param>
-            <returns></returns>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>IQueryable of data</returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.QueryAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
             <summary>
-            Get queryable data from database based on input parameters
+             Returns IQueryable of data based on filters
             </summary>
-            <typeparam name="TModel"></typeparam>
-            <param name="filter"></param>
-            <param name="orderBy"></param>
-            <param name="includes"></param>
-            <returns></returns>
+            <typeparam name="TModel">Model to which result should be mapped to</typeparam>
+            <param name="filter">Where expression to filer the data</param>
+            <param name="orderBy">Specifies the sorting of data</param>
+            <param name="includes">Specify additional columns/tables that should be include in the response</param>
+            <returns>Maps the data to TModel and return IQueryable of data</returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.GetFirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
             <summary>
-            Get records from the database based on  input parameters
+            Gets first or default record based on filter
             </summary>
-            <param name="filter"></param>
-            <param name="includes"></param>
+            <param name="filter">Where expression to filter the data</param>
+            <param name="includes">Properties to be included in the response</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.GetFirstOrDefaultAsync``1(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
             <summary>
-            Get first record from the database based in input parameters
+            Gets first or default record based on filter
+            Maps the response to TModel
             </summary>
-            <param name="filter">Conditions to filter the records</param>
-            <param name="includeProperties">specify the names of the properties that needs to be added to the entity</param>
+            <typeparam name="TModel">Model to which the response should be mapped to</typeparam>
+            <param name="filter">Where expression to filter the data</param>
+            <param name="includes">Properties to be included in the response</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
             <summary>
-            Checks if there are any records in the dB for the query
+            Return true/false if the record exists based on filter
             </summary>
-            <param name="filter"></param>
+            <param name="filter">Where expression based on filter</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.FindAsync(System.Object)">
             <summary>
-            Returns a record from the dB with the matching primary key
+            Finds and returns the entity based on primary key of the table
             </summary>
-            <param name="id"></param>
+            <param name="id">primary key of the table</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.FindAsync``1(System.Object)">
             <summary>
-            Returns a record from the dB with the matching primary key and maps it to different model
+            Finds and returns the mapped model based on primary key of the table
             </summary>
-            <typeparam name="TModel"></typeparam>
-            <param name="id"></param>
+            <typeparam name="TModel">Model to which the response should be mapped to</typeparam>
+            <param name="id">primary key of the table</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.InsertAsync(`0)">
             <summary>
-            Inserts a new record in the dB
+            Inserts a record to the database
             </summary>
-            <param name="entity"></param>
+            <param name="entity">entity to be inserted</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.InsertAsync(System.Collections.Generic.IEnumerable{`0})">
             <summary>
-            Inserts a list of records in the dB
+            Inserts multiple records to the database
             </summary>
-            <param name="entities"></param>
+            <param name="entities">List of entities to be inserted</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAsync(System.Object)">
             <summary>
-            Delete record based on primary key from the dB
+            Deletes the record from the database
             </summary>
-            <param name="request">Datatable request with filters, columns, order details</param>
-            <returns>Datatable Response with filtered data and related information</returns>
+            <param name="id">Primary identifier of the entity</param>
+            <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAsync(`0)">
             <summary>
-            Delete single record from the dB
+            Deletes the record from the database
             </summary>
-            <param name="request">Datatable request with filters, columns, order details</param>
-            <returns>Datatable Response with filtered data and related information</returns>
+            <param name="entity">entity to be deleted</param>
+            <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAllAsync">
             <summary>
-            Delete all entries from the dB
+            Deletes all the records from the table
             </summary>
-            <param name="filter"></param>
-            <param name="includeProperties"></param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.UpdateAsync(`0)">
             <summary>
-            Update single record in the dB
+            Updates the entity to the database
             </summary>
-            <param name="filter"></param>
-            <param name="includeProperties"></param>
+            <param name="entity">Record to the updated</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.DeleteAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
             <summary>
-            delete all the records from the dB based on the expression
+            Deletes the record from the context
             </summary>
-            <param name="filter"></param>
-            <param name="includeProperties"></param>
+            <param name="filter">filter to select records to be deleted</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.UpdateAsync(System.Collections.Generic.IEnumerable{`0})">
             <summary>
-            Update list of records
+            Updates list of records in the database
             </summary>
-            <param name="entities"></param>
+            <param name="entities">list of entities to be updated</param>
             <returns></returns>
         </member>
         <member name="M:Crystal.Abstraction.IBaseRepository`1.RunSql(System.String,System.Object[])">
             <summary>
-            Execute sql query against the entity
+            Executes raw sql query on the context
             </summary>
-            <param name="sql"></param>
-            <param name="paramters"></param>
+            <param name="sql">sql statement to be executed</param>
+            <param name="parameters">parameters to be injected in the sql query</param>
+            <returns>IQueryable of TEntity</returns>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.BulkDeleteAllAsync">
+            <summary>
+            Deletes all records from the table
+            <remarks>This method will commit the changes to the database</remarks>
+            </summary>
+        </member>
+        <member name="M:Crystal.Abstraction.IBaseRepository`1.BulkInsertAsync(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Bulk inserts the records to the database
+            </summary>
+            <param name="entities">list of entities to be inserted</param>
             <returns></returns>
+        </member>
+        <member name="T:Crystal.Abstraction.IBaseUowRepository">
+            <summary>
+            Base unit of work repository interface
+            </summary>
         </member>
         <member name="P:Crystal.Abstraction.IBaseUowRepository.DbContext">
             <summary>
@@ -194,13 +562,119 @@
             <typeparam name="TEntity"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:Crystal.Shared.DatatableDecorator._GetPropertyInfo(System.Type,System.String)">
+        <member name="T:Crystal.Shared.DatatableDecorator">
+            <summary>
+            Datatable decorator with extension methods
+            </summary>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatableAsync``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Performs datatable operations on the result based on input
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query">Collection of data</param>
+            <param name="request">Datatable request</param>
+            <returns>Datatable response</returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatable``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Performs datatable operations on the result based on input
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query">Collection of data</param>
+            <param name="request">Datatable request</param>
+            <returns>Datatable response</returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.OrderBy``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Perform order by operation with datatable request
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.GlobalFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Perform global filter on all searchable columns
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.ColumnFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+            <summary>
+            Perform column level filtering based on datatable request
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="query"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.DatatableDecorator.GetPropertyInfo(System.Type,System.String)">
             <summary>
             Get properties from the Entity including nested properties
             </summary>
             <param name="type"></param>
             <param name="propertyName"></param>
             <returns></returns>
+        </member>
+        <member name="T:Crystal.Shared.ListDecorator">
+            <summary>
+            List extensions
+            </summary>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.IsNullOrEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Return true if records is null oe empty
+            </summary>
+            <typeparam name="TItem"></typeparam>
+            <param name="records"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.PickRandom``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Pick a random record from the records
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="records"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.PickRandom``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Pick a random list of record from the records
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="records"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Crystal.Shared.ListDecorator.Shuffle``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Shuffle the records randomly
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="records"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Crystal.Shared.StringDecorator">
+            <summary>
+            String extensions
+            </summary>
+        </member>
+        <member name="M:Crystal.Shared.StringDecorator.IsNullEmptyWhiteSpace(System.String)">
+            <summary>
+            Returns true if string is null, empty or empty space
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Crystal.Shared.Model.DataTableRequest`1">
+            <summary>
+            Datatable request
+            </summary>
+            <typeparam name="TEntity"></typeparam>
         </member>
         <member name="P:Crystal.Shared.Model.DataTableRequest`1.Start">
             <summary>
@@ -232,6 +706,11 @@
                 Collection of all columns in the table
             </summary>
         </member>
+        <member name="T:Crystal.Shared.Model.Column">
+            <summary>
+            Datatable column
+            </summary>
+        </member>
         <member name="P:Crystal.Shared.Model.Column.Data">
             <summary>
                 Column's data source
@@ -257,6 +736,11 @@
                 Search to apply to this specific column.
             </summary>
         </member>
+        <member name="T:Crystal.Shared.Model.Search">
+            <summary>
+            Datatable search/filter
+            </summary>
+        </member>
         <member name="P:Crystal.Shared.Model.Search.Value">
             <summary>
                 Global search value. To be applied to all columns which have searchable as true
@@ -275,6 +759,11 @@
             Specifies if the filter needs to be an exact match
             </summary>
         </member>
+        <member name="T:Crystal.Shared.Model.Order">
+            <summary>
+            Datatable ordering
+            </summary>
+        </member>
         <member name="P:Crystal.Shared.Model.Order.Column">
             <summary>
                 Column to which ordering should be applied. This is an index reference to the
@@ -286,6 +775,12 @@
                 Ordering direction for this column. It will be asc or desc to indicate ascending
                 ordering or descending ordering, respectively
             </summary>
+        </member>
+        <member name="T:Crystal.Shared.Model.DataTableResponse`1">
+            <summary>
+            Datatable response
+            </summary>
+            <typeparam name="TEntity"></typeparam>
         </member>
         <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalRecords">
             <summary>
@@ -306,6 +801,11 @@
         <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalDisplayRecords">
             <summary>
             Total records, before filtering (i.e. the total number of records in the database)
+            </summary>
+        </member>
+        <member name="P:Crystal.Shared.Model.DataTableResponse`1.Echo">
+            <summary>
+            Echo
             </summary>
         </member>
         <member name="P:Crystal.Shared.Model.DataTableResponse`1.Error">

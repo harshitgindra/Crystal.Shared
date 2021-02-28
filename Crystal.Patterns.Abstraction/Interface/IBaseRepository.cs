@@ -12,165 +12,180 @@ using System.Threading.Tasks;
 
 namespace Crystal.Abstraction
 {
+    /// <summary>
+    /// Base repository interface to perform dB operations
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public interface IBaseRepository<TEntity> : IDisposable
        where TEntity : class
     {
         /// <summary>
-        /// dB entity
+        /// Database entity
         /// </summary>
         DbSet<TEntity> Entity { get; }
 
         /// <summary>
-        /// Get records from the database based on  input parameters
+        /// Returns IEnumerable of data based on filters
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
+        /// <param name="filter">Where expression to filer the data</param>
+        /// <param name="orderBy">Specifies the sorting of data</param>
+        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
+        /// <returns>IEnumerable of data</returns>
         Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
-        /// Get records from the database based on  input parameters
+        /// Returns IEnumerable of data based on filters
         /// </summary>
-        /// <typeparam name="TModel"></typeparam>
-        /// <param name="filter"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
+        /// <typeparam name="TModel">Model to which result should be mapped</typeparam>
+        /// <param name="filter">Where expression to filer the data</param>
+        /// <param name="orderBy">Specifies the sorting of data</param>
+        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
+        /// <returns>IEnumerable of data</returns>
         Task<List<TModel>> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
-        /// Get queryable data from database based on input parameters
+        /// Returns IQueryable of data based on filters
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
+        /// <param name="filter">Where expression to filer the data</param>
+        /// <param name="orderBy">Specifies the sorting of data</param>
+        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
+        /// <returns>IQueryable of data</returns>
         Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
-        /// Get queryable data from database based on input parameters
+        ///  Returns IQueryable of data based on filters
         /// </summary>
-        /// <typeparam name="TModel"></typeparam>
-        /// <param name="filter"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
+        /// <typeparam name="TModel">Model to which result should be mapped to</typeparam>
+        /// <param name="filter">Where expression to filer the data</param>
+        /// <param name="orderBy">Specifies the sorting of data</param>
+        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
+        /// <returns>Maps the data to TModel and return IQueryable of data</returns>
         Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
-        /// Get records from the database based on  input parameters
+        /// Gets first or default record based on filter
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includes"></param>
+        /// <param name="filter">Where expression to filter the data</param>
+        /// <param name="includes">Properties to be included in the response</param>
         /// <returns></returns>
         Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null,
             params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
-        /// Get first record from the database based in input parameters
+        /// Gets first or default record based on filter
+        /// Maps the response to TModel
         /// </summary>
-        /// <param name="filter">Conditions to filter the records</param>
-        /// <param name="includeProperties">specify the names of the properties that needs to be added to the entity</param>
+        /// <typeparam name="TModel">Model to which the response should be mapped to</typeparam>
+        /// <param name="filter">Where expression to filter the data</param>
+        /// <param name="includes">Properties to be included in the response</param>
         /// <returns></returns>
         Task<TModel> GetFirstOrDefaultAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
             params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
-        /// Checks if there are any records in the dB for the query
+        /// Return true/false if the record exists based on filter
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Where expression based on filter</param>
         /// <returns></returns>
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null);
 
         /// <summary>
-        /// Returns a record from the dB with the matching primary key
+        /// Finds and returns the entity based on primary key of the table
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">primary key of the table</param>
         /// <returns></returns>
         Task<TEntity> FindAsync(object id);
 
         /// <summary>
-        /// Returns a record from the dB with the matching primary key and maps it to different model
+        /// Finds and returns the mapped model based on primary key of the table
         /// </summary>
-        /// <typeparam name="TModel"></typeparam>
-        /// <param name="id"></param>
+        /// <typeparam name="TModel">Model to which the response should be mapped to</typeparam>
+        /// <param name="id">primary key of the table</param>
         /// <returns></returns>
         Task<TModel> FindAsync<TModel>(object id);
 
         /// <summary>
-        /// Inserts a new record in the dB
+        /// Inserts a record to the database
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entity">entity to be inserted</param>
         /// <returns></returns>
         Task InsertAsync(TEntity entity);
 
         /// <summary>
-        /// Inserts a list of records in the dB
+        /// Inserts multiple records to the database
         /// </summary>
-        /// <param name="entities"></param>
+        /// <param name="entities">List of entities to be inserted</param>
         /// <returns></returns>
         Task InsertAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// Delete record based on primary key from the dB
+        /// Deletes the record from the database
         /// </summary>
-        /// <param name="request">Datatable request with filters, columns, order details</param>
-        /// <returns>Datatable Response with filtered data and related information</returns>
+        /// <param name="id">Primary identifier of the entity</param>
+        /// <returns></returns>
         Task DeleteAsync(object id);
 
         /// <summary>
-        /// Delete single record from the dB
+        /// Deletes the record from the database
         /// </summary>
-        /// <param name="request">Datatable request with filters, columns, order details</param>
-        /// <returns>Datatable Response with filtered data and related information</returns>
-        Task DeleteAsync(TEntity entityToDelete);
+        /// <param name="entity">entity to be deleted</param>
+        /// <returns></returns>
+        Task DeleteAsync(TEntity entity);
 
         /// <summary>
-        /// Delete all entries from the dB
+        /// Deletes all the records from the table
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includeProperties"></param>
         /// <returns></returns>
         Task DeleteAllAsync();
 
         /// <summary>
-        /// Update single record in the dB
+        /// Updates the entity to the database
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includeProperties"></param>
+        /// <param name="entity">Record to the updated</param>
         /// <returns></returns>
-        Task UpdateAsync(TEntity entityToUpdate);
+        Task UpdateAsync(TEntity entity);
 
         /// <summary>
-        /// delete all the records from the dB based on the expression
+        /// Deletes the record from the context
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includeProperties"></param>
+        /// <param name="filter">filter to select records to be deleted</param>
         /// <returns></returns>
         Task DeleteAsync(Expression<Func<TEntity, bool>> filter);
 
         /// <summary>
-        /// Update list of records
+        /// Updates list of records in the database
         /// </summary>
-        /// <param name="entities"></param>
+        /// <param name="entities">list of entities to be updated</param>
         /// <returns></returns>
         Task UpdateAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// Execute sql query against the entity
+        /// Executes raw sql query on the context
         /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="paramters"></param>
+        /// <param name="sql">sql statement to be executed</param>
+        /// <param name="parameters">parameters to be injected in the sql query</param>
+        /// <returns>IQueryable of TEntity</returns>
+        Task<IQueryable<TEntity>> RunSql(string sql, params object[] parameters);
+
+        /// <summary>
+        /// Deletes all records from the table
+        /// <remarks>This method will commit the changes to the database</remarks>
+        /// </summary>
+        Task BulkDeleteAllAsync();
+
+        /// <summary>
+        /// Bulk inserts the records to the database
+        /// </summary>
+        /// <param name="entities">list of entities to be inserted</param>
         /// <returns></returns>
-        Task<IQueryable<TEntity>> RunSql(string sql, params object[] paramters);
+        Task BulkInsertAsync(IEnumerable<TEntity> entities);
     }
 }

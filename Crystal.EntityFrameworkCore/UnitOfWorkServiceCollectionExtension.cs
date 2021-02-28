@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Crystal.EntityFrameworkCore
 {
+    /// <summary>
+    /// Service collection extension to configure unit of work
+    /// </summary>
     public static class UnitOfWorkServiceCollectionExtension
     {
         /// <summary>

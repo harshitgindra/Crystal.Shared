@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Crystal.Abstraction;
-using Crystal.Abstraction;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {

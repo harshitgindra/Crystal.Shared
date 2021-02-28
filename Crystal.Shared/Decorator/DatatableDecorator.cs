@@ -7,13 +7,30 @@ using System.Threading.Tasks;
 
 namespace Crystal.Shared
 {
+    /// <summary>
+    /// Datatable decorator with extension methods
+    /// </summary>
     public static class DatatableDecorator
     {
+        /// <summary>
+        /// Performs datatable operations on the result based on input
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="query">Collection of data</param>
+        /// <param name="request">Datatable request</param>
+        /// <returns>Datatable response</returns>
         public static Task<DataTableResponse<TEntity>> ToDatatableAsync<TEntity>(this IQueryable<TEntity> query, DataTableRequest<TEntity> request) where TEntity : class
         {
             return Task.FromResult(query.ToDatatable(request));
         }
 
+        /// <summary>
+        /// Performs datatable operations on the result based on input
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="query">Collection of data</param>
+        /// <param name="request">Datatable request</param>
+        /// <returns>Datatable response</returns>
         public static DataTableResponse<TEntity> ToDatatable<TEntity>(this IQueryable<TEntity> query, DataTableRequest<TEntity> request) where TEntity : class
         {
             var response = new DataTableResponse<TEntity>();
@@ -65,7 +82,13 @@ namespace Crystal.Shared
         }
 
         private static readonly string _orCondition = " || ";
-
+        /// <summary>
+        /// Perform order by operation with datatable request
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static IQueryable<TEntity> OrderBy<TEntity>(this IQueryable<TEntity> query, DataTableRequest<TEntity> request)
         {
             //***
@@ -87,6 +110,13 @@ namespace Crystal.Shared
             return query;
         }
 
+        /// <summary>
+        /// Perform global filter on all searchable columns
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static IQueryable<TEntity> GlobalFilter<TEntity>(this IQueryable<TEntity> query,
             DataTableRequest<TEntity> request)
             where TEntity : class
@@ -102,7 +132,7 @@ namespace Crystal.Shared
                     //***
                     //*** Fetching where clause depending on different data types
                     //***
-                    var whrString = _WhereQueryBuilder<TEntity>(column.Data, request.Search);
+                    var whrString = WhereQueryBuilder<TEntity>(column.Data, request.Search);
 
                     if (!string.IsNullOrEmpty(whereQuery) && !string.IsNullOrEmpty(whrString))
                     {
@@ -130,6 +160,13 @@ namespace Crystal.Shared
             return query;
         }
 
+        /// <summary>
+        /// Perform column level filtering based on datatable request
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static IQueryable<TEntity> ColumnFilter<TEntity>(this IQueryable<TEntity> query,
             DataTableRequest<TEntity> request)
             where TEntity : class
@@ -145,7 +182,7 @@ namespace Crystal.Shared
                 //***
                 //*** Fetching where clause depending on different data types
                 //***
-                var whereQuery = _WhereQueryBuilder<TEntity>(column.Data, column.Search);
+                var whereQuery = WhereQueryBuilder<TEntity>(column.Data, column.Search);
 
                 if (!string.IsNullOrEmpty(whereQuery))
                 {
@@ -160,9 +197,9 @@ namespace Crystal.Shared
 
         }
 
-        private static string _WhereQueryBuilder<TEntity>(string field, Search search)
+        private static string WhereQueryBuilder<TEntity>(string field, Search search)
         {
-            var propertyInfo = _GetPropertyInfo(typeof(TEntity), field);
+            var propertyInfo = GetPropertyInfo(typeof(TEntity), field);
 
             if (propertyInfo != null)
             {
@@ -383,7 +420,7 @@ namespace Crystal.Shared
         /// <param name="type"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        private static PropertyInfo _GetPropertyInfo(Type type, string propertyName)
+        private static PropertyInfo GetPropertyInfo(Type type, string propertyName)
         {
             //***
             //*** Check if the property name is a complex nested type
@@ -397,13 +434,13 @@ namespace Crystal.Shared
                 //***
                 //*** Check if the property exists in the type
                 //***
-                var prop = _GetPropertyInfo(type, tempPropertyName[0]);
+                var prop = GetPropertyInfo(type, tempPropertyName[0]);
                 if (prop != null)
                 {
                     //***
                     //*** Drill down to check if the nested property exists in the complex type
                     //***
-                    return _GetPropertyInfo(prop.PropertyType, tempPropertyName[1]);
+                    return GetPropertyInfo(prop.PropertyType, tempPropertyName[1]);
                 }
                 else
                 {

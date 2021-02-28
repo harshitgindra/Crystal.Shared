@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 
 namespace Crystal.Patterns.Abstraction
 {
+    /// <summary>
+    /// Base service interface
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public interface IBaseService<TEntity> where TEntity : class
     {
         /// <summary>
@@ -22,6 +26,7 @@ namespace Crystal.Patterns.Abstraction
         /// Get all entity records based on foreign key identifier
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> GetAllAsync(int id, CancellationToken token = default);
 
@@ -29,6 +34,7 @@ namespace Crystal.Patterns.Abstraction
         /// Get all entity records based on foreign key identifier
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         IEnumerable<TEntity> GetAll(int id, CancellationToken token = default);
 
@@ -36,6 +42,7 @@ namespace Crystal.Patterns.Abstraction
         /// Insert entity record to the data source
         /// </summary>
         /// <param name="item"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         Task<bool> InsertAsync(TEntity item, CancellationToken token = default);
 
@@ -43,6 +50,7 @@ namespace Crystal.Patterns.Abstraction
         /// Insert multiple entity records to the data source
         /// </summary>
         /// <param name="item"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         Task<bool> InsertAsync(IEnumerable<TEntity> item, CancellationToken token = default);
 
@@ -50,6 +58,7 @@ namespace Crystal.Patterns.Abstraction
         /// Delete the entry with the id from the system
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         Task<bool> DeleteAsync(int id, CancellationToken token = default);
 
@@ -57,6 +66,7 @@ namespace Crystal.Patterns.Abstraction
         /// Delete the entry with the id from the system
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
         bool Delete(int id, CancellationToken token = default);
     }
