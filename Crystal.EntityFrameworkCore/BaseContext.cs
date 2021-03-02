@@ -113,7 +113,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Commit changes on the transaction
             //***
-            await this.Transaction?.CommitAsync();
+            this.Transaction?.Commit();
             //***
             //*** Clear tracker
             //***

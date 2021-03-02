@@ -260,13 +260,15 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Delete all method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            await uowRepo.DeleteAllAsync();
-            await DbContext.CommitBulkChangesAsync();
-            //***
-            //*** All Records should be deleted
-            //***
-            Assert.AreEqual(0, DbContext.Orders.Count());
+            using (IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext))
+            {
+                await uowRepo.DeleteAllAsync();
+                await DbContext.CommitBulkChangesAsync();
+                //***
+                //*** All Records should be deleted
+                //***
+                Assert.AreEqual(0, DbContext.Orders.Count());
+            }
         }
 
         #endregion
