@@ -23,7 +23,7 @@ namespace Crystal.EntityFrameworkCore
         where TEntity : class
     {
         private readonly DbContext _context;
-        private readonly MapperConfiguration _mapperConfiguration;
+        private readonly IMapper _mapper;
         /// <summary>
         /// Database entity
         /// </summary>
@@ -32,19 +32,12 @@ namespace Crystal.EntityFrameworkCore
         /// Base repository constructor
         /// </summary>
         /// <param name="context">Database context</param>
-        public BaseRepository(DbContext context)
+        /// <param name="mapper">Auto-mapper configuration</param>
+        public BaseRepository(DbContext context, IMapper mapper = default)
         {
+            _mapper = mapper;
             _context = context;
             Entity = context.Set<TEntity>();
-        }
-        /// <summary>
-        /// Base repository constructor
-        /// </summary>
-        /// <param name="context">Database context</param>
-        /// <param name="mapperConfiguration">Auto-mapper configuration</param>
-        public BaseRepository(DbContext context, MapperConfiguration mapperConfiguration) : this(context)
-        {
-            _mapperConfiguration = mapperConfiguration;
         }
         /// <summary>
         /// Returns IEnumerable of data based on filters
@@ -155,7 +148,7 @@ namespace Crystal.EntityFrameworkCore
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            if (_mapperConfiguration == null)
+            if (_mapper == null)
             {
                 throw new Exception("Auto-mapper not configured");
             }
@@ -168,7 +161,8 @@ namespace Crystal.EntityFrameworkCore
                 //***
                 //*** Maps the result to TModel and return the data
                 //***
-                return query.ProjectTo<TModel>(_mapperConfiguration);
+
+                return _mapper.ProjectTo<TModel>(query);
             }
         }
         /// <summary>
@@ -263,7 +257,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Check if mapper configuration is null
             //***
-            if (_mapperConfiguration == null)
+            if (_mapper == null)
             {
                 throw new Exception("Auto-mapper not configured");
             }
@@ -276,7 +270,7 @@ namespace Crystal.EntityFrameworkCore
                 //***
                 //*** Map the record to TModel and return the result
                 //***
-                return _mapperConfiguration.CreateMapper().Map<TModel>(record);
+                return _mapper.Map<TModel>(record);
             }
         }
 

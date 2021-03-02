@@ -14,14 +14,15 @@ namespace Crystal.EntityFrameworkCore.Tests
     public class GetRepositoryUowWithMappingTests : BaseTests
     {
         private List<Order> _testOrders;
-        private MapperConfiguration _mapper;
+        private IMapper _mapper;
 
         [SetUp]
         public void Setup()
         {
             _mapper = new MapperConfiguration(cfg =>
                        cfg.CreateMap<Order, OrderDto>()
-                       .ForMember(dto => dto.OrderName, conf => conf.MapFrom(ol => ol.Name)));
+                       .ForMember(dto => dto.OrderName, conf => conf.MapFrom(ol => ol.Name)))
+                .CreateMapper();
 
             DbContext = new TestContext();
             //***

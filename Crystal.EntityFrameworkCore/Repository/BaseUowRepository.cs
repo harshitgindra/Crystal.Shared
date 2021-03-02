@@ -20,29 +20,12 @@ namespace Crystal.EntityFrameworkCore
         /// Base unit of work constructor
         /// </summary>
         /// <param name="context"></param>
-        public BaseUowRepository(BaseContext context)
+        /// <param name="mapper"></param>
+        public BaseUowRepository(BaseContext context, IMapper mapper = default)
         {
+            Mapper = mapper;
             _context = context;
             _repositoryInstances = new Dictionary<Type, object>();
-        }
-        /// <summary>
-        /// Base unit of work constructor
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="mapperConfiguration"></param>
-        public BaseUowRepository(BaseContext context, MapperConfiguration mapperConfiguration) : this(context)
-        {
-            this.MapperConfiguration = mapperConfiguration;
-        }
-        /// <summary>
-        /// Returns the instance of IBaseRepository of the entity
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="instance"></param>
-        /// <returns></returns>
-        public virtual IBaseRepository<TEntity> GetInstance<TEntity>(IBaseRepository<TEntity> instance) where TEntity : class
-        {
-            return instance ??= new BaseRepository<TEntity>(this.DbContext);
         }
 
         private readonly IDictionary<Type, object> _repositoryInstances;
@@ -71,7 +54,7 @@ namespace Crystal.EntityFrameworkCore
                 //*** Save it to the dictionary
                 //*** Return the instance
                 //***
-                var repo = new BaseRepository<TEntity>(this.DbContext);
+                var repo = new BaseRepository<TEntity>(this.DbContext, Mapper);
                 _repositoryInstances.Add(typeof(TEntity), repo);
                 return repo;
             }
@@ -83,9 +66,9 @@ namespace Crystal.EntityFrameworkCore
 
         private readonly BaseContext _context;
         /// <summary>
-        /// Auto-mapper configuration
+        /// Auto-mapper
         /// </summary>
-        protected MapperConfiguration MapperConfiguration { get; }
+        protected IMapper Mapper { get; }
 
         /// <summary>
         /// Starts a transaction which can be used across multiple data change requests

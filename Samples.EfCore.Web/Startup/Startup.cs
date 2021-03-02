@@ -30,8 +30,10 @@ namespace Samples.EfCore.Web
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
-            //services.AddDbContext<SampleContext>(
-            //    options => options.UseSqlite("filename=sample.sqlite"));
+            //***
+            //*** Configure automapper
+            //***
+            services.AddAutoMapper(typeof(Startup));
 
             //***
             //*** Configuring unit of work services

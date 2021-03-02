@@ -15,8 +15,8 @@ namespace Crystal.EntityFrameworkCore.Tests
 
         }
 
-        public UowRepository(BaseContext context, MapperConfiguration mapperConfiguration)
-            : base(context, mapperConfiguration)
+        public UowRepository(BaseContext context, IMapper mapper)
+            : base(context, mapper)
         {
 
         }
@@ -30,7 +30,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             {
                 if (_order == null)
                 {
-                    _order = new BaseRepository<Order>(this.DbContext, this.MapperConfiguration);
+                    _order = new BaseRepository<Order>(this.DbContext, this.Mapper);
                 }
 
                 return _order;

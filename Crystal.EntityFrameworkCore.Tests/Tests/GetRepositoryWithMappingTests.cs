@@ -61,7 +61,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Get all method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper.CreateMapper());
             var response = await uowRepo.GetAsync<OrderDto>();
 
             //***
@@ -77,7 +77,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Get all method is called with expression
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper.CreateMapper());
             var response = await uowRepo.GetAsync<OrderDto>(x => x.OrderId == 1);
 
             //***
@@ -96,7 +96,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** When Get method is called with primary identifier
             //***
             var frstRec = _testOrders.First();
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper.CreateMapper());
             var response = await uowRepo.FindAsync<OrderDto>(frstRec.OrderId);
 
             //***
@@ -115,7 +115,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Get method is called with primary identifier
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper.CreateMapper());
             var response = await uowRepo.FindAsync<OrderDto>(99);
             //***
             //*** Return null
@@ -131,7 +131,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //*** When Get method is called with expression
             //***
             var frstRec = _testOrders.First();
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper.CreateMapper());
             var response = await uowRepo.GetAsync<OrderDto>(x => x.OrderId == frstRec.OrderId);
 
             //***
@@ -150,7 +150,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Any all method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper.CreateMapper());
             var response = await uowRepo.AnyAsync(x => x.OrderId == firstRecord.OrderId);
             //***
             //*** Return true
@@ -166,7 +166,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When Any all method is called
             //***
-            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper);
+            IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, _mapper.CreateMapper());
             var response = await uowRepo.AnyAsync(x => x.OrderId == 99);
             //***
             //*** Return false

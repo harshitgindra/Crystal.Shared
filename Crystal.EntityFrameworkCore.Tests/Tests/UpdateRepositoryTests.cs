@@ -205,7 +205,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, default);
             await uowRepo.UpdateAsync(order);
             await DbContext.CommitBulkChangesAsync();
             //***

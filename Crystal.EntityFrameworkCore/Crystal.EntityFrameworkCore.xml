@@ -87,18 +87,12 @@
             Database entity
             </summary>
         </member>
-        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.#ctor(Microsoft.EntityFrameworkCore.DbContext,AutoMapper.IMapper)">
             <summary>
             Base repository constructor
             </summary>
             <param name="context">Database context</param>
-        </member>
-        <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.#ctor(Microsoft.EntityFrameworkCore.DbContext,AutoMapper.MapperConfiguration)">
-            <summary>
-            Base repository constructor
-            </summary>
-            <param name="context">Database context</param>
-            <param name="mapperConfiguration">Auto-mapper configuration</param>
+            <param name="mapper">Auto-mapper configuration</param>
         </member>
         <member name="M:Crystal.EntityFrameworkCore.BaseRepository`1.GetAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},System.Linq.Expressions.Expression{System.Func{`0,System.Object}}[])">
             <summary>
@@ -264,26 +258,12 @@
             Base unit of work repository providing functionality to perform database operations
             </summary>
         </member>
-        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.#ctor(Crystal.EntityFrameworkCore.BaseContext)">
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.#ctor(Crystal.EntityFrameworkCore.BaseContext,AutoMapper.IMapper)">
             <summary>
             Base unit of work constructor
             </summary>
             <param name="context"></param>
-        </member>
-        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.#ctor(Crystal.EntityFrameworkCore.BaseContext,AutoMapper.MapperConfiguration)">
-            <summary>
-            Base unit of work constructor
-            </summary>
-            <param name="context"></param>
-            <param name="mapperConfiguration"></param>
-        </member>
-        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.GetInstance``1(Crystal.Abstraction.IBaseRepository{``0})">
-            <summary>
-            Returns the instance of IBaseRepository of the entity
-            </summary>
-            <typeparam name="TEntity"></typeparam>
-            <param name="instance"></param>
-            <returns></returns>
+            <param name="mapper"></param>
         </member>
         <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.Repository``1">
             <summary>
@@ -297,9 +277,9 @@
             Database context instance
             </summary>
         </member>
-        <member name="P:Crystal.EntityFrameworkCore.BaseUowRepository.MapperConfiguration">
+        <member name="P:Crystal.EntityFrameworkCore.BaseUowRepository.Mapper">
             <summary>
-            Auto-mapper configuration
+            Auto-mapper
             </summary>
         </member>
         <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.BeginTransactionAsync">

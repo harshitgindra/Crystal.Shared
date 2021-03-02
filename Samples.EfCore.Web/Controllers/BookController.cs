@@ -21,7 +21,7 @@ namespace Samples.EfCore.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var data = await _uowRepository.Repository<Book>().GetAsync();
+            var data = await _uowRepository.Repository<Book>().GetAsync<BookViewModel>();
             return View(data);
         }
 

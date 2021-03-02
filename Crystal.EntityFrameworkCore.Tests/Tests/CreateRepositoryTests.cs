@@ -40,7 +40,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, default);
             await uowRepo.InsertAsync(newRecord);
             DbContext.Commit();
             //***
@@ -65,7 +65,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, default);
             await uowRepo.InsertAsync(newRecord);
             DbContext.Commit();
             //***
@@ -102,7 +102,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, default);
             await uowRepo.InsertAsync(records);
             DbContext.Commit();
             //***
@@ -136,7 +136,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, default);
             await uowRepo.InsertAsync(records);
             DbContext.Commit();
             //***
@@ -295,7 +295,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, default);
             await uowRepo.InsertAsync(records);
             DbContext.CommitBulkChanges();
             //***
@@ -329,7 +329,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
+            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext, default);
             await uowRepo.InsertAsync(records);
             await DbContext.CommitBulkChangesAsync();
             //***
