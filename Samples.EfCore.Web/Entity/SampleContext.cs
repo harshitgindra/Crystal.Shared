@@ -11,13 +11,19 @@ namespace Samples.EfCore.Web
 
         public SampleContext()
         {
-
+            this.Database?.EnsureCreated();
         }
 
         public SampleContext(DbContextOptions<SampleContext> options)
             : base(options)
         {
             this.Database?.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("filename=sample.sqlite");
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

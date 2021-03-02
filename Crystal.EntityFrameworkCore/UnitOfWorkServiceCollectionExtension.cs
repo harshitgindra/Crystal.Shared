@@ -1,4 +1,5 @@
-﻿using Crystal.Abstraction;
+﻿using System.Linq;
+using Crystal.Abstraction;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Crystal.EntityFrameworkCore
@@ -10,7 +11,7 @@ namespace Crystal.EntityFrameworkCore
     {
         /// <summary>
         /// Configures unit of work repositories in the service collection to support the implementation
-        /// Make sur that the dB context is registered before registering unit of work repositories
+        /// Make sure that the dB context is registered before registering unit of work repositories
         /// </summary>
         /// <typeparam name="TContext">Derived class of BaseContext</typeparam>
         /// <param name="serviceCollection">Service collection</param>
@@ -22,6 +23,13 @@ namespace Crystal.EntityFrameworkCore
             //*** Register unit of work interface and repositories
             //***
             serviceCollection.AddTransient<IBaseUowRepository, BaseUowRepository>();
+            //***
+            //*** Register dBContext if not registered in service collection
+            //***
+            if (!serviceCollection.Any(x => x.ServiceType == typeof(TContext)))
+            {
+                serviceCollection.AddDbContext<TContext>();
+            }
             //***
             //*** Map base context to the context used in the application
             //***

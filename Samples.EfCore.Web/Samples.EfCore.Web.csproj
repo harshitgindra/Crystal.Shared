@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Crystal.EntityFrameworkCore\Crystal.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstraction\" />
+  </ItemGroup>
+
 </Project>

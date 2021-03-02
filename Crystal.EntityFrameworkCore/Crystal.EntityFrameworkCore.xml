@@ -353,7 +353,7 @@
         <member name="M:Crystal.EntityFrameworkCore.UnitOfWorkServiceCollectionExtension.ConfigureUnitOfWork``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Configures unit of work repositories in the service collection to support the implementation
-            Make sur that the dB context is registered before registering unit of work repositories
+            Make sure that the dB context is registered before registering unit of work repositories
             </summary>
             <typeparam name="TContext">Derived class of BaseContext</typeparam>
             <param name="serviceCollection">Service collection</param>

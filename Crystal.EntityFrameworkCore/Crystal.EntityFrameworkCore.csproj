@@ -28,6 +28,7 @@
     <Compile Include="..\Crystal.Patterns.Abstraction\Interface\IBaseRepository.cs" Link="Interface\IBaseRepository.cs" />
     <Compile Include="..\Crystal.Patterns.Abstraction\Interface\IBaseUowRepository.cs" Link="Interface\IBaseUowRepository.cs" />
     <Compile Include="..\Crystal.Shared\Decorator\DatatableDecorator.cs" Link="Decorator\DatatableDecorator.cs" />
+    <Compile Include="..\Crystal.Shared\Decorator\DisposableDecorator.cs" Link="Decorator\DisposableDecorator.cs" />
     <Compile Include="..\Crystal.Shared\Decorator\ListDecorator.cs" Link="Decorator\ListDecorator.cs" />
     <Compile Include="..\Crystal.Shared\Decorator\StringDecorator.cs" Link="Decorator\StringDecorator.cs" />
     <Compile Include="..\Crystal.Shared\Model\DataTableRequest.cs" Link="Model\DataTableRequest.cs" />

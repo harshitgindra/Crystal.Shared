@@ -11,13 +11,6 @@ namespace Samples.EfCore.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUowRepository _uowRepository;
-
-        public HomeController(IUowRepository uowRepository)
-        {
-            _uowRepository = uowRepository;
-        }
-
         public IActionResult Index()
         {
             return View();

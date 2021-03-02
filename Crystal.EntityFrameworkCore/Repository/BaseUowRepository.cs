@@ -4,9 +4,7 @@ using AutoMapper;
 using Crystal.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Threading.Tasks;
 
 #endregion
@@ -168,17 +166,9 @@ namespace Crystal.EntityFrameworkCore
         public virtual void Dispose()
         {
             //***
-            //*** Dispose all instances
+            //*** Clear all repository instances
             //***
-            foreach (var item in _repositoryInstances)
-            {
-                var repo = (IBaseRepository<object>)item.Value;
-                repo?.Dispose();
-            }
-            //***
-            //*** Dispose the dB context
-            //***
-            _context?.Dispose();
+            _repositoryInstances.Clear();
         }
     }
 }
