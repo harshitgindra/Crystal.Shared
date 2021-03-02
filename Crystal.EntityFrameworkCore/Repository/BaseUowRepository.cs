@@ -2,6 +2,7 @@
 
 using AutoMapper;
 using Crystal.Abstraction;
+using Crystal.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -149,9 +150,20 @@ namespace Crystal.EntityFrameworkCore
         public virtual void Dispose()
         {
             //***
+            //*** Dispose all base repository instances
+            //***
+            foreach (var item in _repositoryInstances)
+            {
+                item.Value.TryDispose();
+            }
+            //***
             //*** Clear all repository instances
             //***
             _repositoryInstances.Clear();
+            //***
+            //*** Dispose dB context
+            //***
+            _context?.Dispose();
         }
     }
 }

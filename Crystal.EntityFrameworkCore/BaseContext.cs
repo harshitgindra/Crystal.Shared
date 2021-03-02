@@ -37,7 +37,7 @@ namespace Crystal.EntityFrameworkCore
         /// </summary>
         public virtual void BeginTransaction()
         {
-            Transaction = this.Database.BeginTransaction();
+            this.Transaction = this.Database.BeginTransaction();
         }
         /// <summary>
         /// Saves uncommitted changes to the database
@@ -48,7 +48,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Commits the changes on the transaction
             //***
-            Transaction?.Commit();
+            this.Transaction?.Commit();
             //***
             //*** Save changes
             //***
@@ -95,7 +95,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Commit changes on the transaction
             //***
-            Transaction?.Commit();
+            this.Transaction?.Commit();
             //***
             //*** Clear tracker
             //***
@@ -113,7 +113,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Commit changes on the transaction
             //***
-            await Transaction?.CommitAsync();
+            await this.Transaction?.CommitAsync();
             //***
             //*** Clear tracker
             //***
@@ -127,7 +127,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Rollback any pending changes on the transaction
             //***
-            Transaction?.Rollback();
+            this.Transaction?.Rollback();
             //***
             //*** Clear tracker
             //***
@@ -141,7 +141,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Rollback any pending changes on the transaction
             //***
-            await Transaction?.RollbackAsync();
+            await this.Transaction?.RollbackAsync();
             //***
             //*** Clear tracker
             //***
@@ -152,8 +152,10 @@ namespace Crystal.EntityFrameworkCore
         /// </summary>
         public override void Dispose()
         {
+            //***
+            //*** Dispose the transaction
+            //***
             this.Transaction?.Dispose();
-            this.Dispose();
             base.Dispose();
         }
     }
