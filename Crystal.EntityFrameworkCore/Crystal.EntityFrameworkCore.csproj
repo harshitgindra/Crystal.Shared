@@ -44,7 +44,7 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.8" />
-    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.1.21" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.1.22" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />
