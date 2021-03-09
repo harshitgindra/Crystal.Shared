@@ -600,6 +600,17 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
+        <member name="T:Crystal.Shared.DisposableDecorator">
+            <summary>
+            Disposable decorator
+            </summary>
+        </member>
+        <member name="M:Crystal.Shared.DisposableDecorator.TryDispose(System.Object)">
+            <summary>
+            This method will try to dispose the object if it implements IDisposable
+            </summary>
+            <param name="obj"></param>
+        </member>
         <member name="T:Crystal.Shared.ListDecorator">
             <summary>
             List extensions

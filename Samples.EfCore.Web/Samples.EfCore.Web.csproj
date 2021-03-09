@@ -7,17 +7,25 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.16.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Crystal.Dapper\Crystal.Dapper.csproj" />
     <ProjectReference Include="..\Crystal.EntityFrameworkCore\Crystal.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Abstraction\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="sample.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

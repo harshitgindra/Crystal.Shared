@@ -30,3 +30,5 @@
 /Samples.EfCore.Web/bin/Debug/net5.0
 /Samples.EfCore.Web/obj
 /Samples.EfCore.Web/bin/Release/net5.0
+/Crystal.Dapper/bin/Debug/netstandard2.1
+/Crystal.Dapper/obj
