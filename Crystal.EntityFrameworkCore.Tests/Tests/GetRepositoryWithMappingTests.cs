@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Crystal.EntityFrameworkCore.Tests.Model;
-using Crystal.Abstraction;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Crystal.EntityFrameworkCore.Tests

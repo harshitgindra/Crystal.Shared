@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.EntityFrameworkCore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Shared", "Crystal.Shared\Crystal.Shared.csproj", "{1C861F18-1199-4516-BC78-CB4828C0EB6E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Patterns.Abstraction", "Crystal.Patterns.Abstraction\Crystal.Patterns.Abstraction.csproj", "{71E0EB47-2BC4-408B-8D6A-94232226459E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.EntityFrameworkCore.Tests", "Crystal.EntityFrameworkCore.Tests\Crystal.EntityFrameworkCore.Tests.csproj", "{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}"
@@ -23,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{3A80
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.EfCore.Web", "Samples.EfCore.Web\Samples.EfCore.Web.csproj", "{BE179090-9CF6-4B1B-9220-4079EB84C3C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.Dapper", "Crystal.Dapper\Crystal.Dapper.csproj", "{57FAE61D-8398-45BB-B631-04C0F444551F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Dapper", "Crystal.Dapper\Crystal.Dapper.csproj", "{57FAE61D-8398-45BB-B631-04C0F444551F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		{1C861F18-1199-4516-BC78-CB4828C0EB6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C861F18-1199-4516-BC78-CB4828C0EB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C861F18-1199-4516-BC78-CB4828C0EB6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71E0EB47-2BC4-408B-8D6A-94232226459E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71E0EB47-2BC4-408B-8D6A-94232226459E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71E0EB47-2BC4-408B-8D6A-94232226459E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71E0EB47-2BC4-408B-8D6A-94232226459E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU

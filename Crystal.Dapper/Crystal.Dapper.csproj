@@ -2,11 +2,35 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Harshit Gindra</Authors>
+    <Description>This package contains the classes and methods to work with Dapper</Description>
+    <Copyright>Harshit Gindra</Copyright>
+    <Version>3.0.0.0</Version>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
+    <PackageIcon>Crystal.Icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.16.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>../Output</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>../Output\Crystal.Dapper.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\Images\Crystal.Icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,11 @@
 ﻿#region USING
 
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using Crystal.Shared;
+using MicroOrm.Dapper.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,47 +13,48 @@ using System.Threading.Tasks;
 
 #endregion
 
-namespace Crystal.EntityFrameworkCore
+namespace Crystal.Dapper
 {
     /// <summary>
     /// Base repository to perform dB operations
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    internal class BaseRepository<TEntity> : IBaseRepository<TEntity>
+    internal class BaseRepository<TEntity>: IBaseRepository<TEntity>
         where TEntity : class
     {
-        private readonly DbContext _context;
+        private readonly IDbConnection _connection;
+
+        private readonly IDapperRepository<TEntity> _repository;
+        private readonly IDbTransaction _dbTransaction;
         private readonly IMapper _mapper;
-        /// <summary>
-        /// Database entity
-        /// </summary>
-        public virtual DbSet<TEntity> Entity { get; }
+
         /// <summary>
         /// Base repository constructor
         /// </summary>
-        /// <param name="context">Database context</param>
-        /// <param name="mapper">Auto-mapper configuration</param>
-        public BaseRepository(DbContext context, IMapper mapper = default)
+        /// <param name="connection"></param>
+        /// <param name="mapper"></param>
+        /// <param name="dbTransaction"></param>
+        public BaseRepository(IDbConnection connection, IMapper mapper = default, IDbTransaction dbTransaction = default)
         {
+            _connection = connection;
+            _dbTransaction = dbTransaction;
             _mapper = mapper;
-            _context = context;
-            Entity = context.Set<TEntity>();
+            _repository = new DapperRepository<TEntity>(connection);
         }
+
         /// <summary>
         /// Returns IEnumerable of data based on filters
         /// </summary>
         /// <param name="filter">Where expression to filer the data</param>
         /// <param name="orderBy">Specifies the sorting of data</param>
-        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
         /// <returns>IEnumerable of data</returns>
         public virtual async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            params Expression<Func<TEntity, object>>[] includes)
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
             //***
             //*** Get IQueryable of data based in input
             //***
-            var query = await this.QueryAsync(filter, orderBy, includes);
+            var query = await this.QueryAsync(filter, orderBy);
             //***
             //*** Execute the query and return the results
             //***
@@ -64,74 +67,45 @@ namespace Crystal.EntityFrameworkCore
         /// <typeparam name="TModel">Model to which result should be mapped</typeparam>
         /// <param name="filter">Where expression to filer the data</param>
         /// <param name="orderBy">Specifies the sorting of data</param>
-        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
         /// <returns>IEnumerable of data</returns>
         public virtual async Task<List<TModel>> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            params Expression<Func<TEntity, object>>[] includes)
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
             //***
             //*** Get IQueryable of data based in input
             //***
-            var query = await this.QueryAsync<TModel>(filter, orderBy, includes);
+            var query = await this.QueryAsync<TModel>(filter, orderBy);
             //***
             //*** Map the results to TModel and return the results
             //***
             return query.ToList();
         }
+
         /// <summary>
         /// Returns IQueryable of data based on filters
         /// </summary>
         /// <param name="filter">Where expression to filer the data</param>
         /// <param name="orderBy">Specifies the sorting of data</param>
-        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
         /// <returns>IQueryable of data</returns>
         public virtual Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            params Expression<Func<TEntity, object>>[] includes)
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
-            //***
-            //*** Disable tracking on the entity
-            //***
-            IQueryable<TEntity> query = Entity.AsNoTracking();
+            var repo = new DapperRepository<TEntity>(_connection);
 
+            var result = repo.FindAll(filter)
+                .AsQueryable();
             //***
-            //*** Check if includes is null, 
-            //***
-            if (includes != null)
-            {
-                foreach (Expression<Func<TEntity, object>> include in includes)
-                {
-                    //***
-                    //*** Include additional properties in the response
-                    //***
-                    query = query.Include(include);
-                }
-            }
-            //***
-            //*** Check if filter is null
-            //***
-            if (filter != null)
-            {
-                //***
-                //*** Apply where expression to filter the data
-                //***
-                query = query.Where(filter);
-            }
-            //***
-            //*** Check if order by is null
+            //*** Order the results if order by is not null
             //***
             if (orderBy != null)
             {
-                //***
-                //*** Order the data based on input
-                //***
-                query = orderBy(query);
+                result = orderBy(result);
             }
+
             //***
             //*** Return IQueryable of data
             //***
-            return Task.FromResult(query);
+            return Task.FromResult(result);
         }
 
         /// <summary>
@@ -140,11 +114,9 @@ namespace Crystal.EntityFrameworkCore
         /// <typeparam name="TModel">Model to which result should be mapped to</typeparam>
         /// <param name="filter">Where expression to filer the data</param>
         /// <param name="orderBy">Specifies the sorting of data</param>
-        /// <param name="includes">Specify additional columns/tables that should be include in the response</param>
         /// <returns>Maps the data to TModel and return IQueryable of data</returns>
         public virtual async Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            params Expression<Func<TEntity, object>>[] includes)
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
         {
             if (_mapper == null)
             {
@@ -155,7 +127,7 @@ namespace Crystal.EntityFrameworkCore
                 //***
                 //*** Get queryable data based in input
                 //***
-                var query = await this.QueryAsync(filter, orderBy, includes);
+                var query = await this.QueryAsync(filter, orderBy);
                 //***
                 //*** Maps the result to TModel and return the data
                 //***
@@ -167,15 +139,13 @@ namespace Crystal.EntityFrameworkCore
         /// Gets first or default record based on filter
         /// </summary>
         /// <param name="filter">Where expression to filter the data</param>
-        /// <param name="includes">Properties to be included in the response</param>
         /// <returns></returns>
-        public virtual async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null,
-            params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null)
         {
             //***
             //*** Query the results based on filter and includes input
             //***
-            var query = await this.QueryAsync(filter, null, includes);
+            var query = await this.QueryAsync(filter, null);
             //***
             //*** Return first or default result
             //***
@@ -187,15 +157,13 @@ namespace Crystal.EntityFrameworkCore
         /// </summary>
         /// <typeparam name="TModel">Model to which the response should be mapped to</typeparam>
         /// <param name="filter">Where expression to filter the data</param>
-        /// <param name="includes">Properties to be included in the response</param>
         /// <returns></returns>
-        public virtual async Task<TModel> GetFirstOrDefaultAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-            params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TModel> GetFirstOrDefaultAsync<TModel>(Expression<Func<TEntity, bool>> filter = null)
         {
             //***
             //*** Query the results based on filter and includes input
             //***
-            var query = await this.QueryAsync<TModel>(filter, null, includes);
+            var query = await this.QueryAsync<TModel>(filter, null);
             //***
             //*** Return first or default
             //***
@@ -210,10 +178,6 @@ namespace Crystal.EntityFrameworkCore
         public virtual Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null)
         {
             //***
-            //*** Disable tracking on the entity
-            //***
-            var query = Entity.AsNoTracking();
-            //***
             //*** Check if filter is null or not
             //***
             if (filter == null)
@@ -221,14 +185,14 @@ namespace Crystal.EntityFrameworkCore
                 //***
                 //*** Return bool if record exists or not
                 //***
-                return Task.FromResult(query.Any());
+                return Task.FromResult(_repository.Count() > 0);
             }
             else
             {
                 //***
                 //*** Return bool if record exists or not based on filter
                 //***
-                return Task.FromResult(query.Any(filter));
+                return Task.FromResult(_repository.Count(filter) > 0);
             }
         }
 
@@ -242,7 +206,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Find the entity based on id and return the result
             //***
-            return Task.FromResult(Entity.Find(id));
+            return Task.FromResult(_repository.FindById(id));
         }
         /// <summary>
         /// Finds and returns the mapped model based on primary key of the table
@@ -277,47 +241,39 @@ namespace Crystal.EntityFrameworkCore
         /// </summary>
         /// <param name="entity">entity to be inserted</param>
         /// <returns></returns>
-        public virtual Task InsertAsync(TEntity entity)
+        public virtual async Task<bool> InsertAsync(TEntity entity)
         {
             //***
-            //*** Attach entity to the tracker
+            //*** Insert the entity into the database
             //***
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                Entity.Attach(entity);
-            }
-
-            //***
-            //*** Update the entity state to added
-            //***
-            _context.Entry(entity).State = EntityState.Added;
-            return Task.CompletedTask;
+            return await _repository.InsertAsync(entity, _dbTransaction);
         }
         /// <summary>
         /// Inserts multiple records to the database
         /// </summary>
         /// <param name="entities">List of entities to be inserted</param>
         /// <returns></returns>
-        public virtual Task InsertAsync(IEnumerable<TEntity> entities)
+        public virtual async Task InsertAsync(IEnumerable<TEntity> entities)
         {
             //***
             //*** Add multiple records to the entity
             //***
-            Entity.AddRange(entities);
-            return Task.CompletedTask;
+            foreach (var item in entities)
+            {
+                await _repository.InsertAsync(item, _dbTransaction);
+            }
         }
         /// <summary>
         /// Bulk inserts the records to the database
         /// </summary>
         /// <param name="entities">list of entities to be inserted</param>
         /// <returns></returns>
-        public virtual Task BulkInsertAsync(IEnumerable<TEntity> entities)
+        public virtual async Task<int> BulkInsertAsync(IEnumerable<TEntity> entities)
         {
             //***
             //*** Add bulk records to the database
             //***
-            Entity.BulkInsert(entities);
-            return Task.CompletedTask;
+            return await _repository.BulkInsertAsync(entities, _dbTransaction);
         }
         /// <summary>
         /// Deletes the record from the database
@@ -329,7 +285,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Find the entity and delete it
             //***
-            await this.DeleteAsync(await Entity.FindAsync(id));
+            await this.DeleteAsync(await _repository.FindByIdAsync(id));
         }
         /// <summary>
         /// Deletes the record from the database
@@ -339,29 +295,9 @@ namespace Crystal.EntityFrameworkCore
         public virtual Task DeleteAsync(TEntity entity)
         {
             //***
-            //*** Attach entity to the tracker
+            //*** Delete the entity
             //***
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                Entity.Attach(entity);
-            }
-
-            //***
-            //*** Update the entity state to deleted
-            //***
-            _context.Entry(entity).State = EntityState.Deleted;
-            return Task.CompletedTask;
-        }
-        /// <summary>
-        /// Deletes all records from the table
-        /// <remarks>This method will commit the changes to the database</remarks>
-        /// </summary>
-        public virtual Task BulkDeleteAllAsync()
-        {
-            //***
-            //*** Bulk delete
-            //***
-            Entity.BulkDelete(Entity);
+            _repository.Delete(entity, _dbTransaction);
             return Task.CompletedTask;
         }
 
@@ -369,47 +305,36 @@ namespace Crystal.EntityFrameworkCore
         /// Deletes all the records from the table
         /// </summary>
         /// <returns></returns>
-        public virtual Task DeleteAllAsync()
+        public virtual async Task<bool> DeleteAllAsync()
         {
             //***
             //*** Delete all entities
             //***
-            Entity.RemoveRange(Entity);
-            return Task.CompletedTask;
+            return await _repository.DeleteAsync(x => x != null, _dbTransaction);
         }
         /// <summary>
         /// Updates the entity to the database
         /// </summary>
         /// <param name="entity">Record to the updated</param>
         /// <returns></returns>
-        public virtual Task UpdateAsync(TEntity entity)
+        public virtual async Task<bool> UpdateAsync(TEntity entity)
         {
             //***
-            //*** Attach entity to the tracker
+            //*** Update the entity and save it
             //***
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                Entity.Attach(entity);
-            }
-
-            //***
-            //*** Update the entity state to modified
-            //***
-            _context.Entry(entity).State = EntityState.Modified;
-            return Task.CompletedTask;
+            return await _repository.UpdateAsync(entity, _dbTransaction);
         }
         /// <summary>
         /// Deletes the record from the context
         /// </summary>
         /// <param name="filter">filter to select records to be deleted</param>
         /// <returns></returns>
-        public virtual Task DeleteAsync(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> filter)
         {
             //***
             //*** Remove/Delete the entities based on filter
             //***
-            Entity.RemoveRange(Entity.Where(filter));
-            return Task.CompletedTask;
+            return await _repository.DeleteAsync(filter, _dbTransaction);
         }
         /// <summary>
         /// Disposes the dBContext
@@ -419,7 +344,9 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Dispose the context and transaction
             //***
-            _context?.Dispose();
+            _mapper?.TryDispose();
+            _dbTransaction?.Dispose();
+            _repository?.Dispose();
         }
         /// <summary>
         /// Updates list of records in the database
@@ -438,20 +365,6 @@ namespace Crystal.EntityFrameworkCore
                 //***
                 await this.UpdateAsync(item);
             }
-        }
-
-        /// <summary>
-        /// Executes raw sql query on the context
-        /// </summary>
-        /// <param name="sql">sql statement to be executed</param>
-        /// <param name="parameters">parameters to be injected in the sql query</param>
-        /// <returns>IQueryable of TEntity</returns>
-        public virtual Task<IQueryable<TEntity>> RunSql(string sql, params object[] parameters)
-        {
-            //***
-            //*** Execute raw sql query with parameters against the entity
-            //***
-            return Task.FromResult(this.Entity.FromSqlRaw(sql, parameters));
         }
     }
 }

@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
-namespace Crystal.Shared.Model
+namespace Crystal.Shared
 {
     /// <summary>
     /// Datatable response

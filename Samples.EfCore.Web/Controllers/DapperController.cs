@@ -1,19 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Samples.EfCore.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using Crystal.Abstraction;
-using Crystal.Dapper;
-using MicroOrm.Dapper.Repositories;
-using MicroOrm.Dapper.Repositories.DbContext;
-using MicroOrm.Dapper.Repositories.SqlGenerator;
-using Microsoft.Data.Sqlite;
 using IBaseUowRepository = Crystal.Dapper.IBaseUowRepository;
 
 namespace Samples.EfCore.Web.Controllers
@@ -32,7 +18,7 @@ namespace Samples.EfCore.Web.Controllers
             //***
             //*** Get all books from the database
             //***
-            var data = await _ctx.Repository<Book>().FindAllAsync();
+            var data = await _ctx.Repository<Book>().GetAsync();
             return View(data);
         }
 
@@ -57,14 +43,14 @@ namespace Samples.EfCore.Web.Controllers
             //***
             //*** Find the book from the database based on primary id
             //***
-            var book = await _ctx.Repository<Book>().FindAsync(x => x.BookId == id);
+            var book = await _ctx.Repository<Book>().FindAsync(id);
             return View(book);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(Book model)
         {
-            var book = await _ctx.Repository<Book>().FindAsync(x => x.BookId == model.BookId);
+            var book = await _ctx.Repository<Book>().FindAsync(model.BookId);
             book.Name = model.Name;
             //***
             //*** Update book details in the database
@@ -77,7 +63,7 @@ namespace Samples.EfCore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var book = await _ctx.Repository<Book>().FindAsync(x => x.BookId == id);
+            var book = await _ctx.Repository<Book>().FindAsync(id);
             return View(book);
         }
 

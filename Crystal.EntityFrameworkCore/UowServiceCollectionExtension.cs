@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using Crystal.Abstraction;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace Crystal.EntityFrameworkCore
 {
     /// <summary>
-    /// Service collection extension to configure unit of work
+    /// Service collection extension to configure unit of work with entity framework core
     /// </summary>
-    public static class UnitOfWorkServiceCollectionExtension
+    public static class UowServiceCollectionExtension
     {
         /// <summary>
         /// Configures unit of work repositories in the service collection to support the implementation

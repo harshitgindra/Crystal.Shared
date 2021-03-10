@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 #endregion
 
-namespace Crystal.Abstraction
+namespace Crystal.EntityFrameworkCore
 {
     /// <summary>
     /// Base unit of work repository interface

@@ -1,23 +1,12 @@
+using Crystal.Dapper;
+using Crystal.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Crystal.Abstraction;
-using Crystal.EntityFrameworkCore;
-using MicroOrm.Dapper.Repositories.Config;
-using MicroOrm.Dapper.Repositories.SqlGenerator;
-using Microsoft.Data.Sqlite;
 using Newtonsoft.Json.Serialization;
-using Samples.EfCore.Web.Controllers;
-using Crystal.Dapper;
 
 namespace Samples.EfCore.Web
 {
@@ -46,7 +35,7 @@ namespace Samples.EfCore.Web
             //***
             services.ConfigureUnitOfWork<SampleContext>();
 
-            services.ConfigureUnitOfWork2<SqliteConnection>("filename=sample.sqlite");
+            services.ConfigureUnitOfWork<SqliteConnection>("filename=sample.sqlite");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

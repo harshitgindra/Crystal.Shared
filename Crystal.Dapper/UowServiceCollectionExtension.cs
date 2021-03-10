@@ -1,13 +1,23 @@
-﻿using System.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Crystal.Dapper
 {
+    /// <summary>
+    /// Service collection extensions to configure unit of work
+    /// </summary>
     public static class UowServiceCollectionExtension
     {
-        public static IServiceCollection ConfigureUnitOfWork2<TContext>(this IServiceCollection serviceCollection, string connectionString)
+        /// <summary>
+        /// Configure unit of work needed to use crystal implementations for dapper
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="serviceCollection"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public static IServiceCollection ConfigureUnitOfWork<TContext>(this IServiceCollection serviceCollection, string connectionString)
             where TContext : DbConnection
         {
             //***
@@ -19,7 +29,8 @@ namespace Crystal.Dapper
             //***
             if (!serviceCollection.Any(x => x.ServiceType == typeof(IDbConnection)))
             {
-                serviceCollection.AddTransient<IDbConnection>(x => ActivatorUtilities.CreateInstance<TContext>(x, connectionString));
+                serviceCollection.AddTransient<IDbConnection>(x => 
+                    ActivatorUtilities.CreateInstance<TContext>(x, connectionString));
             }
             return serviceCollection;
         }

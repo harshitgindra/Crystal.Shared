@@ -1,12 +1,11 @@
 ﻿#region USING
 
 using AutoMapper;
-using Crystal.Abstraction;
-using Crystal.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Crystal.Shared;
 
 #endregion
 
@@ -15,7 +14,7 @@ namespace Crystal.EntityFrameworkCore
     /// <summary>
     /// Base unit of work repository providing functionality to perform database operations
     /// </summary>
-    public class BaseUowRepository : IBaseUowRepository
+    internal class BaseUowRepository : IBaseUowRepository
     {
         /// <summary>
         /// Base unit of work constructor

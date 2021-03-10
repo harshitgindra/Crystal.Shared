@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 #endregion
 
-namespace Crystal.Shared.Model
+namespace Crystal.Shared
 {
     /// <summary>
     /// Datatable request
