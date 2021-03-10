@@ -35,7 +35,7 @@ namespace Samples.EfCore.Web
             //***
             services.ConfigureUnitOfWork<SampleContext>();
 
-            services.ConfigureUnitOfWork<SqliteConnection>("filename=sample.sqlite");
+            //services.ConfigureUnitOfWork<SqliteConnection>("filename=sample.sqlite");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

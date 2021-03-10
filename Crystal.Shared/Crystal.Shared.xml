@@ -9,7 +9,7 @@
             Datatable decorator with extension methods
             </summary>
         </member>
-        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatableAsync``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatableAsync``1(System.Linq.IQueryable{``0},Crystal.Shared.DataTableRequest{``0})">
             <summary>
             Performs datatable operations on the result based on input
             </summary>
@@ -18,7 +18,7 @@
             <param name="request">Datatable request</param>
             <returns>Datatable response</returns>
         </member>
-        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatable``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+        <member name="M:Crystal.Shared.DatatableDecorator.ToDatatable``1(System.Linq.IQueryable{``0},Crystal.Shared.DataTableRequest{``0})">
             <summary>
             Performs datatable operations on the result based on input
             </summary>
@@ -27,7 +27,7 @@
             <param name="request">Datatable request</param>
             <returns>Datatable response</returns>
         </member>
-        <member name="M:Crystal.Shared.DatatableDecorator.OrderBy``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+        <member name="M:Crystal.Shared.DatatableDecorator.OrderBy``1(System.Linq.IQueryable{``0},Crystal.Shared.DataTableRequest{``0})">
             <summary>
             Perform order by operation with datatable request
             </summary>
@@ -36,7 +36,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Crystal.Shared.DatatableDecorator.GlobalFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+        <member name="M:Crystal.Shared.DatatableDecorator.GlobalFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.DataTableRequest{``0})">
             <summary>
             Perform global filter on all searchable columns
             </summary>
@@ -45,7 +45,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Crystal.Shared.DatatableDecorator.ColumnFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.Model.DataTableRequest{``0})">
+        <member name="M:Crystal.Shared.DatatableDecorator.ColumnFilter``1(System.Linq.IQueryable{``0},Crystal.Shared.DataTableRequest{``0})">
             <summary>
             Perform column level filtering based on datatable request
             </summary>
@@ -123,19 +123,19 @@
             <param name="str"></param>
             <returns></returns>
         </member>
-        <member name="T:Crystal.Shared.Model.DataTableRequest`1">
+        <member name="T:Crystal.Shared.DataTableRequest`1">
             <summary>
             Datatable request
             </summary>
             <typeparam name="TEntity"></typeparam>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Start">
+        <member name="P:Crystal.Shared.DataTableRequest`1.Start">
             <summary>
                 Paging first record indicator. This is the start point in the current data set
                 (0 index based - i.e. 0 is the first record)
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Length">
+        <member name="P:Crystal.Shared.DataTableRequest`1.Length">
             <summary>
                 Number of records that the table can display in the current draw. It is expected
                 that the number of records returned will be equal to this number, unless the
@@ -144,62 +144,62 @@
                 server-side processing!)
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Search">
+        <member name="P:Crystal.Shared.DataTableRequest`1.Search">
             <summary>
                 Global Search for the table
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Order">
+        <member name="P:Crystal.Shared.DataTableRequest`1.Order">
             <summary>
                 Collection of all column indexes and their sort directions
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableRequest`1.Columns">
+        <member name="P:Crystal.Shared.DataTableRequest`1.Columns">
             <summary>
                 Collection of all columns in the table
             </summary>
         </member>
-        <member name="T:Crystal.Shared.Model.Column">
+        <member name="T:Crystal.Shared.Column">
             <summary>
             Datatable column
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Column.Data">
+        <member name="P:Crystal.Shared.Column.Data">
             <summary>
                 Column's data source
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Column.Name">
+        <member name="P:Crystal.Shared.Column.Name">
             <summary>
                 Column's name
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Column.Searchable">
+        <member name="P:Crystal.Shared.Column.Searchable">
             <summary>
                 Flag to indicate if this column is searchable (true) or not (false)
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Column.Orderable">
+        <member name="P:Crystal.Shared.Column.Orderable">
             <summary>
                 Flag to indicate if this column is orderable (true) or not (false)
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Column.Search">
+        <member name="P:Crystal.Shared.Column.Search">
             <summary>
                 Search to apply to this specific column.
             </summary>
         </member>
-        <member name="T:Crystal.Shared.Model.Search">
+        <member name="T:Crystal.Shared.Search">
             <summary>
             Datatable search/filter
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Search.Value">
+        <member name="P:Crystal.Shared.Search.Value">
             <summary>
                 Global search value. To be applied to all columns which have searchable as true
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Search.Regex">
+        <member name="P:Crystal.Shared.Search.Regex">
             <summary>
                 true if the global filter should be treated as a regular expression for advanced
                 searching, false otherwise. Note that normally server-side processing scripts
@@ -207,61 +207,61 @@
                 data sets, but it is technically possible and at the discretion of your script
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Search.ExactMatch">
+        <member name="P:Crystal.Shared.Search.ExactMatch">
             <summary>
             Specifies if the filter needs to be an exact match
             </summary>
         </member>
-        <member name="T:Crystal.Shared.Model.Order">
+        <member name="T:Crystal.Shared.Order">
             <summary>
             Datatable ordering
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Order.Column">
+        <member name="P:Crystal.Shared.Order.Column">
             <summary>
                 Column to which ordering should be applied. This is an index reference to the
                 columns array of information that is also submitted to the server
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.Order.Dir">
+        <member name="P:Crystal.Shared.Order.Dir">
             <summary>
                 Ordering direction for this column. It will be asc or desc to indicate ascending
                 ordering or descending ordering, respectively
             </summary>
         </member>
-        <member name="T:Crystal.Shared.Model.DataTableResponse`1">
+        <member name="T:Crystal.Shared.DataTableResponse`1">
             <summary>
             Datatable response
             </summary>
             <typeparam name="TEntity"></typeparam>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalRecords">
+        <member name="P:Crystal.Shared.DataTableResponse`1.TotalRecords">
             <summary>
             Total records, before filtering (i.e. the total number of records in the database)
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableResponse`1.RecordsFiltered">
+        <member name="P:Crystal.Shared.DataTableResponse`1.RecordsFiltered">
             <summary>
             Total records, after filtering (i.e. the total number of records after filtering has been applied -
             not just the number of records being returned for this page of data).
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableResponse`1.Data">
+        <member name="P:Crystal.Shared.DataTableResponse`1.Data">
             <summary>
             The data to be displayed in the table. This is an array of data source objects, one for each row, which will be used by DataTables.
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableResponse`1.TotalDisplayRecords">
+        <member name="P:Crystal.Shared.DataTableResponse`1.TotalDisplayRecords">
             <summary>
             Total records, before filtering (i.e. the total number of records in the database)
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableResponse`1.Echo">
+        <member name="P:Crystal.Shared.DataTableResponse`1.Echo">
             <summary>
             Echo
             </summary>
         </member>
-        <member name="P:Crystal.Shared.Model.DataTableResponse`1.Error">
+        <member name="P:Crystal.Shared.DataTableResponse`1.Error">
             <summary>
             f an error occurs during the running of the server-side processing script, 
             you can inform the user of this error by passing back the error message to be displayed using this parameter. 

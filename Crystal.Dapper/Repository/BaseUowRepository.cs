@@ -22,7 +22,7 @@ namespace Crystal.Dapper
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="mapper"></param>
-        public BaseUowRepository(IDbConnection connection, IMapper mapper)
+        public BaseUowRepository(IDbConnection connection, IMapper mapper = default)
             : base(connection)
         {
             _mapper = mapper;

@@ -33,3 +33,7 @@
 /Crystal.Dapper/bin/Debug/netstandard2.1
 /Crystal.Dapper/obj
 /Crystal.Dapper/bin/Release
+/Crystal.Dapper.Tests/bin/Release/net5.0
+/Crystal.Dapper.Tests/obj
+/Crystal.Dapper.Tests/bin/Debug/net5.0
+/Crystal.Dapper/bin/Debug

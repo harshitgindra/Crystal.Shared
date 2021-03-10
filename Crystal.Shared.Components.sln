@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.EfCore.Web", "Sampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Dapper", "Crystal.Dapper\Crystal.Dapper.csproj", "{57FAE61D-8398-45BB-B631-04C0F444551F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crystal.Dapper.Tests", "Crystal.Dapper.Tests\Crystal.Dapper.Tests.csproj", "{CA1AA15E-6827-4174-BE0A-7E78F1554C60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{57FAE61D-8398-45BB-B631-04C0F444551F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57FAE61D-8398-45BB-B631-04C0F444551F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57FAE61D-8398-45BB-B631-04C0F444551F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA1AA15E-6827-4174-BE0A-7E78F1554C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA1AA15E-6827-4174-BE0A-7E78F1554C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA1AA15E-6827-4174-BE0A-7E78F1554C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA1AA15E-6827-4174-BE0A-7E78F1554C60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9} = {FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}
 		{CECF33F6-EA60-4E83-A4B0-79C706146996} = {251E8D2D-C0C1-404A-AA55-5460DB01FB89}
 		{BE179090-9CF6-4B1B-9220-4079EB84C3C6} = {3A8078D0-5203-47C0-AFE9-83E930818ABC}
+		{CA1AA15E-6827-4174-BE0A-7E78F1554C60} = {FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {610FF09B-265B-4730-9213-0D0225D8D4F5}

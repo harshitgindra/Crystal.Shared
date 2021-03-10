@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using MicroOrm.Dapper.Repositories.SqlGenerator;
 
 #endregion
 
@@ -19,7 +20,7 @@ namespace Crystal.Dapper
     /// Base repository to perform dB operations
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    internal class BaseRepository<TEntity>: IBaseRepository<TEntity>
+    internal class BaseRepository<TEntity> : IBaseRepository<TEntity>
         where TEntity : class
     {
         private readonly IDbConnection _connection;
@@ -39,7 +40,16 @@ namespace Crystal.Dapper
             _connection = connection;
             _dbTransaction = dbTransaction;
             _mapper = mapper;
-            _repository = new DapperRepository<TEntity>(connection);
+
+            switch (connection.GetType().Name.ToLower())
+            {
+                case "sqliteconnection":
+                    _repository = new DapperRepository<TEntity>(connection, new SqlGenerator<TEntity>(SqlProvider.SQLite));
+                    break;
+                default:
+                    _repository = new DapperRepository<TEntity>(connection, new SqlGenerator<TEntity>());
+                    break;
+            }
         }
 
         /// <summary>
