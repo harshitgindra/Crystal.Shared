@@ -12,7 +12,7 @@ namespace Crystal.Dapper
     /// <summary>
     /// Base unit of work repository
     /// </summary>
-    internal class BaseUowRepository : DapperDbContext, IBaseUowRepository
+    public class BaseUowRepository : DapperDbContext, IBaseUowRepository
     {
         private readonly IDictionary<Type, object> _repositoryInstances;
         private IDbTransaction _dbTransaction;

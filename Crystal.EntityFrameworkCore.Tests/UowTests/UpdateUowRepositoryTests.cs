@@ -79,8 +79,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** When insert method is called
             //***
-            using IBaseRepository<Order> uowRepo = new BaseRepository<Order>(DbContext);
-            await uowRepo.UpdateAsync(order);
+            await Uow.Repository<Order>().UpdateAsync(order);
             await DbContext.CommitBulkChangesAsync();
             //***
             //*** Then: 1 record should be updated

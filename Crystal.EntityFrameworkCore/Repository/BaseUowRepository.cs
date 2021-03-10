@@ -14,7 +14,7 @@ namespace Crystal.EntityFrameworkCore
     /// <summary>
     /// Base unit of work repository providing functionality to perform database operations
     /// </summary>
-    internal class BaseUowRepository : IBaseUowRepository
+    public class BaseUowRepository : IBaseUowRepository
     {
         /// <summary>
         /// Base unit of work constructor

@@ -29,7 +29,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             {
                 if (_order == null)
                 {
-                    _order = new BaseRepository<Order>(this.DbContext, this.Mapper);
+                    _order = this.Repository<Order>();
                 }
 
                 return _order;
