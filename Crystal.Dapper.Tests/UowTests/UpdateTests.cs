@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MicroOrm.Dapper.Repositories.SqlGenerator;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
@@ -46,14 +45,11 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             await UowRepository.Repository<Product>().InsertAsync(_sampleProduct);
             _sampleProduct.Name = "Sample 2";
-
-            SqlGenerator<Product> p = new SqlGenerator<Product>(SqlProvider.SQLite);
-            var str = p.GetUpdate(_sampleProduct);
             //***
             //*** When Update method is called
             //***
             await UowRepository.Repository<Product>().UpdateAsync(_sampleProduct);
-            var product = await UowRepository.Repository<Product>().FindAsync(newRecord.ProductId);
+            var product = await UowRepository.Repository<Product>().FindAsync(_sampleProduct.ProductId);
             //***
             //*** Then: 1 record should be saved
             //***
