@@ -376,5 +376,18 @@ namespace Crystal.Dapper
                 await this.UpdateAsync(item);
             }
         }
+
+        /// <summary>
+        /// Bulk updates list of records in the database
+        /// </summary>
+        /// <param name="entities">list of entities to be updated</param>
+        /// <returns></returns>
+        public virtual async Task<bool> BulkUpdateAsync(IEnumerable<TEntity> entities)
+        {
+            //***
+            //*** Bulk update all entity records
+            //***
+            return await _repository.BulkUpdateAsync(entities, _dbTransaction);
+        }
     }
 }

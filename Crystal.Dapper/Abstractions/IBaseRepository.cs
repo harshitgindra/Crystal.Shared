@@ -154,5 +154,12 @@ namespace Crystal.Dapper
         /// <param name="entities">list of entities to be updated</param>
         /// <returns></returns>
         Task UpdateAsync(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        /// Bulk update multiple entities
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        Task<bool> BulkUpdateAsync(IEnumerable<TEntity> entities);
     }
 }
