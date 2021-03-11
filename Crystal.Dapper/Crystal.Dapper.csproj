@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.16.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -29,7 +30,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MicroOrm.Dapper.Repositories\src\MicroOrm.Dapper.Repositories\MicroOrm.Dapper.Repositories.csproj" />
     <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
   </ItemGroup>
 
