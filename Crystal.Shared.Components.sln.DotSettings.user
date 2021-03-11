@@ -16,5 +16,6 @@
     &lt;TestId&gt;NUnit3x::CA1AA15E-6827-4174-BE0A-7E78F1554C60::net5.0::Crystal.Dapper.Tests.UowTests.GetTests.NoRecordsFirstOrDefault&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::CA1AA15E-6827-4174-BE0A-7E78F1554C60::net5.0::Crystal.Dapper.Tests.UowTests.AnyTests.RecordsDoNotExistsWithExpression&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::CA1AA15E-6827-4174-BE0A-7E78F1554C60::net5.0::Crystal.Dapper.Tests.UowTests.FindTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::CA1AA15E-6827-4174-BE0A-7E78F1554C60::net5.0::Crystal.Dapper.Tests.UowTests.DeleteTests.DeleteRecordsExpression&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
