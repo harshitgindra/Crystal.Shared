@@ -4,8 +4,8 @@
     &lt;TestId&gt;NUnit3x::CA1AA15E-6827-4174-BE0A-7E78F1554C60::net5.0::Crystal.Dapper.Tests.UowTests.CreateTests.InsertRecord&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ce1a3f56_002Da0ed_002D4756_002D9518_002D0591953af06a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="InsertRecord" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ce1a3f56_002Da0ed_002D4756_002D9518_002D0591953af06a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="InsertRecord" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::CA1AA15E-6827-4174-BE0A-7E78F1554C60::net5.0::Crystal.Dapper.Tests.UowTests.CreateTests.InsertRecord&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::CA1AA15E-6827-4174-BE0A-7E78F1554C60::net5.0::Crystal.Dapper.Tests.UowTests.CreateTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

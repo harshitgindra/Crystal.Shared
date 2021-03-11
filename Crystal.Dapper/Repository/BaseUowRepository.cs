@@ -99,6 +99,7 @@ namespace Crystal.Dapper
         /// <summary>
         /// Starts a transaction which can be used across multiple data change requests
         /// </summary>
+        /// <param name="isolationLevel">Set isolation level on the transaction. Isolation level will not be set when using sqlite connection</param>
         /// <returns></returns>
         public virtual Task BeginTransactionAsync(IsolationLevel isolationLevel = default)
         {
@@ -108,7 +109,22 @@ namespace Crystal.Dapper
             }
             else
             {
-                _dbTransaction = this.Connection?.BeginTransaction(isolationLevel);
+                switch (this.Connection.GetType().Name.ToLower())
+                {
+                    case "sqliteconnection":
+                        //***
+                        //*** No isolation level when using sqlite
+                        //***
+                        _dbTransaction = this.Connection.BeginTransaction();
+                        break;
+                    default:
+                        //***
+                        //*** Create transaction with isolation level for all other database providers
+                        //***
+                        _dbTransaction = this.Connection.BeginTransaction(isolationLevel);
+                        break;
+                }
+                
             }
 
             return Task.CompletedTask;
