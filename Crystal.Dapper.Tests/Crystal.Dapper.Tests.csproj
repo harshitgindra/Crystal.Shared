@@ -4,10 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Version>3.0.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.16.0" />
+    <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.16.1" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />

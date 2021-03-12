@@ -36,6 +36,17 @@ namespace Crystal.Dapper
         /// <returns></returns>
         public virtual IBaseRepository<TEntity> Repository<TEntity>() where TEntity : class
         {
+            return this.Repository<TEntity>(this.Connection);
+        }
+
+        /// <summary>
+        /// Returns IBaseRepository instance of the entity
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="connection"></param>
+        /// <returns></returns>
+        public virtual IBaseRepository<TEntity> Repository<TEntity>(IDbConnection connection) where TEntity : class
+        {
             //***
             //*** Check if the instance is already created
             //***
@@ -53,12 +64,15 @@ namespace Crystal.Dapper
                 //*** Save it to the dictionary
                 //*** Return the instance
                 //***
-                var repo = new BaseRepository<TEntity>(this.Connection, _mapper, _dbTransaction);
+                var repo = new BaseRepository<TEntity>(connection, _mapper, _dbTransaction);
                 _repositoryInstances.Add(typeof(TEntity), repo);
                 return repo;
             }
         }
 
+        /// <summary>
+        /// Dispose all open connections and repositories
+        /// </summary>
         public new void Dispose()
         {
             //***
@@ -124,7 +138,7 @@ namespace Crystal.Dapper
                         _dbTransaction = this.Connection.BeginTransaction(isolationLevel);
                         break;
                 }
-                
+
             }
 
             return Task.CompletedTask;

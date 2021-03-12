@@ -43,5 +43,13 @@ namespace Crystal.EntityFrameworkCore
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         IBaseRepository<TEntity> Repository<TEntity>() where TEntity : class;
+
+        /// <summary>
+        /// Returns IBaseRepository instance of the entity
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        IBaseRepository<TEntity> Repository<TEntity>(DbContext context) where TEntity : class;
     }
 }

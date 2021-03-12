@@ -220,7 +220,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //*** When delete all method is called with transaction rollback
             //***
             await UowRepository.Repository<Product>().DeleteAllAsync();
-            await UowRepository.CommitAsync();
+            await UowRepository.RollbackAsync();
             var product = await UowRepository.Repository<Product>().GetAsync();
             //***
             //*** Then: no record should be deleted

@@ -8,7 +8,7 @@ namespace Crystal.Dapper
     /// <summary>
     /// Base unit of work repository interface
     /// </summary>
-    public interface IBaseUowRepository: IDisposable
+    public interface IBaseUowRepository : IDisposable
     {
         /// <summary>
         /// Returns IBaseRepository instance of the entity
@@ -16,6 +16,15 @@ namespace Crystal.Dapper
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         IBaseRepository<TEntity> Repository<TEntity>() where TEntity : class;
+
+        /// <summary>
+        /// Returns IBaseRepository instance of the entity
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="connection"></param>
+        /// <returns></returns>
+        IBaseRepository<TEntity> Repository<TEntity>(IDbConnection connection) where TEntity : class;
+
         /// <summary>
         /// Database connection
         /// </summary>

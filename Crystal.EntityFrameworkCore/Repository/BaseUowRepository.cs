@@ -23,7 +23,7 @@ namespace Crystal.EntityFrameworkCore
         /// <param name="mapper"></param>
         public BaseUowRepository(BaseContext context, IMapper mapper = default)
         {
-            Mapper = mapper;
+            _mapper = mapper;
             _context = context;
             _repositoryInstances = new Dictionary<Type, object>();
         }
@@ -36,6 +36,17 @@ namespace Crystal.EntityFrameworkCore
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         public virtual IBaseRepository<TEntity> Repository<TEntity>() where TEntity : class
+        {
+            return this.Repository<TEntity>(this.DbContext);
+        }
+
+        /// <summary>
+        /// Returns IBaseRepository instance of the entity
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public virtual IBaseRepository<TEntity> Repository<TEntity>(DbContext context) where TEntity : class
         {
             //***
             //*** Check if the instance is already created
@@ -54,7 +65,7 @@ namespace Crystal.EntityFrameworkCore
                 //*** Save it to the dictionary
                 //*** Return the instance
                 //***
-                var repo = new BaseRepository<TEntity>(this.DbContext, Mapper);
+                var repo = new BaseRepository<TEntity>(context, _mapper);
                 _repositoryInstances.Add(typeof(TEntity), repo);
                 return repo;
             }
@@ -65,10 +76,7 @@ namespace Crystal.EntityFrameworkCore
         public virtual DbContext DbContext => this._context;
 
         private readonly BaseContext _context;
-        /// <summary>
-        /// Auto-mapper
-        /// </summary>
-        protected IMapper Mapper { get; }
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Starts a transaction which can be used across multiple data change requests

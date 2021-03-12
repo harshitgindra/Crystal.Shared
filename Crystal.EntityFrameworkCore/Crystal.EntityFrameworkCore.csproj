@@ -5,7 +5,7 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
     <Copyright>Harshit Gindra</Copyright>
-    <Version>3.0.1.0</Version>
+    <Version>3.0.2.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
@@ -40,7 +40,7 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.8" />
-    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.1.22" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.1.23" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />

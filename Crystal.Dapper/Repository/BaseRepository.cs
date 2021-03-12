@@ -320,7 +320,12 @@ namespace Crystal.Dapper
             //***
             //*** Delete all entities
             //***
-            return await _repository.DeleteAsync(x => x != null, _dbTransaction);
+            foreach (var item in _repository.FindAll(_dbTransaction))
+            {
+                await _repository.DeleteAsync(item, _dbTransaction);
+            }
+
+            return true;
         }
         /// <summary>
         /// Updates the entity to the database
