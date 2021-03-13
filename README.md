@@ -20,19 +20,6 @@
 | Github Actions | [![Actions](https://github.com/harshitgindra/Crystal.Shared/workflows/Main%20workflow/badge.svg)](https://github.com/harshitgindra/Crystal.Shared/actions?query=workflow%3A%22Main+workflow%22) |
 
 
-
-<!-- TABLE OF CONTENTS -->
-## Table of Contents
-
-* [About the Project](#about-the-project)
-* [Getting Started](#getting-started)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
-
 ## Entity Framework core
 Here's the link to [Crystal.EntityFrameworkCore](https://github.com/harshitgindra/Crystal.Shared/blob/master/Crystal.EntityFrameworkCore/Readme.md) documentation
 
