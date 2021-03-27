@@ -207,6 +207,14 @@
             <typeparam name="TEntity"></typeparam>
             <returns></returns>
         </member>
+        <member name="M:Crystal.EntityFrameworkCore.IBaseUowRepository.Repository``1(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Returns IBaseRepository instance of the entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="T:Crystal.EntityFrameworkCore.BaseContext">
             <summary>
             Base context derived from DbContext
@@ -475,14 +483,17 @@
             <typeparam name="TEntity"></typeparam>
             <returns></returns>
         </member>
+        <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.Repository``1(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Returns IBaseRepository instance of the entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="P:Crystal.EntityFrameworkCore.BaseUowRepository.DbContext">
             <summary>
             Database context instance
-            </summary>
-        </member>
-        <member name="P:Crystal.EntityFrameworkCore.BaseUowRepository.Mapper">
-            <summary>
-            Auto-mapper
             </summary>
         </member>
         <member name="M:Crystal.EntityFrameworkCore.BaseUowRepository.BeginTransactionAsync">
