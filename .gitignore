@@ -37,3 +37,5 @@
 /Crystal.Dapper.Tests/obj
 /Crystal.Dapper.Tests/bin/Debug/net5.0
 /Crystal.Dapper/bin/Debug
+/Crystal.Dapper.Tests/bin/Debug/net6.0
+/Samples.EfCore.Web/bin/Debug/net6.0

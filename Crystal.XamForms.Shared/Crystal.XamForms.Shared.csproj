@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Crystal.XamForms.Shared</Title>
     <Authors>Harshit Gindra</Authors>
     <Copyright>Harshit Gindra</Copyright>
     <Description>Extension and Utility methods of using Xamarin View Elements in a structured way with the use of MVVMCROSS and its dependency injection library.</Description>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
-    <Version>3.0.6.0</Version>
-    <PackageIcon>Crystal.Icon.png</PackageIcon>
+	  <Version>4.0.0.0</Version>
+	  <PackageIcon>Crystal.Icon.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
@@ -24,7 +24,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="MvvmCross.Forms" Version="8.0.2" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Images\Crystal.Icon.png">

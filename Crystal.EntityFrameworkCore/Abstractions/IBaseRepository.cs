@@ -172,7 +172,7 @@ namespace Crystal.EntityFrameworkCore
         /// <param name="sql">sql statement to be executed</param>
         /// <param name="parameters">parameters to be injected in the sql query</param>
         /// <returns>IQueryable of TEntity</returns>
-        Task<IQueryable<TEntity>> RunSql(string sql, params object[] parameters);
+        //Task<IQueryable<TEntity>> RunSql(string sql, params object[] parameters);
 
         /// <summary>
         /// Deletes all records from the table

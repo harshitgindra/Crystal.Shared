@@ -1,31 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
     public class BaseTests
     {
-        private readonly string _filename = "test.sqlite";
-        public IServiceCollection ServiceCollection { get; private set; }
-        public IBaseUowRepository UowRepository { get; private set; }
+        private string _fileNameTemplate = "{0}.test.sqlite";
+        protected IBaseUowRepository UowRepository { get; private set; }
 
         protected void Init()
         {
-            if (File.Exists(_filename))
-            {
-                File.Delete(_filename);
-            }
+            string guid = Guid.NewGuid().ToString();
+            string fileName  = string.Format(_fileNameTemplate, guid);
 
-            ServiceCollection = new ServiceCollection()
-                .ConfigureUnitOfWork<SqliteConnection>($"filename={_filename}");
+            IServiceCollection serviceCollection = new ServiceCollection()
+                .ConfigureUnitOfWork<SqliteConnection>($"filename={fileName}");
 
-            UowRepository = this.ServiceCollection.BuildServiceProvider().GetService<IBaseUowRepository>();
+            UowRepository = serviceCollection.BuildServiceProvider().GetService<IBaseUowRepository>();
 
             var cmd = UowRepository.Connection.CreateCommand();
             cmd.CommandText =
