@@ -92,7 +92,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@harshitgindra](https://twitter.com/harshitgindra) - harshitgindra@gmail.com
+Your Name - [@harshitgindra](https://twitter.com/harshitgindra)
 
 Project Link: [https://github.com/harshitgindra/Crystal.Shared](https://github.com/harshitgindra/Crystal.Shared)
 
