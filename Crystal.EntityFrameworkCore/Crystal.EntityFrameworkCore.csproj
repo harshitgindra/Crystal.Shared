@@ -5,7 +5,7 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
     <Copyright>Harshit Gindra</Copyright>
-    <Version>4.2.1.0</Version>
+    <Version>4.2.3.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
@@ -39,11 +39,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.19" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.23" />
     <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="6.14.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Crystal.Shared\Crystal.Shared.csproj" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
@@ -54,4 +51,5 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>../Output\Crystal.EntityFrameworkCore.xml</DocumentationFile>
   </PropertyGroup>
+  <Import Project="..\Crystal.Core\Crystal.Core.projitems" Label="Shared" />
 </Project>

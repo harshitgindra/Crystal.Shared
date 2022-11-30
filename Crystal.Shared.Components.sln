@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.XamForms.Shared", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.EntityFrameworkCore", "Crystal.EntityFrameworkCore\Crystal.EntityFrameworkCore.csproj", "{063A9322-831E-4E10-A8F7-7A5E3D052496}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Shared", "Crystal.Shared\Crystal.Shared.csproj", "{1C861F18-1199-4516-BC78-CB4828C0EB6E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBBCAE4E-EAB6-4043-AD8F-D955995E1CEB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.EntityFrameworkCore.Tests", "Crystal.EntityFrameworkCore.Tests\Crystal.EntityFrameworkCore.Tests.csproj", "{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}"
@@ -30,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Dapper", "Crystal.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crystal.Dapper.Tests", "Crystal.Dapper.Tests\Crystal.Dapper.Tests.csproj", "{CA1AA15E-6827-4174-BE0A-7E78F1554C60}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Crystal.Shared", "Crystal.Core\Crystal.Shared.shproj", "{87EC8E76-F51B-444F-AB1F-3F45BF40A227}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,10 +44,6 @@ Global
 		{063A9322-831E-4E10-A8F7-7A5E3D052496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{063A9322-831E-4E10-A8F7-7A5E3D052496}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{063A9322-831E-4E10-A8F7-7A5E3D052496}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C861F18-1199-4516-BC78-CB4828C0EB6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C861F18-1199-4516-BC78-CB4828C0EB6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C861F18-1199-4516-BC78-CB4828C0EB6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C861F18-1199-4516-BC78-CB4828C0EB6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{723C9269-C8E9-4FA2-9B34-4F92F44A0FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -76,5 +72,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {610FF09B-265B-4730-9213-0D0225D8D4F5}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Crystal.Core\Crystal.Core.projitems*{063a9322-831e-4e10-a8f7-7a5e3d052496}*SharedItemsImports = 5
+		Crystal.Core\Crystal.Core.projitems*{57fae61d-8398-45bb-b631-04c0f444551f}*SharedItemsImports = 5
+		Crystal.Core\Crystal.Core.projitems*{87ec8e76-f51b-444f-ab1f-3f45bf40a227}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>87ec8e76-f51b-444f-ab1f-3f45bf40a227</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Crystal.Core</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Decorator\DatatableDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Decorator\DisposableDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Decorator\ListDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Decorator\StringDecorator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\DataTableRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\DataTableResponse.cs" />
+  </ItemGroup>
+</Project>
