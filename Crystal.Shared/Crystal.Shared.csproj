@@ -6,7 +6,7 @@
     <Description>This package contains all the common components used by all crystal libraries</Description>
     <Copyright>Harshit Gindra</Copyright>
 	  <Version>4.2.1.0</Version>
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
     <AssemblyName>Crystal.Shared</AssemblyName>
