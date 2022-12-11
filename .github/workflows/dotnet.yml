@@ -1,23 +1,23 @@
-name: .NET
+# name: .NET
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+# on:
+#   push:
+#     branches: [ master ]
+#   pull_request:
+#     branches: [ master ]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Setup .NET
+#       uses: actions/setup-dotnet@v1
+#       with:
+#         dotnet-version: 7.0.x
+#     - name: Restore dependencies
+#       run: dotnet restore
+#     - name: Build
+#       run: dotnet build --no-restore
