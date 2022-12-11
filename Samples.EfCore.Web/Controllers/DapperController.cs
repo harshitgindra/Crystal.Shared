@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using IBaseUowRepository = Crystal.Dapper.IBaseUowRepository;
+using Crystal.EntityFrameworkCore;
 
 namespace Samples.EfCore.Web.Controllers
 {

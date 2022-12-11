@@ -29,7 +29,7 @@ namespace Samples.EfCore.Web.Controllers
                     .ToDatatable(request);
                 return Json(data);
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
