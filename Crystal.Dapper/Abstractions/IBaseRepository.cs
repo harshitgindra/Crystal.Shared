@@ -36,25 +36,6 @@ namespace Crystal.Dapper
         Task<List<TModel>> GetAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
 
-        ///// <summary>
-        ///// Returns IQueryable of data based on filters
-        ///// </summary>
-        ///// <param name="filter">Where expression to filer the data</param>
-        ///// <param name="orderBy">Specifies the sorting of data</param>
-        ///// <returns>IQueryable of data</returns>
-        //Task<IQueryable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> filter = null,
-        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
-        ///// <summary>
-        /////  Returns IQueryable of data based on filters
-        ///// </summary>
-        ///// <typeparam name="TModel">Model to which result should be mapped to</typeparam>
-        ///// <param name="filter">Where expression to filer the data</param>
-        ///// <param name="orderBy">Specifies the sorting of data</param>
-        ///// <returns>Maps the data to TModel and return IQueryable of data</returns>
-        //Task<IQueryable<TModel>> QueryAsync<TModel>(Expression<Func<TEntity, bool>> filter = null,
-        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
         /// <summary>
         /// Gets first or default record based on filter
         /// </summary>
@@ -125,14 +106,16 @@ namespace Crystal.Dapper
         /// Deletes the record from the database
         /// </summary>
         /// <param name="entity">entity to be deleted</param>
+        /// <param name="timeout">configure timeout value for query execution</param>
         /// <returns></returns>
-        Task DeleteAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity, TimeSpan timeout = default);
 
         /// <summary>
         /// Deletes all the records from the table
         /// </summary>
+        /// <param name="timeout">configure timeout value for query execution</param>
         /// <returns></returns>
-        Task<bool> DeleteAllAsync();
+        Task<bool> DeleteAllAsync(TimeSpan timeout = default);
 
         /// <summary>
         /// Updates the entity to the database
@@ -145,8 +128,9 @@ namespace Crystal.Dapper
         /// Deletes the record from the context
         /// </summary>
         /// <param name="filter">filter to select records to be deleted</param>
+        /// <param name="timeout">configure timeout value for query execution</param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> filter);
+        Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> filter, TimeSpan timeout = default);
 
         /// <summary>
         /// Updates list of records in the database

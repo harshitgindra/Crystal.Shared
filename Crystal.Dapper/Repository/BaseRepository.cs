@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using MicroOrm.Dapper.Repositories.SqlGenerator;
 
@@ -302,27 +303,38 @@ namespace Crystal.Dapper
         /// </summary>
         /// <param name="entity">entity to be deleted</param>
         /// <returns></returns>
-        public virtual Task DeleteAsync(TEntity entity)
+        public virtual Task DeleteAsync(TEntity entity, TimeSpan timeout = default)
         {
+            var tempTimeout = timeout;
+            if (tempTimeout == default)
+            {
+                tempTimeout = TimeSpan.FromSeconds(30);
+            }
             //***
             //*** Delete the entity
             //***
-            _repository.Delete(entity, _dbTransaction);
+            _repository.Delete(entity, _dbTransaction, tempTimeout);
             return Task.CompletedTask;
         }
 
         /// <summary>
         /// Deletes all the records from the table
         /// </summary>
+        /// <param name="timeout">configure timeout value for query execution</param>
         /// <returns></returns>
-        public virtual async Task<bool> DeleteAllAsync()
+        public virtual async Task<bool> DeleteAllAsync(TimeSpan timeout = default)
         {
+            var tempTimeout = timeout;
+            if (tempTimeout == default)
+            {
+                tempTimeout = TimeSpan.FromSeconds(30);
+            }
             //***
             //*** Delete all entities
             //***
             foreach (var item in _repository.FindAll(_dbTransaction))
             {
-                await _repository.DeleteAsync(item, _dbTransaction);
+                await _repository.DeleteAsync(item, _dbTransaction, tempTimeout);
             }
 
             return true;
@@ -343,13 +355,19 @@ namespace Crystal.Dapper
         /// Deletes the record from the context
         /// </summary>
         /// <param name="filter">filter to select records to be deleted</param>
+        /// <param name="timeout">configure timeout value for query execution</param>
         /// <returns></returns>
-        public virtual async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> filter, TimeSpan timeout = default)
         {
+            var tempTimeout = timeout;
+            if (tempTimeout == default)
+            {
+                tempTimeout = TimeSpan.FromSeconds(30);
+            }
             //***
             //*** Remove/Delete the entities based on filter
             //***
-            return await _repository.DeleteAsync(filter, _dbTransaction);
+            return await _repository.DeleteAsync(filter, _dbTransaction, tempTimeout);
         }
         /// <summary>
         /// Disposes the dBContext
