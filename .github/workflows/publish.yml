@@ -1,4 +1,4 @@
-name: CI
+name: Nuget Build and Publish
 
 on:
   create:
