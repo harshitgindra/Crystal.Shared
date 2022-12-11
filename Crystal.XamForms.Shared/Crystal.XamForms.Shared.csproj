@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
 	  <Version>7.0.2.0</Version>
 	  <PackageIcon>Crystal.Icon.png</PackageIcon>
-	  <TargetFrameworks>net7.0</TargetFrameworks>
+	  <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>
