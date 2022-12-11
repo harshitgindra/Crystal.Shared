@@ -35,15 +35,5 @@ jobs:
 
           # API key to authenticate with NuGet server
           NUGET_KEY: ${{secrets.NUGET_KEY}}
-          
-      - name: publish on version change
-        id: Publish_Nuget_Crystal_Shared
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: Crystal.Shared/Crystal.Shared.csproj
-
-          # API key to authenticate with NuGet server
-          NUGET_KEY: ${{secrets.NUGET_KEY}}
 
         
