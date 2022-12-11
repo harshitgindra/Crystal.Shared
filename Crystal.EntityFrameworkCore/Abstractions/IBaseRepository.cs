@@ -167,14 +167,6 @@ namespace Crystal.EntityFrameworkCore
         Task UpdateAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// Executes raw sql query on the context
-        /// </summary>
-        /// <param name="sql">sql statement to be executed</param>
-        /// <param name="parameters">parameters to be injected in the sql query</param>
-        /// <returns>IQueryable of TEntity</returns>
-        //Task<IQueryable<TEntity>> RunSql(string sql, params object[] parameters);
-
-        /// <summary>
         /// Deletes all records from the table
         /// <remarks>This method will commit the changes to the database</remarks>
         /// </summary>
