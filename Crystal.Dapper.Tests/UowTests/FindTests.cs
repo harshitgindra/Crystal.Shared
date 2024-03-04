@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
@@ -45,7 +46,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: Return 1 record
             //***
-            Assert.AreEqual(_sampleProducts.First().Name, product.Name);
+           ClassicAssert.AreEqual(_sampleProducts.First().Name, product.Name);
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: Return 1 record
             //***
-            Assert.IsNull(product);
+           ClassicAssert.IsNull(product);
         }
 
         [TearDown]

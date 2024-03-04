@@ -5,7 +5,7 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Dapper</Description>
     <Copyright>Harshit Gindra</Copyright>
-	  <Version>7.0.3.0</Version>
+	  <Version>7.0.4.0</Version>
 	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
@@ -13,11 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.0" />
-    <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.24.0" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.26.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.23" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.10" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>

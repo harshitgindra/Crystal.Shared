@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MicroOrm.Dapper.Repositories.SqlGenerator;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
@@ -46,7 +47,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: Return true
             //***
-            Assert.IsTrue(result);
+           ClassicAssert.IsTrue(result);
         }
 
         [Test]
@@ -64,7 +65,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: Return true
             //***
-            Assert.IsTrue(result);
+           ClassicAssert.IsTrue(result);
         }
 
         [Test]
@@ -82,7 +83,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: Return false
             //***
-            Assert.IsFalse(result);
+           ClassicAssert.IsFalse(result);
         }
 
 

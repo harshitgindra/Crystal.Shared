@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
@@ -34,7 +35,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(newRecord.Name, product.Name);
+           ClassicAssert.Equals(newRecord.Name, product.Name);
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(newRecord.Name, product.Name);
+           ClassicAssert.Equals(newRecord.Name, product.Name);
         }
 
         [Test]
@@ -92,7 +93,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 0 records should be returned
             //***
-            Assert.IsNull(product);
+           ClassicAssert.IsNull(product);
         }
 
         [Test]
@@ -124,7 +125,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(records.Count, products.Count);
+           ClassicAssert.Equals(records.Count, products.Count);
         }
 
         [Test]
@@ -161,7 +162,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(records.Count, products.Count);
+           ClassicAssert.Equals(records.Count, products.Count);
         }
 
         [Test]
@@ -198,7 +199,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 0 records should be returned
             //***
-            Assert.AreEqual(0, products.Count);
+           ClassicAssert.Equals(0, products.Count);
         }
 
         [Test]
@@ -230,7 +231,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(records.Count, products.Count);
+           ClassicAssert.Equals(records.Count, products.Count);
         }
 
         [Test]
@@ -267,7 +268,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(records.Count, products.Count);
+           ClassicAssert.Equals(records.Count, products.Count);
         }
 
         [Test]
@@ -304,7 +305,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 0 records should be returned
             //***
-            Assert.AreEqual(0, products.Count);
+           ClassicAssert.Equals(0, products.Count);
         }
 
         [TearDown]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
@@ -52,7 +53,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: record should be deleted
             //***
-            Assert.IsNull(product);
+            ClassicAssert.IsNull(product);
         }
 
         [Test]
@@ -74,7 +75,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: record should be deleted
             //***
-            Assert.IsNull(product);
+            ClassicAssert.IsNull(product);
         }
 
         [Test]
@@ -96,7 +97,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: record should be not deleted
             //***
-            Assert.IsNotNull(product);
+            ClassicAssert.IsNotNull(product);
         }
 
         [Test]
@@ -116,7 +117,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: record should be deleted
             //***
-            Assert.IsNull(product);
+            ClassicAssert.IsNull(product);
         }
 
         [Test]
@@ -138,7 +139,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: record should be deleted
             //***
-            Assert.IsNull(product);
+            ClassicAssert.IsNull(product);
         }
 
         [Test]
@@ -160,7 +161,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: record should be not deleted
             //***
-            Assert.IsNotNull(product);
+            ClassicAssert.IsNotNull(product);
         }
 
 
@@ -181,7 +182,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: all record should be deleted
             //***
-            Assert.AreEqual(0, product.Count);
+            ClassicAssert.AreEqual(0, product.Count);
         }
 
         [Test]
@@ -203,7 +204,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: all record should be deleted
             //***
-            Assert.AreEqual(0, product.Count);
+            ClassicAssert.AreEqual(0, product.Count);
         }
 
         [Test]
@@ -225,7 +226,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: no record should be deleted
             //***
-            Assert.AreEqual(_sampleProducts.Count, product.Count);
+            ClassicAssert.AreEqual(_sampleProducts.Count, product.Count);
         }
 
 

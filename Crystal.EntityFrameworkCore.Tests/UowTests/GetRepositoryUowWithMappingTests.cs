@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {
@@ -66,7 +67,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return all records
             //***
-            Assert.AreEqual(_testOrders.Count, response.Count());
+            ClassicAssert.AreEqual(_testOrders.Count, response.Count());
         }
 
         [Test]
@@ -82,7 +83,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return all records
             //***
-            Assert.AreEqual(_testOrders.Count(x => x.OrderId == 1), response.Count());
+            ClassicAssert.AreEqual(_testOrders.Count(x => x.OrderId == 1), response.Count());
         }
         #endregion
 
@@ -101,7 +102,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-            Assert.AreEqual(frstRec.Name, response.OrderName);
+           ClassicAssert.AreEqual(frstRec.Name, response.OrderName);
         }
 
         [Test]
@@ -119,7 +120,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return null
             //***
-            Assert.IsNull(response);
+           ClassicAssert.IsNull(response);
         }
 
         [Test]
@@ -136,7 +137,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-            Assert.AreEqual(frstRec.OrderId, response.First().OrderId);
+           ClassicAssert.AreEqual(frstRec.OrderId, response.First().OrderId);
         }
         #endregion
 
@@ -154,7 +155,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return true
             //***
-            Assert.IsTrue(response);
+           ClassicAssert.IsTrue(response);
         }
 
         [Test]
@@ -170,7 +171,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return false
             //***
-            Assert.IsFalse(response);
+           ClassicAssert.IsFalse(response);
         }
         #endregion
     }

@@ -7,5 +7,6 @@
 /Output
 bin
 obj
-Crystal.Shared.Components.sln.DotSettings.user
 .idea
+*.DotSettings.user
+Crystal.Shared.Components.sln.DotSettings.user

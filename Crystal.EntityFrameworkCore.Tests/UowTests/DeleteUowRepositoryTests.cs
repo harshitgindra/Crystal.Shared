@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {
@@ -58,8 +59,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Record should be deleted
             //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
+            ClassicAssert.IsNull(DbContext.Orders.Find(record.OrderId));
+            ClassicAssert.AreNotEqual(0, DbContext.Orders.Count());
         }
 
         [Test]
@@ -78,14 +79,14 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 //*** Then: Test failed if Exception not generated
                 //***
-                Assert.IsNotNull(DbContext.Orders.Find(record.OrderId));
+                ClassicAssert.IsNotNull(DbContext.Orders.Find(record.OrderId));
             }
             catch
             {
                 //***
                 //*** Then: Exception generated, test passed
                 //***
-                Assert.Pass("Exception generated as record not found");
+               ClassicAssert.Pass("Exception generated as record not found");
             }
         }
 
@@ -107,8 +108,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Record should be deleted
             //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
+            ClassicAssert.IsNull(DbContext.Orders.Find(record.OrderId));
+            ClassicAssert.AreNotEqual(0, DbContext.Orders.Count());
         }
 
         [Test]
@@ -125,7 +126,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** All Records should be deleted
             //***
-            Assert.AreEqual(0, DbContext.Orders.Count());
+            ClassicAssert.AreEqual(0, DbContext.Orders.Count());
         }
 
         #endregion
@@ -145,8 +146,8 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Record should be deleted
             //***
-            Assert.IsNull(DbContext.Orders.Find(record.OrderId));
-            Assert.AreNotEqual(0, DbContext.Orders.Count());
+            ClassicAssert.IsNull(DbContext.Orders.Find(record.OrderId));
+            ClassicAssert.AreNotEqual(0, DbContext.Orders.Count());
         }
 
         [Test]
@@ -165,14 +166,14 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 //*** Then: Test failed if Exception not generated
                 //***
-                Assert.IsNotNull(DbContext.Orders.Find(record.OrderId));
+                ClassicAssert.IsNotNull(DbContext.Orders.Find(record.OrderId));
             }
             catch
             {
                 //***
                 //*** Then: Exception generated, test passed
                 //***
-                Assert.Pass("Exception generated as record not found");
+               ClassicAssert.Pass("Exception generated as record not found");
             }
         }
 

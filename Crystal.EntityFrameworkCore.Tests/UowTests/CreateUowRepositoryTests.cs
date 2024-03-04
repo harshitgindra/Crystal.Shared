@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {
@@ -47,7 +48,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
+           ClassicAssert.Equals(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
         }
 
         [Test]
@@ -72,7 +73,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be saved
             //***
-            Assert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
+            ClassicAssert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
         }
 
         #endregion
@@ -109,7 +110,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-            Assert.AreEqual(records.Count, DbContext.Orders.Count());
+           ClassicAssert.Equals(records.Count, DbContext.Orders.Count());
         }
 
         [Test]
@@ -143,7 +144,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-            Assert.AreEqual(records.Count, DbContext.Orders.Count());
+           ClassicAssert.Equals(records.Count, DbContext.Orders.Count());
         }
 
         #endregion
@@ -180,7 +181,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-            Assert.AreEqual(records.Count, DbContext.Orders.Count());
+            ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
         }
 
         [Test]
@@ -214,7 +215,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-            Assert.AreEqual(records.Count, DbContext.Orders.Count());
+            ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
         }
 
         #endregion
