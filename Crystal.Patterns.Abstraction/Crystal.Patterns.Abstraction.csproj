@@ -5,7 +5,7 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains all interfaces used by the Crystal pattern libraries</Description>
     <Copyright>Harshit Gindra</Copyright>
-    <Version>7.0.4.0</Version>
+    <Version>8.0.1</Version>
     <AssemblyName>Crystal.Patterns.Abstraction</AssemblyName>
     <RootNamespace>Crystal.Patterns.Abstraction</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

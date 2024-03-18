@@ -5,11 +5,11 @@
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Dapper</Description>
     <Copyright>Harshit Gindra</Copyright>
-	  <Version>7.0.4.0</Version>
+	  <Version>8.0.1</Version>
 	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
