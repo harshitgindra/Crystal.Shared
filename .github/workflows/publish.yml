@@ -1,12 +1,10 @@
 name: Nuget Build and Publish
 
 on:
-  create:
-    branches: 
-      - release/**
   push:
     branches:
     - master
+    - release/**
   pull_request:
     branches:
     - master
