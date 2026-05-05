@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Dapper</Description>
     <Copyright>Harshit Gindra</Copyright>
