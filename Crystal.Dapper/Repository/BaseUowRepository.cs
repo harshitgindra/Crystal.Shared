@@ -123,20 +123,19 @@ namespace Crystal.Dapper
             }
             else
             {
-                switch (this.Connection.GetType().Name.ToLower())
+                if (string.Equals(this.Connection.GetType().Name, "SqliteConnection", StringComparison.OrdinalIgnoreCase))
                 {
-                    case "sqliteconnection":
-                        //***
-                        //*** No isolation level when using sqlite
-                        //***
-                        _dbTransaction = this.Connection.BeginTransaction();
-                        break;
-                    default:
-                        //***
-                        //*** Create transaction with isolation level for all other database providers
-                        //***
-                        _dbTransaction = this.Connection.BeginTransaction(isolationLevel);
-                        break;
+                    //***
+                    //*** No isolation level when using sqlite
+                    //***
+                    _dbTransaction = this.Connection.BeginTransaction();
+                }
+                else
+                {
+                    //***
+                    //*** Create transaction with isolation level for all other database providers
+                    //***
+                    _dbTransaction = this.Connection.BeginTransaction(isolationLevel);
                 }
 
             }

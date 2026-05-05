@@ -42,14 +42,13 @@ namespace Crystal.Dapper
             _dbTransaction = dbTransaction;
             _mapper = mapper;
 
-            switch (connection.GetType().Name.ToLower())
+            if (string.Equals(connection.GetType().Name, "SqliteConnection", StringComparison.OrdinalIgnoreCase))
             {
-                case "sqliteconnection":
-                    _repository = new DapperRepository<TEntity>(connection, new SqlGenerator<TEntity>(SqlProvider.SQLite));
-                    break;
-                default:
-                    _repository = new DapperRepository<TEntity>(connection, new SqlGenerator<TEntity>());
-                    break;
+                _repository = new DapperRepository<TEntity>(connection, new SqlGenerator<TEntity>(SqlProvider.SQLite));
+            }
+            else
+            {
+                _repository = new DapperRepository<TEntity>(connection, new SqlGenerator<TEntity>());
             }
         }
 
