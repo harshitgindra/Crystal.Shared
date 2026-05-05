@@ -447,8 +447,7 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Execute raw sql query with parameters against the entity
             //***
-            //return Task.FromResult(this.Entity.FromSqlRaw(sql, parameters));
-            return null;
+            return Task.FromResult(Entity.FromSqlRaw(sql, parameters));
         }
     }
 }
