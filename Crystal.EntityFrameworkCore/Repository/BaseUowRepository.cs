@@ -1,13 +1,9 @@
-﻿#region USING
-
-using AutoMapper;
+﻿using AutoMapper;
 using Crystal.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-#endregion
 
 namespace Crystal.EntityFrameworkCore
 {
