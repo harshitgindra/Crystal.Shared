@@ -43,7 +43,7 @@ jobs:
       run: dotnet build $SOLUTION --configuration $BUILD_CONFIG -p:Version=$BUILD_VERSION --no-restore
 
     - name: Run tests
-      run: dotnet test --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal
+      run: dotnet test $SOLUTION --configuration $BUILD_CONFIG --no-restore --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
       
     - name: Pack
       if: startsWith(github.ref, 'refs/heads/release')
