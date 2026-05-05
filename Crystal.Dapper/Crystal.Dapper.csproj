@@ -1,12 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Dapper</Description>
-    <Copyright>Harshit Gindra</Copyright>
-	  <Version>8.0.1</Version>
-	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
+    <Version>8.0.1</Version>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <TargetFrameworks>net6.0;net8.0</TargetFrameworks>

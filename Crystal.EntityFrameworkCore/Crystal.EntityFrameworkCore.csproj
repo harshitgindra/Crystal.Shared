@@ -1,12 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <Title>Crystal.EntityFramework</Title>
-    <Authors>Harshit Gindra</Authors>
     <Description>This package contains the classes and methods to work with Entity Framework Core</Description>
-    <Copyright>Harshit Gindra</Copyright>
     <Version>8.0.1</Version>
-    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <TargetFramework>net8.0</TargetFramework>
