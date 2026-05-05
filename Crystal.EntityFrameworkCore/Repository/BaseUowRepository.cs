@@ -97,12 +97,11 @@ namespace Crystal.EntityFrameworkCore
             _context.Commit();
         }
         /// <summary>
-        /// Commit changes to database
+        /// Commit changes to database asynchronously
         /// </summary>
-        public virtual Task CommitAsync()
+        public virtual async Task CommitAsync()
         {
-            this.Commit();
-            return Task.CompletedTask;
+            await _context.CommitAsync();
         }
 
         /// <summary>

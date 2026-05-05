@@ -73,15 +73,25 @@ namespace Crystal.EntityFrameworkCore
             _ = this.SaveChanges();
         }
         /// <summary>
-        /// Commits pending changes to the database
+        /// Commits pending changes to the database asynchronously
         /// </summary>
-        public virtual Task CommitAsync()
+        public virtual async Task CommitAsync()
         {
             //***
-            //*** Save pending changes
+            //*** Commit the transaction if one is active
             //***
-            this.Commit();
-            return Task.CompletedTask;
+            if (this.Transaction != null)
+            {
+                await this.Transaction.CommitAsync();
+            }
+            //***
+            //*** Save changes asynchronously
+            //***
+            await base.SaveChangesAsync();
+            //***
+            //*** Clean all trackers
+            //***
+            this.ChangeTracker.Clear();
         }
         /// <summary>
         /// Commits pending bulk changes to the database
