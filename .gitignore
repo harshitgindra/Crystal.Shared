@@ -10,3 +10,5 @@ obj
 .idea
 *.DotSettings.user
 Crystal.Shared.Components.sln.DotSettings.user
+TestResults/
+*.cobertura.xml

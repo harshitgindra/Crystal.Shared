@@ -151,7 +151,10 @@ namespace Crystal.EntityFrameworkCore
             //***
             //*** Rollback any pending changes on the transaction
             //***
-            await this.Transaction?.RollbackAsync();
+            if (this.Transaction != null)
+            {
+                await this.Transaction.RollbackAsync();
+            }
             //***
             //*** Clear tracker
             //***
