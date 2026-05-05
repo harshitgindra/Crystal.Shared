@@ -9,6 +9,7 @@
 	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
   </PropertyGroup>
 
@@ -29,6 +30,10 @@
     <None Include="..\Images\Crystal.Icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="Readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
   <Import Project="..\Crystal.Core\Crystal.Core.projitems" Label="Shared" />

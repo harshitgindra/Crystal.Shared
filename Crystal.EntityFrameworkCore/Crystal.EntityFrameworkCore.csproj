@@ -10,6 +10,7 @@
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
@@ -28,6 +29,10 @@
     <None Include="..\Images\Crystal.Icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="Readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>
