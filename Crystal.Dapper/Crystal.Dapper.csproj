@@ -9,7 +9,7 @@
 	  <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/harshitgindra/Crystal.Shared</PackageProjectUrl>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
