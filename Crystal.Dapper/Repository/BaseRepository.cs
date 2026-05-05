@@ -1,6 +1,4 @@
-﻿#region USING
-
-using AutoMapper;
+﻿using AutoMapper;
 using Crystal.Shared;
 using MicroOrm.Dapper.Repositories;
 using System;
@@ -12,8 +10,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MicroOrm.Dapper.Repositories.SqlGenerator;
-
-#endregion
 
 namespace Crystal.Dapper
 {
