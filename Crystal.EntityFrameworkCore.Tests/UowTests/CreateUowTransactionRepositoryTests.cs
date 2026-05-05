@@ -47,7 +47,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 0 record should be saved
             //***
-           ClassicAssert.Equals(0, DbContext.Orders.Count());
+           ClassicAssert.AreEqual(0, DbContext.Orders.Count());
         }
 
         public List<Order> Records = new List<Order>()

@@ -5,7 +5,7 @@
     <Version>8.0.1</Version>
     <PackageIcon>Crystal.Icon.png</PackageIcon>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Decorator\**" />
@@ -39,7 +39,7 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.10" />
-    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="8.102.2" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="8.105.4" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>../Output</OutputPath>

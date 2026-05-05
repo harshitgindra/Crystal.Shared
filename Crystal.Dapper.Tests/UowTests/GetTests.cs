@@ -45,7 +45,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 2 record should be saved
             //***
-           ClassicAssert.Equals(_sampleProducts.Count, products.Count);
+           ClassicAssert.AreEqual(_sampleProducts.Count, products.Count);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be returned
             //***
-           ClassicAssert.Equals(1, products.Count);
+           ClassicAssert.AreEqual(1, products.Count);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be returned
             //***
-           ClassicAssert.Equals("Sample 1", products.Name);
+           ClassicAssert.AreEqual("Sample 1", products.Name);
         }
 
         [Test]

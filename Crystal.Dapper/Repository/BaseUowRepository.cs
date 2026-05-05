@@ -149,15 +149,32 @@ namespace Crystal.Dapper
         /// <returns></returns>
         public virtual Task RollbackAsync()
         {
-            //***
-            //*** rollback the changes
-            //***
             if (_dbTransaction == null)
             {
                 throw new Exception("Transaction not initialized");
             }
             _dbTransaction.Rollback();
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Executes an atomic unit of work: begins a transaction, invokes <paramref name="work"/>,
+        /// commits on success, or rolls back and rethrows on failure.
+        /// </summary>
+        /// <param name="work">The async delegate containing all data-change operations.</param>
+        public virtual async Task ExecuteUnitOfWork(Func<Task> work)
+        {
+            await BeginTransactionAsync();
+            try
+            {
+                await work();
+                await CommitAsync();
+            }
+            catch
+            {
+                await RollbackAsync();
+                throw;
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be saved
             //***
-           ClassicAssert.Equals(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
+           ClassicAssert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-           ClassicAssert.Equals(records.Count, DbContext.Orders.Count());
+           ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-           ClassicAssert.Equals(records.Count, DbContext.Orders.Count());
+           ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
         }
 
         #endregion

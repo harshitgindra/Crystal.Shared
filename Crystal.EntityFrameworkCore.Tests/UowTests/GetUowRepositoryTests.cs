@@ -59,7 +59,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return all records
             //***
-           ClassicAssert.Equals(_testOrders.Count, response.Count());
+           ClassicAssert.AreEqual(_testOrders.Count, response.Count());
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-           ClassicAssert.Equals(frstRec.Name, response.Name);
+           ClassicAssert.AreEqual(frstRec.Name, response.Name);
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-           ClassicAssert.Equals(frstRec.OrderId, response.OrderId);
+           ClassicAssert.AreEqual(frstRec.OrderId, response.OrderId);
         }
         #endregion
 

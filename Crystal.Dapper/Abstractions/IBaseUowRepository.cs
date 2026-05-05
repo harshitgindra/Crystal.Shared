@@ -46,5 +46,12 @@ namespace Crystal.Dapper
         /// Rollback the transaction
         /// </summary>
         Task RollbackAsync();
+
+        /// <summary>
+        /// Executes an atomic unit of work: begins a transaction, invokes <paramref name="work"/>,
+        /// commits on success, or rolls back and rethrows on failure.
+        /// </summary>
+        /// <param name="work">The async delegate containing all data-change operations.</param>
+        Task ExecuteUnitOfWork(Func<Task> work);
     }
 }

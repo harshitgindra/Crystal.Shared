@@ -61,7 +61,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be updated
             //***
-           ClassicAssert.Equals(order.Name, DbContext.Orders.Find(order.OrderId).Name);
+           ClassicAssert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
         }
         #endregion       
 
@@ -85,7 +85,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be updated
             //***
-           ClassicAssert.Equals(order.Name, DbContext.Orders.Find(order.OrderId).Name);
+           ClassicAssert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
         }
         #endregion
 
@@ -116,7 +116,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             {
                 foreach (var item in updatedRecords)
                 {
-                   ClassicAssert.Equals(item.Name, DbContext.Orders.Find(item.OrderId).Name);
+                   ClassicAssert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
                 }
             });
         }
