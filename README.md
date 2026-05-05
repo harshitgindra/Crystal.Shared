@@ -17,7 +17,8 @@
 | LinkedIn | [![LinkedIn][linkedin-shield]][linkedin-url]
 | Crystal.EntityFrameworkCore | [![Crystal.EntityFrameworkCore](https://img.shields.io/nuget/v/Crystal.EntityFrameworkCore)](https://www.nuget.org/packages/Crystal.EntityFrameworkCore/)
 | Crystal.Dapper | [![Crystal.Dapper](https://img.shields.io/nuget/v/Crystal.Dapper)](https://www.nuget.org/packages/Crystal.Dapper/)
-| Github Actions | [![Actions](https://github.com/harshitgindra/Crystal.Shared/workflows/Main%20workflow/badge.svg)](https://github.com/harshitgindra/Crystal.Shared/actions?query=workflow%3A%22Main+workflow%22) |
+| CI Build | [![CI Build and Test](https://github.com/harshitgindra/Crystal.Shared/actions/workflows/ci.yml/badge.svg)](https://github.com/harshitgindra/Crystal.Shared/actions/workflows/ci.yml) |
+| Publish | [![Nuget Publish](https://github.com/harshitgindra/Crystal.Shared/actions/workflows/publish.yml/badge.svg)](https://github.com/harshitgindra/Crystal.Shared/actions/workflows/publish.yml) |
 
 
 ## Entity Framework core
