@@ -51,7 +51,7 @@
     <OutputPath>../Output</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Source\Github\Crystal.Shared\Crystal.EntityFrameworkCore\Crystal.EntityFrameworkCore.xml</DocumentationFile>
+    <DocumentationFile>Crystal.EntityFrameworkCore.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>../Output\Crystal.EntityFrameworkCore.xml</DocumentationFile>
