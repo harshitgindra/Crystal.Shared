@@ -36,9 +36,6 @@ jobs:
           6.0.x
           7.0.x
 
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
-
     - name: Restore dependencies
       run: dotnet restore $SOLUTION
 
