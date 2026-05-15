@@ -5,7 +5,7 @@
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Crystal.EntityFrameworkCore)](https://www.nuget.org/packages/Crystal.EntityFrameworkCore/)
 [![Contributors](https://img.shields.io/github/contributors/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/graphs/contributors)
 [![Issues](https://img.shields.io/github/issues/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/issues)
-[![MIT License](https://img.shields.io/github/license/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/blob/master/LICENSE.txt)
+[![MIT License](https://img.shields.io/github/license/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/blob/main/LICENSE.txt)
 [![Stars](https://img.shields.io/github/stars/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/stargazers)
 
 A **Unit of Work** and **Repository pattern** wrapper around [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/), standardizing data access across ASP.NET applications. Ensures `DbContext` instances are properly disposed, preventing memory leaks and open contexts.
@@ -68,7 +68,7 @@ Refer to the [Wiki](https://github.com/harshitgindra/Crystal.Shared/wiki/Entity-
 
 ## Contributing
 
-Contributions are welcome! Please read [CONTRIBUTING.md](https://github.com/harshitgindra/Crystal.Shared/blob/master/CONTRIBUTING.md) to get started.
+Contributions are welcome! Please read [CONTRIBUTING.md](https://github.com/harshitgindra/Crystal.Shared/blob/main/CONTRIBUTING.md) to get started.
 
 1. Fork the repository
 2. Create a branch: `git checkout -b feature/my-feature`
@@ -80,7 +80,7 @@ Contributions are welcome! Please read [CONTRIBUTING.md](https://github.com/hars
 
 ## License
 
-Distributed under the MIT License. See [LICENSE.txt](https://github.com/harshitgindra/Crystal.Shared/blob/master/LICENSE.txt) for more information.
+Distributed under the MIT License. See [LICENSE.txt](https://github.com/harshitgindra/Crystal.Shared/blob/main/LICENSE.txt) for more information.
 
 ---
 
