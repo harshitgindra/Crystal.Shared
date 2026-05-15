@@ -1,10 +1,10 @@
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
-using Crystal.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Crystal.Shared;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.DecoratorTests
 {
@@ -57,8 +57,10 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = 2,
-                Columns = new List<Column>(), Order = new List<Order>()
+                Start = 0,
+                Length = 2,
+                Columns = new List<Column>(),
+                Order = new List<Order>()
             };
             var result = BuildQuery().ToDatatable(request);
             ClassicAssert.AreEqual(4, result.TotalRecords);
@@ -70,8 +72,10 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
-                Columns = new List<Column>(), Order = new List<Order>()
+                Start = 0,
+                Length = -1,
+                Columns = new List<Column>(),
+                Order = new List<Order>()
             };
             var result = BuildQuery().ToDatatable(request);
             ClassicAssert.AreEqual(4, result.Data.Length);
@@ -82,8 +86,10 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
-                Columns = new List<Column>(), Order = new List<Order>()
+                Start = 0,
+                Length = -1,
+                Columns = new List<Column>(),
+                Order = new List<Order>()
             };
             var result = await BuildQuery().ToDatatableAsync(request);
             ClassicAssert.AreEqual(4, result.TotalRecords);
@@ -96,7 +102,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Search = new Search { Value = "alpha" },
                 Columns = new List<Column> { new Column { Data = "Name", Searchable = true } },
                 Order = new List<Order>()
@@ -110,7 +117,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Search = new Search { Value = "alpha" },
                 Columns = new List<Column> { new Column { Data = "Name", Searchable = false } },
                 Order = new List<Order>()
@@ -126,7 +134,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "Name", Searchable = true, Search = new Search { Value = "Beta" } }
@@ -143,7 +152,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "Name", Searchable = true, Search = new Search { Value = "Gamma", ExactMatch = true } }
@@ -161,7 +171,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "IsActive", Searchable = true, Search = new Search { Value = "true" } }
@@ -177,7 +188,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "IsActive", Searchable = true, Search = new Search { Value = "notabool" } }
@@ -193,7 +205,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "IsOptional", Searchable = true, Search = new Search { Value = "true" } }
@@ -209,7 +222,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "IsOptional", Searchable = true, Search = new Search { Value = "notabool" } }
@@ -227,7 +241,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "Value", Searchable = true, Search = new Search { Value = "10" } }
@@ -243,7 +258,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "Value", Searchable = true, Search = new Search { Value = "20", ExactMatch = true } }
@@ -259,7 +275,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "Value", Searchable = true, Search = new Search { Value = "notanint" } }
@@ -275,7 +292,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalInt", Searchable = true, Search = new Search { Value = "5" } }
@@ -291,7 +309,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalInt", Searchable = true, Search = new Search { Value = "10", ExactMatch = true } }
@@ -307,7 +326,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalInt", Searchable = true, Search = new Search { Value = "notanint" } }
@@ -325,7 +345,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "LongValue", Searchable = true, Search = new Search { Value = "200" } }
@@ -341,7 +362,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "LongValue", Searchable = true, Search = new Search { Value = "300", ExactMatch = true } }
@@ -357,7 +379,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "LongValue", Searchable = true, Search = new Search { Value = "notalong" } }
@@ -373,7 +396,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalLong", Searchable = true, Search = new Search { Value = "200" } }
@@ -389,7 +413,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalLong", Searchable = true, Search = new Search { Value = "300", ExactMatch = true } }
@@ -405,7 +430,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalLong", Searchable = true, Search = new Search { Value = "notalong" } }
@@ -423,7 +449,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "ShortValue", Searchable = true, Search = new Search { Value = "2" } }
@@ -439,7 +466,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "ShortValue", Searchable = true, Search = new Search { Value = "3", ExactMatch = true } }
@@ -455,7 +483,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "ShortValue", Searchable = true, Search = new Search { Value = "notashort" } }
@@ -471,7 +500,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalShort", Searchable = true, Search = new Search { Value = "2" } }
@@ -487,7 +517,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalShort", Searchable = true, Search = new Search { Value = "3", ExactMatch = true } }
@@ -503,7 +534,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalShort", Searchable = true, Search = new Search { Value = "notashort" } }
@@ -521,7 +553,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "CreatedDate", Searchable = true, Search = new Search { Value = "2024-01-01" } }
@@ -537,7 +570,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "CreatedDate", Searchable = true, Search = new Search { Value = "01/01/2024 - 03/01/2024" } }
@@ -553,7 +587,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "CreatedDate", Searchable = true, Search = new Search { Value = "notadate" } }
@@ -569,7 +604,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalDate", Searchable = true, Search = new Search { Value = "2024-02-01" } }
@@ -585,7 +621,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalDate", Searchable = true, Search = new Search { Value = "01/01/2024 - 03/01/2024" } }
@@ -601,7 +638,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "OptionalDate", Searchable = true, Search = new Search { Value = "notadate" } }
@@ -619,7 +657,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column>
                 {
                     new Column { Data = "DoesNotExist", Searchable = true, Search = new Search { Value = "anything" } }
@@ -637,7 +676,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column> { new Column { Data = "Name", Searchable = false } },
                 Order = new List<Order> { new Order { Column = 0, Dir = "desc" } }
             };
@@ -650,7 +690,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<Column> { new Column { Data = "DoesNotExist", Searchable = false } },
                 Order = new List<Order> { new Order { Column = 0, Dir = "asc" } }
             };
@@ -665,7 +706,8 @@ namespace Crystal.Dapper.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 2, Length = -1,
+                Start = 2,
+                Length = -1,
                 Columns = new List<Column> { new Column { Data = "Id", Searchable = false } },
                 Order = new List<Order> { new Order { Column = 0, Dir = "asc" } }
             };

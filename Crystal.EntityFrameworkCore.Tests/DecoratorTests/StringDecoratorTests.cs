@@ -1,6 +1,6 @@
+using Crystal.Shared;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using Crystal.Shared;
 
 namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
 {

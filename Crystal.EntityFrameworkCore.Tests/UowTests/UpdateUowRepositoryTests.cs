@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
@@ -61,7 +61,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be updated
             //***
-           ClassicAssert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
+            ClassicAssert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
         }
         #endregion       
 
@@ -85,7 +85,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be updated
             //***
-           ClassicAssert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
+            ClassicAssert.AreEqual(order.Name, DbContext.Orders.Find(order.OrderId).Name);
         }
         #endregion
 
@@ -112,13 +112,13 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: multiple records should be updated
             //***
-           ClassicAssert.Multiple(() =>
-            {
-                foreach (var item in updatedRecords)
-                {
-                   ClassicAssert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
-                }
-            });
+            ClassicAssert.Multiple(() =>
+             {
+                 foreach (var item in updatedRecords)
+                 {
+                     ClassicAssert.AreEqual(item.Name, DbContext.Orders.Find(item.OrderId).Name);
+                 }
+             });
         }
         #endregion
     }

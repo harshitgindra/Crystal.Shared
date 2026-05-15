@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crystal.Dapper
 {
@@ -29,7 +29,7 @@ namespace Crystal.Dapper
             //***
             if (!serviceCollection.Any(x => x.ServiceType == typeof(IDbConnection)))
             {
-                serviceCollection.AddTransient<IDbConnection>(x => 
+                serviceCollection.AddTransient<IDbConnection>(x =>
                     ActivatorUtilities.CreateInstance<TContext>(x, connectionString));
             }
             return serviceCollection;

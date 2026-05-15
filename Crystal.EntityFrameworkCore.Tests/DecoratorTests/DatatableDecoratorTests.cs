@@ -1,12 +1,12 @@
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
-using Crystal.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DtOrder = Crystal.Shared.Order;
+using Crystal.Shared;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using DtColumn = Crystal.Shared.Column;
+using DtOrder = Crystal.Shared.Order;
 
 namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
 {
@@ -74,7 +74,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Search = new Search { Value = "alpha" },
                 Columns = new List<DtColumn> { new DtColumn { Data = "Name", Searchable = true } },
                 Order = new List<DtOrder>()
@@ -88,7 +89,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "Name", Searchable = true, Search = new Search { Value = "Beta" } } },
                 Order = new List<DtOrder>()
             };
@@ -101,7 +103,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "Name", Searchable = true, Search = new Search { Value = "Gamma", ExactMatch = true } } },
                 Order = new List<DtOrder>()
             };
@@ -114,7 +117,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "IsActive", Searchable = true, Search = new Search { Value = "true" } } },
                 Order = new List<DtOrder>()
             };
@@ -127,7 +131,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "IsActive", Searchable = true, Search = new Search { Value = "notabool" } } },
                 Order = new List<DtOrder>()
             };
@@ -140,7 +145,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "IsOptional", Searchable = true, Search = new Search { Value = "true" } } },
                 Order = new List<DtOrder>()
             };
@@ -153,7 +159,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "IsOptional", Searchable = true, Search = new Search { Value = "notabool" } } },
                 Order = new List<DtOrder>()
             };
@@ -166,7 +173,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "Value", Searchable = true, Search = new Search { Value = "20", ExactMatch = true } } },
                 Order = new List<DtOrder>()
             };
@@ -179,7 +187,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "Value", Searchable = true, Search = new Search { Value = "10" } } },
                 Order = new List<DtOrder>()
             };
@@ -192,7 +201,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "Value", Searchable = true, Search = new Search { Value = "notanint" } } },
                 Order = new List<DtOrder>()
             };
@@ -205,7 +215,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalInt", Searchable = true, Search = new Search { Value = "10", ExactMatch = true } } },
                 Order = new List<DtOrder>()
             };
@@ -218,7 +229,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalInt", Searchable = true, Search = new Search { Value = "notanint" } } },
                 Order = new List<DtOrder>()
             };
@@ -231,7 +243,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "LongValue", Searchable = true, Search = new Search { Value = "300", ExactMatch = true } } },
                 Order = new List<DtOrder>()
             };
@@ -244,7 +257,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "LongValue", Searchable = true, Search = new Search { Value = "200" } } },
                 Order = new List<DtOrder>()
             };
@@ -257,7 +271,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "LongValue", Searchable = true, Search = new Search { Value = "notalong" } } },
                 Order = new List<DtOrder>()
             };
@@ -270,7 +285,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalLong", Searchable = true, Search = new Search { Value = "300", ExactMatch = true } } },
                 Order = new List<DtOrder>()
             };
@@ -283,7 +299,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalLong", Searchable = true, Search = new Search { Value = "notalong" } } },
                 Order = new List<DtOrder>()
             };
@@ -296,7 +313,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "ShortValue", Searchable = true, Search = new Search { Value = "3", ExactMatch = true } } },
                 Order = new List<DtOrder>()
             };
@@ -309,7 +327,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "ShortValue", Searchable = true, Search = new Search { Value = "2" } } },
                 Order = new List<DtOrder>()
             };
@@ -322,7 +341,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "ShortValue", Searchable = true, Search = new Search { Value = "notashort" } } },
                 Order = new List<DtOrder>()
             };
@@ -335,7 +355,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalShort", Searchable = true, Search = new Search { Value = "3", ExactMatch = true } } },
                 Order = new List<DtOrder>()
             };
@@ -348,7 +369,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalShort", Searchable = true, Search = new Search { Value = "notashort" } } },
                 Order = new List<DtOrder>()
             };
@@ -361,7 +383,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "CreatedDate", Searchable = true, Search = new Search { Value = "2024-01-01" } } },
                 Order = new List<DtOrder>()
             };
@@ -374,7 +397,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "CreatedDate", Searchable = true, Search = new Search { Value = "01/01/2024 - 03/01/2024" } } },
                 Order = new List<DtOrder>()
             };
@@ -387,7 +411,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "CreatedDate", Searchable = true, Search = new Search { Value = "notadate" } } },
                 Order = new List<DtOrder>()
             };
@@ -400,7 +425,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalDate", Searchable = true, Search = new Search { Value = "2024-02-01" } } },
                 Order = new List<DtOrder>()
             };
@@ -413,7 +439,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalDate", Searchable = true, Search = new Search { Value = "01/01/2024 - 03/01/2024" } } },
                 Order = new List<DtOrder>()
             };
@@ -426,7 +453,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "OptionalDate", Searchable = true, Search = new Search { Value = "notadate" } } },
                 Order = new List<DtOrder>()
             };
@@ -439,7 +467,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "DoesNotExist", Searchable = true, Search = new Search { Value = "anything" } } },
                 Order = new List<DtOrder>()
             };
@@ -452,7 +481,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 0, Length = -1,
+                Start = 0,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "Name", Searchable = false } },
                 Order = new List<DtOrder> { new DtOrder { Column = 0, Dir = "desc" } }
             };
@@ -465,7 +495,8 @@ namespace Crystal.EntityFrameworkCore.Tests.DecoratorTests
         {
             var request = new DataTableRequest<SampleItem>
             {
-                Start = 2, Length = -1,
+                Start = 2,
+                Length = -1,
                 Columns = new List<DtColumn> { new DtColumn { Data = "Id", Searchable = false } },
                 Order = new List<DtOrder> { new DtOrder { Column = 0, Dir = "asc" } }
             };

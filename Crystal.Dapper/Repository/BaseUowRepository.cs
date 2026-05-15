@@ -1,11 +1,11 @@
-﻿using MicroOrm.Dapper.Repositories;
-using MicroOrm.Dapper.Repositories.DbContext;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Crystal.Shared;
 using System.Threading.Tasks;
 using AutoMapper;
+using Crystal.Shared;
+using MicroOrm.Dapper.Repositories;
+using MicroOrm.Dapper.Repositories.DbContext;
 
 namespace Crystal.Dapper
 {

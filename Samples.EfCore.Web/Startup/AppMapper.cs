@@ -1,8 +1,8 @@
-﻿using AutoMapper;
+using AutoMapper;
 
 namespace Samples.EfCore.Web
 {
-    public class AppMapper: Profile
+    public class AppMapper : Profile
     {
         public AppMapper()
         {

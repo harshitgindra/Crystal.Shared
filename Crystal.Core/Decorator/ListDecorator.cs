@@ -1,4 +1,4 @@
-﻿#region USING
+#region USING
 
 using System;
 using System.Collections.Generic;

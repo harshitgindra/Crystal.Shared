@@ -15,7 +15,7 @@ namespace Crystal.XamForms.Shared.Behavior
 
         public ICommand LoadMoreCommand
         {
-            get => (ICommand) GetValue(LoadMoreCommandProperty);
+            get => (ICommand)GetValue(LoadMoreCommandProperty);
             set => SetValue(LoadMoreCommandProperty, value);
         }
 

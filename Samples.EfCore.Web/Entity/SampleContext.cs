@@ -1,4 +1,4 @@
-﻿using Crystal.EntityFrameworkCore;
+using Crystal.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Samples.EfCore.Web

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Crystal.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Samples.EfCore.Web.Controllers
 {

@@ -1,10 +1,10 @@
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Crystal.Dapper.Tests.UowTests;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
@@ -63,7 +63,7 @@ namespace Crystal.Dapper.Tests.UowTests
             // Assert: All changes should be committed and visible
             var countAfter = await UowRepository.Repository<Product>().GetAsync();
             ClassicAssert.AreEqual(4, countAfter.Count); // 2 initial + 2 new
-            
+
             var updatedProduct = await UowRepository.Repository<Product>().FindAsync(_sampleProducts.First().ProductId);
             ClassicAssert.AreEqual("Updated Sample 1", updatedProduct.Name);
         }
@@ -108,7 +108,7 @@ namespace Crystal.Dapper.Tests.UowTests
 
             // Assert: All changes must be rolled back. The database should revert to its initial state.
             var countAfter = await UowRepository.Repository<Product>().GetAsync();
-            ClassicAssert.AreEqual(2, countAfter.Count); 
+            ClassicAssert.AreEqual(2, countAfter.Count);
 
             var updatedProductCheck = await UowRepository.Repository<Product>().FindAsync(_sampleProducts.First().ProductId);
             // Ensure the name is still the original value, proving the update failed to persist

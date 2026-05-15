@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NUnit.Framework;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {
@@ -17,7 +17,7 @@ namespace Crystal.EntityFrameworkCore.Tests
         {
             Uow?.Dispose();
             DbContext?.Dispose();
-           
+
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
@@ -12,7 +12,7 @@ namespace Crystal.EntityFrameworkCore.Tests
         [SetUp]
         public void Setup()
         {
-            
+
             DbContext = new TestContext();
             //***
             //*** Clean data
@@ -48,7 +48,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 1 record should be saved
             //***
-           ClassicAssert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
+            ClassicAssert.AreEqual(newRecord.Name, DbContext.Orders.Find(newRecord.OrderId).Name);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-           ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
+            ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 2 record should be saved
             //***
-           ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
+            ClassicAssert.AreEqual(records.Count, DbContext.Orders.Count());
         }
 
         #endregion

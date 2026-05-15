@@ -1,6 +1,6 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Crystal.Dapper.Tests.UowTests
 {
@@ -12,7 +12,7 @@ namespace Crystal.Dapper.Tests.UowTests
         protected void Init()
         {
             string guid = Guid.NewGuid().ToString();
-            string fileName  = string.Format(_fileNameTemplate, guid);
+            string fileName = string.Format(_fileNameTemplate, guid);
 
             IServiceCollection serviceCollection = new ServiceCollection()
                 .ConfigureUnitOfWork<SqliteConnection>($"filename={fileName}");

@@ -1,4 +1,4 @@
-﻿namespace Crystal.Dapper.Tests
+namespace Crystal.Dapper.Tests
 {
     public class ProductDto
     {

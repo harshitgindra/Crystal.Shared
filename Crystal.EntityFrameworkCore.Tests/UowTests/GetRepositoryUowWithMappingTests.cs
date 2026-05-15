@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Crystal.EntityFrameworkCore.Tests.Model;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
@@ -102,7 +102,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-           ClassicAssert.AreEqual(frstRec.Name, response.OrderName);
+            ClassicAssert.AreEqual(frstRec.Name, response.OrderName);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return null
             //***
-           ClassicAssert.IsNull(response);
+            ClassicAssert.IsNull(response);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-           ClassicAssert.AreEqual(frstRec.OrderId, response.First().OrderId);
+            ClassicAssert.AreEqual(frstRec.OrderId, response.First().OrderId);
         }
         #endregion
 
@@ -155,7 +155,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return true
             //***
-           ClassicAssert.IsTrue(response);
+            ClassicAssert.IsTrue(response);
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return false
             //***
-           ClassicAssert.IsFalse(response);
+            ClassicAssert.IsFalse(response);
         }
         #endregion
     }

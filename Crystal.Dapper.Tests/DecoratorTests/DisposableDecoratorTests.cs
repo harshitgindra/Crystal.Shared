@@ -1,7 +1,7 @@
+using System;
+using Crystal.Shared;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using Crystal.Shared;
-using System;
 
 namespace Crystal.Dapper.Tests.DecoratorTests
 {

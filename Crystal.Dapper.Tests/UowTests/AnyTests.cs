@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MicroOrm.Dapper.Repositories.SqlGenerator;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.UowTests
@@ -47,7 +47,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: Return true
             //***
-           ClassicAssert.IsTrue(result);
+            ClassicAssert.IsTrue(result);
         }
 
         [Test]
@@ -61,11 +61,11 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** When Check if any records exists
             //***
-            var result = await UowRepository.Repository<Product>().AnyAsync(x=>x.ProductId != 0);
+            var result = await UowRepository.Repository<Product>().AnyAsync(x => x.ProductId != 0);
             //***
             //*** Then: Return true
             //***
-           ClassicAssert.IsTrue(result);
+            ClassicAssert.IsTrue(result);
         }
 
         [Test]
@@ -79,11 +79,11 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** When Check if any records exists
             //***
-            var result = await UowRepository.Repository<Product>().AnyAsync(x=>x.ProductId == 0);
+            var result = await UowRepository.Repository<Product>().AnyAsync(x => x.ProductId == 0);
             //***
             //*** Then: Return false
             //***
-           ClassicAssert.IsFalse(result);
+            ClassicAssert.IsFalse(result);
         }
 
 

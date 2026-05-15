@@ -1,7 +1,7 @@
-﻿#region USING
-using Microsoft.EntityFrameworkCore;
+#region USING
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 #endregion
 
 namespace Crystal.EntityFrameworkCore

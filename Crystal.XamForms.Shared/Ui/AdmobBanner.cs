@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Xamarin.Forms;
 
 namespace Crystal.XamForms.Shared.Ui
 {
-    public class AdmobBanner: View
+    public class AdmobBanner : View
     {
         public static readonly BindableProperty AdUnitIdProperty = BindableProperty.Create(
                        nameof(AdUnitId),

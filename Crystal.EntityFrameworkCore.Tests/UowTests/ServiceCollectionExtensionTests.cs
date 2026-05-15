@@ -1,7 +1,7 @@
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
 
 namespace Crystal.EntityFrameworkCore.Tests
 {

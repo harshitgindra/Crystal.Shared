@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
@@ -86,7 +86,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 //*** Then: Exception generated, test passed
                 //***
-               ClassicAssert.Pass("Exception generated as record not found");
+                ClassicAssert.Pass("Exception generated as record not found");
             }
         }
 
@@ -130,7 +130,7 @@ namespace Crystal.EntityFrameworkCore.Tests
         }
 
         #endregion
-      
+
         #region Delete tests
         [Test]
         [Category("Delete")]
@@ -173,7 +173,7 @@ namespace Crystal.EntityFrameworkCore.Tests
                 //***
                 //*** Then: Exception generated, test passed
                 //***
-               ClassicAssert.Pass("Exception generated as record not found");
+                ClassicAssert.Pass("Exception generated as record not found");
             }
         }
 

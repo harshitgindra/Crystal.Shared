@@ -1,4 +1,4 @@
-﻿namespace Crystal.Shared
+namespace Crystal.Shared
 {
     /// <summary>
     /// String extensions

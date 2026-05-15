@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
@@ -47,7 +47,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Then: 0 record should be saved
             //***
-           ClassicAssert.AreEqual(0, DbContext.Orders.Count());
+            ClassicAssert.AreEqual(0, DbContext.Orders.Count());
         }
 
         public List<Order> Records = new List<Order>()

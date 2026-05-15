@@ -16,5 +16,5 @@ namespace Crystal.XamForms.Shared.Extension
             self.Aspect = aspect;
             return self;
         }
-        }
+    }
 }

@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Crystal.Shared;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using Crystal.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace Crystal.EntityFrameworkCore
 {

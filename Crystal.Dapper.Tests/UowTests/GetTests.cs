@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.Dapper.Tests.UowTests
@@ -45,7 +45,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 2 record should be saved
             //***
-           ClassicAssert.AreEqual(_sampleProducts.Count, products.Count);
+            ClassicAssert.AreEqual(_sampleProducts.Count, products.Count);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be returned
             //***
-           ClassicAssert.AreEqual(1, products.Count);
+            ClassicAssert.AreEqual(1, products.Count);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Crystal.Dapper.Tests.UowTests
             //***
             //*** Then: 1 record should be returned
             //***
-           ClassicAssert.AreEqual("Sample 1", products.Name);
+            ClassicAssert.AreEqual("Sample 1", products.Name);
         }
 
         [Test]

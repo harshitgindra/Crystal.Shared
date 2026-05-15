@@ -1,8 +1,8 @@
-﻿using Crystal.EntityFrameworkCore;
-using Crystal.Shared;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Crystal.EntityFrameworkCore;
+using Crystal.Shared;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Samples.EfCore.Web.Controllers
 {

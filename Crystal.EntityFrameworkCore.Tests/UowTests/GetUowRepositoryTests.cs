@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
 namespace Crystal.EntityFrameworkCore.Tests
@@ -59,7 +59,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return all records
             //***
-           ClassicAssert.AreEqual(_testOrders.Count, response.Count());
+            ClassicAssert.AreEqual(_testOrders.Count, response.Count());
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-           ClassicAssert.AreEqual(frstRec.Name, response.Name);
+            ClassicAssert.AreEqual(frstRec.Name, response.Name);
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace Crystal.EntityFrameworkCore.Tests
             //***
             //*** Return 1 record
             //***
-           ClassicAssert.AreEqual(frstRec.OrderId, response.OrderId);
+            ClassicAssert.AreEqual(frstRec.OrderId, response.OrderId);
         }
         #endregion
 

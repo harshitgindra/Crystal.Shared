@@ -1,4 +1,4 @@
-﻿namespace Samples.EfCore.Web
+namespace Samples.EfCore.Web
 {
     public class BookViewModel
     {
