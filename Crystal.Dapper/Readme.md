@@ -1,120 +1,91 @@
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** reference: https://github.com/harshitgindra/Crystal.Shared/edit/master/README.md
--->
+# Crystal.Dapper
 
+[![CI Build and Test](https://github.com/harshitgindra/Crystal.Shared/actions/workflows/ci.yml/badge.svg)](https://github.com/harshitgindra/Crystal.Shared/actions/workflows/ci.yml)
+[![NuGet Version](https://img.shields.io/nuget/v/Crystal.Dapper?label=NuGet)](https://www.nuget.org/packages/Crystal.Dapper/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Crystal.Dapper)](https://www.nuget.org/packages/Crystal.Dapper/)
+[![Contributors](https://img.shields.io/github/contributors/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/graphs/contributors)
+[![Issues](https://img.shields.io/github/issues/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/issues)
+[![MIT License](https://img.shields.io/github/license/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/blob/master/LICENSE.txt)
+[![Stars](https://img.shields.io/github/stars/harshitgindra/Crystal.Shared.svg)](https://github.com/harshitgindra/Crystal.Shared/stargazers)
 
-| | |
-|-|-|
-| Contributors | [![Contributors][contributors-shield]][contributors-url]
-| Forks | [![Forks][forks-shield]][forks-url]
-| Issues | [![Issues][issues-shield]][issues-url]
-| MIT License | [![MIT License][license-shield]][license-url]
-| LinkedIn | [![LinkedIn][linkedin-shield]][linkedin-url]
-| Nuget | [![Nuget](https://img.shields.io/nuget/v/Crystal.Dapper)](https://www.nuget.org/packages/Crystal.Dapper/)
-| Stargazers | [![Stargazers][stars-shield]][stars-url]
-| Github Actions | [![Actions](https://github.com/harshitgindra/Crystal.Shared/workflows/Main%20workflow/badge.svg)](https://github.com/harshitgindra/Crystal.Shared/actions?query=workflow%3A%22Main+workflow%22) |
+A **Unit of Work** and **Repository pattern** wrapper around [Dapper](https://github.com/DapperLib/Dapper), standardizing data access across ASP.NET applications. Ensures database connections are always disposed, preventing memory leaks and open connections.
 
+---
 
-
-<!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
-* [About the Project](#about-the-project)
-* [Getting Started](#getting-started)
-* [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
+- [About](#about)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Built With](#built-with)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
+---
 
+## About
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
-This project contains some of the shared components that can be reused in any ASP.NET applications(Web, Api, Desktop and Mobile). One of the reason of builidng this library is to standardize the repository implementation. Whenever we build a repository and query data, it is important to make sure it is disposed after it is used. Sometimes we do it, sometimes we forget. It could be one of the biggest factor for failure of several applications as the scalability of the app is affected. The `Unit Of Work` implementation in this project makes sure that the connection to the database is disposed and we do not leave any room for memory leaks or open contexts
+`Crystal.Dapper` provides a clean, testable abstraction over Dapper using the Unit of Work pattern. It enforces proper resource disposal so you never accidentally leave database connections open.
 
+---
 
-### Built With
-The libraries used in the project includes
-* [Dapper](https://www.nuget.org/packages/Dapper)
-* [MicroOrm.Dapper.Repositories](https://www.nuget.org/packages/MicroOrm.Dapper.Repositories/)
-* [Newtonsoft Json](https://www.nuget.org/packages/Newtonsoft.Json/)
-* [NUnit](https://www.nuget.org/packages/NUnit/)
-
-
-<!-- GETTING STARTED -->
 ## Getting Started
-To get started, the first step is to download the nuget packages
-* [Crystal.Dapper](https://www.nuget.org/packages/Crystal.Dapper/)
 
+### Install via NuGet
 
-## Examples
-Refer to [wiki](https://github.com/harshitgindra/Crystal.Shared/wiki/Dapper-Examples) for examples
+```bash
+dotnet add package Crystal.Dapper
+```
 
+Or via the Package Manager Console:
 
+```powershell
+Install-Package Crystal.Dapper
+```
 
-<!-- ROADMAP -->
-## Roadmap
+### Requirements
 
-See the [open issues](https://github.com/harshitgindra/Crystal.Shared/issues) for a list of proposed features (and known issues).
+- .NET 8.0 or .NET 10.0
 
+---
 
-<!-- CONTRIBUTING -->
+## Usage
+
+Refer to the [Wiki](https://github.com/harshitgindra/Crystal.Shared/wiki/Dapper-Examples) for full usage examples and guides.
+
+---
+
+## Built With
+
+- [Dapper](https://www.nuget.org/packages/Dapper)
+- [MicroOrm.Dapper.Repositories](https://www.nuget.org/packages/MicroOrm.Dapper.Repositories/)
+- [AutoMapper](https://www.nuget.org/packages/AutoMapper/)
+- [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/)
+- [System.Linq.Dynamic.Core](https://www.nuget.org/packages/System.Linq.Dynamic.Core/)
+
+---
+
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are welcome! Please read [CONTRIBUTING.md](https://github.com/harshitgindra/Crystal.Shared/blob/master/CONTRIBUTING.md) to get started.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m 'Add my feature'`
+4. Push the branch: `git push origin feature/my-feature`
+5. Open a Pull Request targeting `master`
 
+---
 
-
-<!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE.txt](https://github.com/harshitgindra/Crystal.Shared/blob/master/LICENSE.txt) for more information.
 
+---
 
-<!-- CONTACT -->
 ## Contact
 
-Your Name - [@harshitgindra](https://twitter.com/harshitgindra)
+Harshit Gindra — [@harshitgindra](https://twitter.com/harshitgindra) · [LinkedIn](https://linkedin.com/in/harshit-gindra)
 
 Project Link: [https://github.com/harshitgindra/Crystal.Shared](https://github.com/harshitgindra/Crystal.Shared)
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
-* [Github Readme template](https://github.com/othneildrew/Best-README-Template)
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/harshitgindra/Crystal.Shared.svg?style=flat-square
-[contributors-url]: https://github.com/harshitgindra/Crystal.Shared/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/harshitgindra/Crystal.Shared.svg?style=flat-square
-[forks-url]: https://github.com/harshitgindra/Crystal.Shared/network/members
-[stars-shield]: https://img.shields.io/github/stars/harshitgindra/Crystal.Shared.svg?style=flat-square
-[stars-url]: https://github.com/harshitgindra/Crystal.Shared/stargazers
-[issues-shield]: https://img.shields.io/github/issues/harshitgindra/Crystal.Shared.svg?style=flat-square
-[issues-url]: https://github.com/harshitgindra/Crystal.Shared/issues
-[license-shield]: https://img.shields.io/github/license/harshitgindra/Crystal.Shared.svg?style=flat-square
-[license-url]: https://github.com/harshitgindra/Crystal.Shared/blob/master/LICENSE.txt
-[license-shield]: https://img.shields.io/github/license/harshitgindra/Crystal.Shared.svg?style=flat-square
-[license-url]: https://github.com/harshitgindra/Crystal.Shared/blob/master/LICENSE.txt
-
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/harshit-gindra

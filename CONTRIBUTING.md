@@ -14,8 +14,8 @@ Thank you for your interest in contributing! Here's everything you need to know 
 ## Getting Started
 
 ### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (for multi-targeting)
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 ### Clone and Build
 
@@ -32,6 +32,16 @@ dotnet build Crystal.Shared.Components.sln --configuration Debug
 dotnet test Crystal.Shared.Components.sln --verbosity normal
 ```
 
+### Checking Formatting
+
+This project uses `dotnet format` to enforce code style defined in `.editorconfig`. Always run this before committing:
+
+```bash
+dotnet format Crystal.Shared.Components.sln
+```
+
+CI will fail if formatting issues are detected (`dotnet format --verify-no-changes`).
+
 ## Making Changes
 
 1. Fork the repository
@@ -40,8 +50,9 @@ dotnet test Crystal.Shared.Components.sln --verbosity normal
    git checkout -b feature/my-feature
    ```
 3. Make your changes with clear, focused commits
-4. Ensure all tests pass locally
-5. Open a Pull Request targeting `master`
+4. Run `dotnet format` to fix any formatting issues
+5. Ensure all tests pass locally
+6. Open a Pull Request targeting `master`
 
 ## Pull Request Guidelines
 
@@ -54,9 +65,10 @@ dotnet test Crystal.Shared.Components.sln --verbosity normal
 
 Releases are triggered by pushing to a `release/**` branch (e.g. `release/8.1.0`). The CI pipeline will:
 1. Extract the version from the branch name
-2. Build and test
-3. Pack NuGet packages
-4. Publish to [nuget.org](https://www.nuget.org/)
+2. Check formatting
+3. Build and test
+4. Pack NuGet packages
+5. Publish to [nuget.org](https://www.nuget.org/)
 
 ## Questions?
 
