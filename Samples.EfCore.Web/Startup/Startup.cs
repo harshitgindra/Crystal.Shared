@@ -26,7 +26,7 @@ namespace Samples.EfCore.Web
             //***
             //*** Configure automapper
             //***
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(cfg => cfg.AddProfile<AppMapper>());
 
             //***
             //*** Configuring unit of work services

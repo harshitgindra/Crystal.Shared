@@ -1,5 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Crystal.EntityFrameworkCore.Tests.Model;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,9 @@ namespace Crystal.EntityFrameworkCore.Tests
         [SetUp]
         public void Setup()
         {
-            _mapper = new MapperConfiguration(cfg =>
-                       cfg.CreateMap<Order, OrderDto>()
-                       .ForMember(dto => dto.OrderName, conf => conf.MapFrom(ol => ol.Name)))
-                .CreateMapper();
+            _mapper = new Mapper(new MapperConfiguration(cfg =>
+                cfg.CreateMap<Order, OrderDto>()
+                   .ForMember(dto => dto.OrderName, conf => conf.MapFrom(ol => ol.Name)), NullLoggerFactory.Instance));
 
             DbContext = new TestContext();
             //***

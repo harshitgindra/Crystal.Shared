@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
@@ -262,7 +262,7 @@ namespace Crystal.Shared
                             }
                             else
                             {
-                                return $"{field}.ToString().Contains(@0)";
+                                return $"Convert.ToString({field}).Contains(@0)";
                             }
                         }
                         else
@@ -280,7 +280,7 @@ namespace Crystal.Shared
                             }
                             else
                             {
-                                return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                                return $"{field}.HasValue && Convert.ToString({field}.Value).Contains(@0)";
                             }
                         }
                         else
@@ -298,7 +298,7 @@ namespace Crystal.Shared
                             }
                             else
                             {
-                                return $"{field}.ToString().Contains(@0)";
+                                return $"Convert.ToString({field}).Contains(@0)";
                             }
                         }
                         else
@@ -316,7 +316,7 @@ namespace Crystal.Shared
                             }
                             else
                             {
-                                return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                                return $"{field}.HasValue && Convert.ToString({field}.Value).Contains(@0)";
                             }
                         }
                         else
@@ -334,7 +334,7 @@ namespace Crystal.Shared
                             }
                             else
                             {
-                                return $"{field}.ToString().Contains(@0)";
+                                return $"Convert.ToString({field}).Contains(@0)";
                             }
                         }
                         else
@@ -352,7 +352,7 @@ namespace Crystal.Shared
                             }
                             else
                             {
-                                return $"{field}.HasValue && {field}.Value.ToString().Contains(@0)";
+                                return $"{field}.HasValue && Convert.ToString({field}.Value).Contains(@0)";
                             }
                         }
                         else

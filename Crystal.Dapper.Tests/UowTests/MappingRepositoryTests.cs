@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using System;
@@ -29,12 +30,11 @@ namespace Crystal.Dapper.Tests.UowTests
                 "CREATE TABLE Product ( ProductId INTEGER primary key AUTOINCREMENT, Name text not null, Value int not null);";
             cmd.ExecuteNonQuery();
 
-            var mapperConfig = new MapperConfiguration(cfg =>
+            var mapper = new Mapper(new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Product, ProductDto>()
                     .ForMember(x => x.ProductName, opt => opt.MapFrom(src => src.Name));
-            });
-            var mapper = mapperConfig.CreateMapper();
+            }, NullLoggerFactory.Instance));
 
             _mappedUowRepository = new BaseUowRepository(connection, mapper);
             await _mappedUowRepository.Repository<Product>().InsertAsync(new List<Product>
