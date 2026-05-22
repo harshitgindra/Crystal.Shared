@@ -14,7 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MicroOrm.Dapper.Repositories" Version="1.31.2" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.27" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.16" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
     <PackageReference Include="NUnit" Version="4.6.0" />
